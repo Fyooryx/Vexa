@@ -2023,7 +2023,7 @@ public class System extends CordovaPlugin {
 
   private boolean isReservedAuthIntent(Intent intent) {
     Uri data = intent != null ? intent.getData() : null;
-    if (data == null || !"acode".equals(data.getScheme())) {
+    if (data == null || !("vexa".equalsIgnoreCase(data.getScheme()) || "acode".equalsIgnoreCase(data.getScheme()))) {
       return false;
     }
     String host = data.getHost();

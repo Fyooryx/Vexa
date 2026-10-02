@@ -7,7 +7,7 @@ const execFile = promisify(execFileCallback);
 
 const ADMOB_PLUGIN_ID = "admob-plus-cordova";
 const LEGACY_CONSENT_PLUGIN_ID = "cordova-plugin-consent";
-const ID_PAID = "com.foxdebug.acode";
+const ID_PAID = "com.vexa.app";
 const ID_FREE = "com.foxdebug.acodefree";
 const VARIANTS = new Set(["free", "paid"]);
 const VARIANT_PLUGIN_IDS = [ADMOB_PLUGIN_ID, LEGACY_CONSENT_PLUGIN_ID];
@@ -23,8 +23,8 @@ const PLUGIN_COMMAND_ENV = Object.freeze({
 const LOGO_TEXT = {
 	paid: `<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ic_launcher_background">#3a3e54</color>
-    <color name="ic_splash_background">#3a3e54</color>
+    <color name="ic_launcher_background">#ffffff</color>
+    <color name="ic_splash_background">#ffffff</color>
 </resources>`,
 	free: `<?xml version="1.0" encoding="utf-8"?>
 <resources>

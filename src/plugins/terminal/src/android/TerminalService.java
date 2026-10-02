@@ -38,10 +38,10 @@ public class TerminalService extends Service {
 
     public static final String CHANNEL_ID = "terminal_exec_channel";
     
-    public static final String ACTION_EXIT_SERVICE = "com.foxdebug.acode.ACTION_EXIT_SERVICE";
-    public static final String MOVE_TO_BACKGROUND = "com.foxdebug.acode.MOVE_TO_BACKGROUND";
-    public static final String MOVE_TO_FOREGROUND = "com.foxdebug.acode.MOVE_TO_FOREGROUND";
-    public static final String ACTION_TOGGLE_WAKE_LOCK = "com.foxdebug.acode.ACTION_TOGGLE_WAKE_LOCK";
+    public static final String ACTION_EXIT_SERVICE = "com.vexa.app.ACTION_EXIT_SERVICE";
+    public static final String MOVE_TO_BACKGROUND = "com.vexa.app.MOVE_TO_BACKGROUND";
+    public static final String MOVE_TO_FOREGROUND = "com.vexa.app.MOVE_TO_FOREGROUND";
+    public static final String ACTION_TOGGLE_WAKE_LOCK = "com.vexa.app.ACTION_TOGGLE_WAKE_LOCK";
     public static boolean Default_Foreground = true;
 
     private final Map<String, Process> processes = new ConcurrentHashMap<>();
@@ -142,7 +142,7 @@ public class TerminalService extends Service {
     private void acquireWakeLock() {
         if (wakeLock == null) {
             PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-            wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "AcodeTerminal:WakeLock");
+            wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "VexaTerminal:WakeLock");
         }
         
         if (!isWakeLockHeld) {
@@ -378,10 +378,10 @@ public class TerminalService extends Service {
         String contentText = "Executor service" + (isWakeLockHeld ? " (wakelock held)" : "");
         String wakeLockButtonText = isWakeLockHeld ? "Release Wake Lock" : "Acquire Wake Lock";
 
-        int notificationIcon = resolveDrawableId("ic_notification", "ic_launcher_foreground", "ic_launcher");
+        int notificationIcon = resolveDrawableId("ic_notification", "vexa_icon", "ic_launcher_foreground", "ic_launcher");
 
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Acode Service")
+                .setContentTitle("Vexa Service")
                 .setContentText(contentText)
                 .setSmallIcon(notificationIcon)
                 .setOngoing(true)

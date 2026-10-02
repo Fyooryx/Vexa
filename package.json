@@ -1,8 +1,8 @@
 {
-  "name": "com.foxdebug.acode",
-  "displayName": "Acode",
+  "name": "com.vexa.app",
+  "displayName": "Vexa",
   "version": "1.13.5",
-  "description": "Acode is a code editor for android",
+  "description": "Vexa is a code editor and web IDE for Android",
   "scripts": {
     "lang": "node ./utils/lang.js",
     "build": "sh utils/scripts/build.sh",
@@ -58,12 +58,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deadlyjack/acode.git"
+    "url": "git+https://github.com/Fyooryx/Vexa.git"
   },
   "bugs": {
-    "url": "https://github.com/deadlyjack/acode/issues"
+    "url": "https://github.com/Fyooryx/Vexa/issues"
   },
-  "homepage": "https://github.com/deadlyjack/acode#readme",
+  "homepage": "https://github.com/Fyooryx/Vexa#readme",
   "devDependencies": {
     "@babel/core": "^8.0.1",
     "@babel/generator": "^7.29.8",
