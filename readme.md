@@ -58,9 +58,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed instructions.
 
 ## • Contributors
 
-<a href="https://github.com/Acode-Foundation/Acode/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=Acode-Foundation/Acode" />
-</a>
+
 
 ## • Developing a Plugin for Acode
 
