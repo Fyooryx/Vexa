@@ -1,4 +1,4 @@
-# Acode - Code Editor for Android
+# Vexa - Code Editor for Android
 
 <p align="center">
   <img src='res/logo_1.png' width='250'>
@@ -24,12 +24,13 @@ Welcome to Acode Editor - a powerful and versatile code editing tool designed sp
 
 You can get Acode Editor from popular platforms:
 
-[<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="60">](https://play.google.com/store/apps/details?id=com.foxdebug.acodefree) [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="60"/>](https://www.f-droid.org/packages/com.foxdebug.acode/)
+Link playstore
+Link F-droid 
 
 ## • Project Structure
 
 <pre>
-Acode/
+Vexa/
 |
 |- src/   - Core code and language files
 |
@@ -66,13 +67,3 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed instructions.
 For comprehensive documentation on creating plugins for Acode Editor, visit the [repository](https://github.com/Acode-Foundation/acode-plugin).
 
 For plugin development information, refer to: [Acode Plugin Documentation](https://docs.acode.app/)
-
-## Star History
-
-<a href="https://star-history.com/#Acode-Foundation/Acode&Date">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Acode-Foundation/Acode&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=Acode-Foundation/Acode&type=Date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Acode-Foundation/Acode&type=Date" />
- </picture>
-</a>
