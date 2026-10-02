@@ -8,24 +8,24 @@
 
 ## • Overview
 
-Welcome to Acode Editor - a powerful and versatile code editing tool designed specifically for Android devices. Whether you're working on HTML, CSS, JavaScript, or other programming languages, Acode empowers you to code on-the-go with confidence.
+Selamat datang di Acode Editor - alat pengeditan kode yang kuat dan serbaguna yang dirancang khusus untuk perangkat Android. Apakah Anda sedang mengerjakan HTML, CSS, JavaScript, atau bahasa pemrograman lainnya, Acode memberdayakan Anda untuk mengkode di mana saja dengan percaya diri. 
 
 ## • Features
 
-- Edit and create websites, and instantly preview them in a browser.
-- Seamlessly modify source files for various languages like Python, Java, JavaScript, and more.
-- Built-in javascript console
-- S/FTP and SSH terminal integration
-- Built-in terminal(Alpine)
-- Enjoy multi-language editing support with easy management tools.
-- Enjoy a large collections of community plugins to enhance your coding experience.
+- Mengedit dan membuat situs web, lalu langsung pratinjau di browser. 
+- Modifikasi file sumber untuk berbagai bahasa seperti Python, Java, JavaScript, dan lainnya secara mulus. 
+- Konsol javascript bawaan
+- Integrasi terminal S/FTP dan SSH
+- Terminal bawaan (Alpine)
+- Nikmati dukungan pengeditan multibahasa dengan alat manajemen yang mudah. 
+- Nikmati koleksi besar plugin komunitas untuk meningkatkan pengalaman coding Anda. 
 
 ## • Installation
 
-You can get Acode Editor from popular platforms:
+Anda dapat mendapatkan Acode Editor dari platform populer: 
 
-Link playstore
-Link F-droid 
+Link playstore isi nanti belum diupload/tahap pengembangan
+Link F-droid isi nanti belum diupload/tahap pengembangan
 
 ## • Project Structure
 
@@ -43,7 +43,7 @@ Vexa/
 
 ## • Multi-language Support
 
-Enhance Acode's capabilities by adding new languages easily. Just create a file with the language code (e.g., en-us for English) in [`src/lang/`](https://github.com/Acode-Foundation/Acode/tree/main/src/lang) and include it in [`src/lib/lang.js`](https://github.com/Acode-Foundation/Acode/blob/main/src/lib/lang.js). Manage strings across languages effortlessly using utility commands:
+Tingkatkan kemampuan Acode dengan menambahkan bahasa baru dengan mudah. Cukup buat file dengan kode bahasa (misalnya, en-us untuk bahasa Inggris) di ['src/lang/'](https://github.com/Acode-Foundation/Acode/tree/main/src/lang) dan sertakan di ['src/lib/lang.js'](https://github.com/Acode-Foundation/Acode/blob/main/src/lib/lang.js). Kelola string lintas bahasa dengan mudah menggunakan perintah utilitas: 
 
 ```shell
 pnpm run lang add
@@ -57,11 +57,12 @@ pnpm run lang update
 See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed instructions.
 
 ## • Contributors
-
+Isi kalo sudah ada Contributor
 
 
 ## • Developing a Plugin for Acode
 
-For comprehensive documentation on creating plugins for Acode Editor, visit the [repository](https://github.com/Acode-Foundation/acode-plugin).
+Untuk dokumentasi komprehensif tentang membuat plugin untuk Acode Editor, kunjungi [repository] 
+(https://github.com/Acode-Foundation/acode-plugin).
 
 For plugin development information, refer to: [Acode Plugin Documentation](https://docs.acode.app/)
