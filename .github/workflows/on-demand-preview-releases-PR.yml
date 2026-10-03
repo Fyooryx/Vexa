@@ -6,7 +6,7 @@ on:
   # Uses this trigger to keep up-to-date execution of the workflow (triggers from Default Branch)
   pull_request_target:
     paths-ignore:
-      - '!*.md'
+      - '**.md'
 #      - '.github/**'
     types: [labeled, synchronize]
 
@@ -38,7 +38,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.2.2
         with:
           clean: false
           fetch-depth: 0
