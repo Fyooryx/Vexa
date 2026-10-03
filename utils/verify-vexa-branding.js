@@ -100,6 +100,37 @@ expect(
 	"config.xml still references a legacy Acode launcher resource",
 );
 
+const englishStrings = readJson("src/lang/en-us.json");
+const indonesianStrings = readJson("src/lang/id-id.json");
+for (const [locale, strings] of [
+	["en-us", englishStrings],
+	["id-id", indonesianStrings],
+]) {
+	for (const [key, value] of Object.entries(strings)) {
+		expect(
+			typeof value !== "string" || !/\\bAcode\\b/.test(value),
+			`${locale} translation still exposes the old product name at key: ${key}`,
+		);
+	}
+}
+
+const pluginView = read("src/pages/plugin/plugin.view.js");
+expect(
+	!pluginView.includes("Built for older Acode"),
+	"plugin compatibility warning still exposes the old product name",
+);
+
+const terminalInit = read("src/plugins/terminal/scripts/init-alpine.sh");
+expect(
+	terminalInit.includes("Welcome to Alpine Linux in Vexa!"),
+	"Alpine terminal MOTD must use Vexa branding",
+);
+expect(
+	terminalInit.includes("/usr/local/bin/vexa") &&
+		terminalInit.includes('ln -sfn vexa "$PREFIX/alpine/usr/local/bin/acode"'),
+	"Vexa terminal CLI must be installed with an Acode compatibility alias",
+);
+
 const appIcons = read("src/lib/appIcons.js");
 expect(
 	appIcons.includes('image: "icons/vexa.svg"'),

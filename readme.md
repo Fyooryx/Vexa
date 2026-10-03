@@ -10,12 +10,13 @@
 
 Vexa is a customized/rebranded build based on the upstream Acode open-source codebase. Original upstream attribution remains part of the repository.
 
-## • Vexa 1.14.0 additions
+## • Vexa 1.14.1 additions
 
 - centralized Vexa identity metadata without conflating it with upstream service endpoints
 - `Vexa: Copy Diagnostics` command for support reports
 - density-specific Vexa launcher assets across Android mipmap resources
-- automated branding/release checks in CI
+- automated branding, type-safety, test, and workflow supply-chain checks in CI
+- reproducible nightly builds with pinned GitHub Actions and Node.js 22
 
 ## • Overview
 
@@ -35,8 +36,7 @@ Selamat datang di Vexa Editor - alat pengeditan kode yang kuat dan serbaguna yan
 
 Anda dapat mendapatkan Vexa Editor dari platform populer: 
 
-Link playstore isi nanti belum diupload/tahap pengembangan
-Link F-droid isi nanti belum diupload/tahap pengembangan
+Rilis publik Play Store dan F-Droid belum tersedia; distribusi saat ini masih tahap pengembangan.
 
 ## • Project Structure
 
@@ -57,11 +57,22 @@ Vexa/
 Tingkatkan kemampuan Vexa dengan menambahkan bahasa baru dengan mudah. Cukup buat file dengan kode bahasa (misalnya, en-us untuk bahasa Inggris) di ['src/lang/'](https://github.com/Fyooryx/Vexa/tree/main/src/lang) dan sertakan di ['src/lib/lang.js'](https://github.com/Fyooryx/Vexa/blob/main/src/lib/lang.js). Kelola string lintas bahasa dengan mudah menggunakan perintah utilitas: 
 
 ```shell
-pnpm run lang add
-pnpm run lang remove
-pnpm run lang search
-pnpm run lang update
+npm run lang add
+npm run lang remove
+npm run lang search
+npm run lang update
 ```
+
+## • Development Validation
+
+Before submitting changes, run the same validation gate used by Vexa CI:
+
+```shell
+npm ci
+npm run check:vexa
+```
+
+This checks Vexa identity/branding, immutable GitHub Actions, TypeScript, and unit tests.
 
 ## • Contributing & Building the Application
 

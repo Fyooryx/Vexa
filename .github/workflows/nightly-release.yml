@@ -30,7 +30,6 @@ jobs:
     if: ${{ github.repository == 'Fyooryx/Vexa' && needs.build.result == 'success' }}
     permissions:
       contents: write
-      id-token: write
 
     outputs:
       should_publish: ${{ steps.publish_gate.outputs.should_publish }}
@@ -48,7 +47,7 @@ jobs:
           persist-credentials: true
 
       - name: Install cosign
-        uses: sigstore/cosign-installer@v4.1.2
+        uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
 
       - name: Set Publish Metadata
         shell: bash
@@ -70,7 +69,7 @@ jobs:
           path: ${{ env.ARTIFACTS_DIR }}/normal
 
       - name: Download fdroid APK artifact
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: ${{ needs.build.outputs.fdroid_artifact_name }}
           path: ${{ env.ARTIFACTS_DIR }}/fdroid
@@ -132,7 +131,7 @@ jobs:
       - name: Create subjects file handle
         id: subjects_file
         if: steps.publish_gate.outputs.should_publish == 'true'
-        uses: slsa-framework/slsa-github-generator/actions/generator/generic/create-base64-subjects-from-file@v2.1.0
+        uses: slsa-framework/slsa-github-generator/actions/generator/generic/create-base64-subjects-from-file@f7dd8c54c2067bafc12ca7a55595d5ee9b75204a # v2.1.0
         with:
           path: ${{ env.SUBJECTS_FILE }}
 
@@ -163,7 +162,7 @@ jobs:
       - name: Create nightly prerelease
         if: steps.publish_gate.outputs.should_publish == 'true'
         id: gh_release
-        uses: softprops/action-gh-release@v3
+        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3
         env:
             FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
         with:
@@ -200,7 +199,7 @@ jobs:
       actions: read
       id-token: write
       contents: write
-    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v2.1.0
+    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@f7dd8c54c2067bafc12ca7a55595d5ee9b75204a # v2.1.0
     with:
      base64-subjects-as-file: "${{ needs.release.outputs.subjects_file }}"
      upload-assets: true

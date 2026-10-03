@@ -23,7 +23,8 @@
     "test:watch": "vitest",
     "verify:branding": "node utils/verify-vexa-branding.js",
     "prebuild": "npm run verify:branding",
-    "check:vexa": "npm run verify:branding && npm run typecheck && npm run test"
+    "check:vexa": "npm run verify:branding && npm run verify:workflows && npm run typecheck && npm run test",
+    "verify:workflows": "node utils/verify-vexa-workflows.js"
   },
   "keywords": [
     "ecosystem:cordova"

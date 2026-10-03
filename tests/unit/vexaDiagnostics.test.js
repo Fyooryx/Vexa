@@ -5,8 +5,8 @@ describe("Vexa diagnostics", () => {
 	it("produces a stable support report from injected runtime data", () => {
 		const report = getVexaDiagnostics({
 			buildInfo: {
-				versionName: "1.14.0",
-				versionCode: 1013,
+				versionName: "1.14.1",
+				versionCode: 1014,
 				packageName: "com.vexa.app",
 			},
 			device: {
@@ -22,7 +22,7 @@ describe("Vexa diagnostics", () => {
 		});
 
 		expect(report).toContain("App: Vexa");
-		expect(report).toContain("Version: 1.14.0");
+		expect(report).toContain("Version: 1.14.1");
 		expect(report).toContain("Package: com.vexa.app");
 		expect(report).toContain("Android: 14");
 		expect(report).toContain("Model: Test Device");

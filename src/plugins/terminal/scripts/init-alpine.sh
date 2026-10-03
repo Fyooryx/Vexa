@@ -87,7 +87,7 @@ fi
 
     if [ ! -e "$PREFIX/alpine/etc/acode_motd" ]; then
         cat <<EOF > "$PREFIX/alpine/etc/acode_motd"
-Welcome to Alpine Linux in Acode!
+Welcome to Alpine Linux in Vexa!
 
 Working with packages:
 
@@ -99,24 +99,24 @@ Working with packages:
 EOF
     fi
 
-    # Create acode CLI tool
-    if [ ! -e "$PREFIX/alpine/usr/local/bin/acode" ]; then
+    # Create Vexa CLI tool (keep acode as a compatibility alias)
+    if [ ! -e "$PREFIX/alpine/usr/local/bin/vexa" ]; then
         mkdir -p "$PREFIX/alpine/usr/local/bin"
         cat <<'ACODE_CLI' > "$PREFIX/alpine/usr/local/bin/acode"
 #!/bin/bash
-# acode - Open files/folders in Acode editor
-# Uses OSC escape sequences to communicate with the Acode terminal
+# vexa - Open files/folders in Vexa
+# Uses OSC escape sequences to communicate with the Vexa terminal
 
 usage() {
-    echo "Usage: acode [file/folder...]"
+    echo "Usage: vexa [file/folder...]"
     echo ""
-    echo "Open files or folders in Acode editor."
+    echo "Open files or folders in Vexa."
     echo ""
     echo "Examples:"
-    echo "  acode file.txt      # Open a file"
-    echo "  acode .             # Open current folder"
-    echo "  acode ~/project     # Open a folder"
-    echo "  acode -h, --help    # Show this help"
+    echo "  vexa file.txt      # Open a file"
+    echo "  vexa .             # Open current folder"
+    echo "  vexa ~/project     # Open a folder"
+    echo "  vexa -h, --help    # Show this help"
 }
 
 get_abs_path() {
@@ -176,8 +176,9 @@ for arg in "$@"; do
             ;;
     esac
 done
-ACODE_CLI
-        chmod +x "$PREFIX/alpine/usr/local/bin/acode"
+VEXA_CLI
+        chmod +x "$PREFIX/alpine/usr/local/bin/vexa"
+        ln -sfn vexa "$PREFIX/alpine/usr/local/bin/acode"
     fi
 
     # Create initrc if it doesn't exist
