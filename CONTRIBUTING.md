@@ -1,6 +1,6 @@
-# Contributing to Acode
+# Contributing to Vexa
 
-Thank you for your interest in contributing to Acode! This guide will help you get started with development.
+Thank you for your interest in contributing to Vexa! This guide will help you get started with development.
 
 ## Quick Start Options
 
@@ -10,8 +10,8 @@ Thank you for your interest in contributing to Acode! This guide will help you g
 
 2. Clone and open the repository:
    ```bash
-   git clone --recurse-submodules https://github.com/Acode-Foundation/Acode.git
-   code Acode
+   git clone --recurse-submodules https://github.com/Fyooryx/Vexa.git
+   code Vexa
    ```
 
 3. When VS Code prompts "Reopen in Container", click it
@@ -35,17 +35,17 @@ If your editor doesn't support DevContainers, you can use Docker directly:
 
 ```bash
 # Clone the repository
-git clone --recurse-submodules https://github.com/Acode-Foundation/Acode.git
-cd Acode
+git clone --recurse-submodules https://github.com/Fyooryx/Vexa.git
+cd Vexa
 
 # Build the Docker image from our Dockerfile
-docker build --target standalone -t acode-dev .devcontainer/
+docker build --target standalone -t vexa-dev .devcontainer/
 
 # Run the container with your code mounted
 docker run -it --rm \
-  -v "$(pwd):/workspaces/acode" \
-  -w /workspaces/acode \
-  acode-dev \
+  -v "$(pwd):/workspaces/vexa" \
+  -w /workspaces/vexa \
+  vexa-dev \
   bash
 
 # Inside the container, run setup and build
@@ -57,18 +57,18 @@ pnpm run build paid dev apk # or pnpm run build p d
 **Keep container running for repeated use:**
 ```bash
 # Start container in background
-docker run -d --name acode-dev \
-  -v "$(pwd):/workspaces/acode" \
-  -w /workspaces/acode \
-  acode-dev \
+docker run -d --name vexa-dev \
+  -v "$(pwd):/workspaces/vexa" \
+  -w /workspaces/vexa \
+  vexa-dev \
   sleep infinity
 
 # Execute commands in the running container
-docker exec -it acode-dev bash -c "pnpm run setup"
-docker exec -it acode-dev pnpm run build paid dev apk
+docker exec -it vexa-dev bash -c "pnpm run setup"
+docker exec -it vexa-dev pnpm run build paid dev apk
 
 # Stop and remove when done
-docker stop acode-dev && docker rm acode-dev
+docker stop vexa-dev && docker rm vexa-dev
 ```
 
 ---
@@ -109,8 +109,8 @@ Some more environment variables, check [cordova docs](https://cordova.apache.org
 
 ```bash
 # Clone the repository
-git clone --recurse-submodules https://github.com/Acode-Foundation/Acode.git
-cd Acode
+git clone --recurse-submodules https://github.com/Fyooryx/Vexa.git
+cd Vexa
 
 # Install dependencies and set up Cordova
 pnpm run setup
@@ -152,7 +152,7 @@ This usually means the repository was cloned without `--recurse-submodules`. Clo
 submodules avoids the problem entirely:
 
 ```bash
-git clone --recurse-submodules https://github.com/Acode-Foundation/Acode.git
+git clone --recurse-submodules https://github.com/Fyooryx/Vexa.git
 ```
 
 > [!NOTE]
@@ -208,7 +208,7 @@ refactor: simplify file loading logic
 
 ## ℹ️ Adding New Icons (to the existing font family)
 > [!NOTE]
-> Acode uses SVG and converts them into a font family, to be used inside the editor and generally for plugin devs.
+> Vexa uses SVG and converts them into a font family, to be used inside the editor and generally for plugin devs.
 > 
 > **Plugin-specific icons SHOULD NOT be added into the editor. Only generally helpful icons SHOULD BE added**
 
@@ -242,6 +242,6 @@ Many font editing software and web-based tools exist for this purpose. Some of t
 
 ## 🔌 Plugin Development
 
-To create plugins for Acode:
+To create plugins for Vexa:
 - [Plugin Starter Repository](https://github.com/Acode-Foundation/acode-plugin)
-- [Plugin Documentation](https://docs.acode.app/)
+- [Upstream Plugin Documentation](https://docs.acode.app/)
