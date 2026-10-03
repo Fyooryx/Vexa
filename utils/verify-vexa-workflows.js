@@ -38,7 +38,8 @@ for (const file of workflowFiles) {
 	let match;
 	while ((match = usesPattern.exec(content)) !== null) {
 		const reference = match[1];
-		if (reference.startsWith("./") || reference.startsWith("docker://")) continue;
+		if (reference.startsWith("./") || reference.startsWith("docker://"))
+			continue;
 		const at = reference.lastIndexOf("@");
 		if (at <= 0 || !/^[0-9a-f]{40}$/i.test(reference.slice(at + 1))) {
 			unpinned.push({
@@ -53,7 +54,7 @@ expect(
 	unpinned.length === 0,
 	`third-party GitHub Actions must be pinned to immutable commit SHAs: ${unpinned
 			.map(({ file, reference }) => `${file} -> ${reference}`)
-			.join("; ")}`,
+		.join("; ")}`,
 );
 
 console.log(
