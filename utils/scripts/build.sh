@@ -1,107 +1,102 @@
-#!/bin/bash
-# Default values
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
 app="paid"
 mode="d"
 fdroidFlag=""
-packageType="apk"  # New default: apk or aar
+packageType="apk"
 webpackmode="development"
-cordovamode=""
 
-# Check all arguments for specific values
 for arg in "$@"; do
     case "$arg" in
-        "free"|"paid")
+        free|paid)
             app="$arg"
             ;;
-        "p"|"prod"|"d"|"dev")
-            mode="$arg"
+        p|prod)
+            mode="p"
             ;;
-        "fdroid")
+        d|dev)
+            mode="d"
+            ;;
+        fdroid)
             fdroidFlag="fdroid"
             ;;
-        "apk"|"bundle")
+        apk|bundle)
             packageType="$arg"
             ;;
         *)
-            echo "Warning: Unknown argument '$arg' ignored"
+            printf 'Warning: unknown argument %q ignored\n' "$arg" >&2
             ;;
     esac
 done
 
-root=$(npm prefix)
+root="$(npm prefix)"
+cd "$root"
 
-if [ -n "$TMPDIR" ] && [ -r "$TMPDIR" ] && [ -w "$TMPDIR" ]; then
-  tmpdir="$TMPDIR"
-elif [ -r "/tmp" ] && [ -w "/tmp" ]; then
-  tmpdir="/tmp"
+tmpdir=""
+if [[ -n "${TMPDIR:-}" && -r "$TMPDIR" && -w "$TMPDIR" ]]; then
+    tmpdir="$TMPDIR"
+elif [[ -r "/tmp" && -w "/tmp" ]]; then
+    tmpdir="/tmp"
+fi
+
+fdroidMarker=""
+if [[ -n "$tmpdir" ]]; then
+    fdroidMarker="$tmpdir/fdroid.bool"
+    if [[ "$fdroidFlag" == "fdroid" ]]; then
+        printf 'true\n' > "$fdroidMarker"
+    else
+        printf 'false\n' > "$fdroidMarker"
+    fi
+fi
+
+cleanup() {
+    if [[ -n "${fdroidMarker:-}" ]]; then
+        rm -f -- "$fdroidMarker"
+    fi
+}
+trap cleanup EXIT
+
+run() {
+    printf '→'
+    printf ' %q' "$@"
+    printf '\n'
+    "$@"
+}
+
+if [[ "$fdroidFlag" == "fdroid" ]]; then
+    if [[ -d "plugins/com.foxdebug.acode.rk.exec.proot" ]]; then
+        run cordova plugin remove com.foxdebug.acode.rk.exec.proot
+    fi
+    if [[ -d "plugins/cordova-plugin-iap" ]]; then
+        run cordova plugin remove cordova-plugin-iap
+    fi
 else
-  echo "Warning: No usable temporary directory found (TMPDIR or /tmp not accessible). Skipping fdroid.bool file." >&2
-  tmpdir=""
+    if [[ -d "src/plugins/proot" && ! -d "plugins/com.foxdebug.acode.rk.exec.proot" ]]; then
+        run cordova plugin add src/plugins/proot/
+    fi
+    if [[ -d "src/plugins/iap" && ! -d "plugins/cordova-plugin-iap" ]]; then
+        run cordova plugin add src/plugins/iap/
+    fi
 fi
 
-if [ "$fdroidFlag" = "fdroid" ]; then
-  if [ -n "$tmpdir" ]; then
-    echo "true" > "$tmpdir/fdroid.bool"
-  fi
-
-  # Remove only if installed
-  if [ -d "plugins/com.foxdebug.acode.rk.exec.proot" ]; then
-    cordova plugin remove com.foxdebug.acode.rk.exec.proot
-  fi
-
-  if [ -d "plugins/cordova-plugin-iap" ]; then
-    cordova plugin remove cordova-plugin-iap
-  fi
-else
-  if [ -n "$tmpdir" ]; then
-    echo "false" > "$tmpdir/fdroid.bool"
-  fi
-
-  # Add only if the src exists and not already installed
-  if [ -d "src/plugins/proot" ] && [ ! -d "plugins/com.foxdebug.acode.rk.exec.proot" ]; then
-    cordova plugin add src/plugins/proot/
-  fi
-
-  if [ -d "src/plugins/iap" ] && [ ! -d "plugins/cordova-plugin-iap" ]; then
-    cordova plugin add src/plugins/iap/
-  fi
+if [[ "$mode" == "p" ]]; then
+    webpackmode="production"
 fi
 
-
-
-# Normalize mode values
-if [ "$mode" = "p" ] || [ "$mode" = "prod" ]
-then
-mode="p"
-webpackmode="production"
-cordovamode="--release"
-fi
-
-# Set build target based on packageType
-if [ "$packageType" = "bundle" ]; then
+if [[ "$packageType" == "bundle" ]]; then
     echo "Building AAR library file..."
 else
     echo "Building APK file..."
 fi
 
-RED=''
-NC=''
+run node ./utils/config.js "$mode" "$app"
+run rspack --mode "$webpackmode"
 
-script1="node ./utils/config.js $mode $app"
-script2="rspack --mode $webpackmode"
-# script3="node ./utils/loadStyles.js"
+cordovaArgs=(build android)
+if [[ "$mode" == "p" ]]; then
+    cordovaArgs+=(--release)
+fi
+cordovaArgs+=(-- "--packageType=$packageType")
 
-echo "type : $packageType"
-
-script4="cordova build android $cordovamode -- --packageType=$packageType"
-
-eval "
-echo \"${RED}$script1${NC}\";
-$script1;
-echo \"${RED}$script2${NC}\";
-$script2&&
-# echo \"${RED}$script3${NC}\";
-# $script3;
-echo \"${RED}$script4${NC}\";
-$script4;
-"
+run cordova "${cordovaArgs[@]}"
