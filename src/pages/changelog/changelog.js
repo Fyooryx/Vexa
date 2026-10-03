@@ -14,8 +14,7 @@ import helpers from "utils/helpers";
 
 const VEXA_REPO_URL = VEXA_IDENTITY.REPOSITORY_URL;
 const UPSTREAM_REPO_URL = VEXA_IDENTITY.UPSTREAM_REPOSITORY_URL;
-const VEXA_RELEASES_URL =
-	"https://api.github.com/repos/Fyooryx/Vexa/releases";
+const VEXA_RELEASES_URL = "https://api.github.com/repos/Fyooryx/Vexa/releases";
 const UPSTREAM_RELEASES_URL =
 	"https://api.github.com/repos/Acode-Foundation/Acode/releases";
 const VEXA_CHANGELOG_URL =
@@ -164,9 +163,9 @@ export default async function Changelog() {
 		let lastError;
 		for (const source of RELEASE_SOURCES) {
 			try {
-				const release = await fsOperation(
-					`${source.releases}${path}`,
-				).readFile("json");
+				const release = await fsOperation(`${source.releases}${path}`).readFile(
+					"json",
+				);
 				return { release, repository: source.repository };
 			} catch (error) {
 				lastError = error;
