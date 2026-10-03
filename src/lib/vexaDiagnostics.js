@@ -30,24 +30,26 @@ export function getVexaDiagnostics(runtime = {}) {
 	].join("\n");
 }
 
-export async function copyVexaDiagnostics(runtime) {
+export async function copyVexaDiagnostics(runtime = {}) {
 	const report = getVexaDiagnostics(runtime);
+	const navigatorInfo = runtime.navigator ?? globalThis.navigator;
+	const cordovaInfo = runtime.cordova ?? globalThis.cordova;
 
-	if (globalThis.navigator?.clipboard?.writeText) {
+	if (navigatorInfo?.clipboard?.writeText) {
 		try {
-			await globalThis.navigator.clipboard.writeText(report);
+			await navigatorInfo.clipboard.writeText(report);
 			return true;
 		} catch {
 			// Fall back to the Cordova clipboard below.
 		}
 	}
 
-	if (globalThis.cordova?.plugins?.clipboard?.copy) {
-		globalThis.cordova.plugins.clipboard.copy(report);
+	if (cordovaInfo?.plugins?.clipboard?.copy) {
+		cordovaInfo.plugins.clipboard.copy(report);
 		return true;
 	}
 
 	// Intentionally keep diagnostics side-effect free until copy is requested.
 	return false;
 }
-export const VEXA_DIAGNOSTICS_VERSION = 1;
+export const VEXA_DIAGNOSTICS_VERSION = 2;
