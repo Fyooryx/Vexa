@@ -76,15 +76,13 @@ for (const file of [
   expect(fs.existsSync(path.join(root, file)), \`missing Vexa asset: \${file}\`);
 }
 
-const canonicalWebp = path.join(
-  root,
-  "res/android/mipmap-mdpi/ic_launcher.webp",
-);
-expect(fs.existsSync(canonicalWebp), "canonical launcher WebP is missing");
-const canonicalHash = crypto
-  .createHash("sha256")
-  .update(fs.readFileSync(canonicalWebp))
-  .digest("hex");
+const expectedLauncherHashes = Object.freeze({
+  mdpi: "6d240e9b1b6accacc2a9bf87d3a5928977cec30e21a2e01f8036fb14e01f5b42",
+  hdpi: "766b647653d09c226d0efce39b93bec42ebc7ab5d0d0729ed8d2eda3148d7ad6",
+  xhdpi: "bf4aa3eeb0223422e9fd77d634ec2826b9f827a8ca0e93107f1ae231dafd6a61",
+  xxhdpi: "bcfbecf9e0792b75cd36b95d8ed629a7a38c4241d01f089292698b5da182f4aa",
+  xxxhdpi: "b315a6787cdd0bdb010541690bbc3ddd5e8009ac0c15083e98f89b0930d770a5",
+});
 
 function walk(dir) {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
@@ -100,20 +98,26 @@ function walk(dir) {
 
 let launcherCount = 0;
 for (const file of walk(path.join(root, "res/android"))) {
-  if (!/[/\\]mipmap-[^/]+[/\\](?:ic_acode_[^/]+|ic_launcher(?:_round)?)\.webp$/i.test(file)) {
+  if (!/[/\\]mipmap-(mdpi|hdpi|xhdpi|xxhdpi|xxxhdpi)[/\\](?:ic_acode_[^/\\]+|ic_launcher(?:_round)?)\.webp$/i.test(file)) {
     continue;
   }
+
   launcherCount += 1;
+  const relative = path.relative(root, file);
+  const density = /^res[/\\]android[/\\]mipmap-(mdpi|hdpi|xhdpi|xxhdpi|xxxhdpi)[/\\]/i.exec(relative)?.[1]?.toLowerCase();
+  expect(density && expectedLauncherHashes[density], `unknown launcher density: ${relative}`);
+
   const hash = crypto
     .createHash("sha256")
     .update(fs.readFileSync(file))
     .digest("hex");
+
   expect(
-    hash === canonicalHash,
-    \`launcher asset is not the Vexa logo: \${path.relative(root, file)}\`,
+    hash === expectedLauncherHashes[density],
+    `launcher asset is not the expected Vexa logo for ${density}: ${relative}`,
   );
 }
-expect(launcherCount > 0, "no Android launcher WebP assets were checked");
+expect(launcherCount === 150, `expected 150 Android launcher WebP assets, checked ${launcherCount}`);
 
 console.log("[Vexa branding] PASS");
 console.log(\`Version: \${pkg.version} | Package: \${pkg.name} | Launchers checked: \${launcherCount}\`);
