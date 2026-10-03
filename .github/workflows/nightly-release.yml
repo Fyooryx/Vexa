@@ -45,7 +45,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           fetch-depth: 0 # Required for tags
           persist-credentials: true
@@ -67,7 +67,7 @@ jobs:
 
 
       - name: Download normal APK artifact
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: ${{ needs.build.outputs.normal_artifact_name }}
           path: ${{ env.ARTIFACTS_DIR }}/normal
