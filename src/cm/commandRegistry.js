@@ -626,14 +626,17 @@ function registerCoreCommands() {
 		description: "Copy Vexa diagnostics",
 		readOnly: true,
 		requiresView: false,
-		async run() {
-			const copied = await copyVexaDiagnostics();
-			toast(
-				copied
-					? "Vexa diagnostics copied to clipboard"
-					: "Clipboard is unavailable",
-			);
-			return copied;
+		run() {
+			copyVexaDiagnostics()
+				.then((copied) => {
+					toast(
+						copied
+							? "Vexa diagnostics copied to clipboard"
+							: "Clipboard is unavailable",
+					);
+				})
+				.catch(() => toast("Failed to copy Vexa diagnostics"));
+			return true;
 		},
 	});
 	addCommand({
