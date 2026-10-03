@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.14.2 — Vexa authentication hardening
+
+### Fixed
+- reject non-HTTPS or untrusted native authentication endpoints before login state or verifier material is persisted
+- constrain authentication redirects and token exchanges to the supported upstream authentication hosts
+
+### Improved
+- increment Android version code to 1015 and align package/lockfile metadata with Vexa 1.14.2
+
+
 ## Unreleased — Vexa hardening
 
 ### Improved
