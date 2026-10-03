@@ -45,7 +45,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.2.2
         with:
           fetch-depth: 0 # Required for tags
           persist-credentials: true
@@ -153,7 +153,7 @@ jobs:
         continue-on-error: true
         run: |
           RELEASE_NOTES="$(node utils/scripts/generate-release-notes.js \
-            ${{ github.repository_owner }} Vexa ${{ github.sha }} \
+            ${{ github.repository_owner }} Acode ${{ github.sha }} \
             --format md --from-tag ${{ steps.prev.outputs.tag_commit }} --important-only --quiet --changelog-only || true)"
           {
             echo "RELEASE_NOTES<<EOF"
@@ -216,7 +216,7 @@ jobs:
     if: ${{ needs.release.outputs.should_publish == 'true' && needs.release.outputs.release_output_url }}
     permissions:
       contents: read
-    uses: ./.github/workflows/community-release-notifier.yml
+    uses: Acode-Foundation/acode/.github/workflows/community-release-notifier.yml@main
     with:
       url: ${{ needs.release.outputs.release_output_url }}
       tag_name: ${{ needs.release.outputs.nightly_tag_name }}
