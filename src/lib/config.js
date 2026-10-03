@@ -40,6 +40,7 @@ const config = {
 	LOG_FILE_NAME: "Vexa.log",
 
 	// Social Links
+	// The hosted documentation/service URLs remain upstream until Vexa infrastructure is deployed.
 	DOCS_URL: "https://docs.acode.app",
 	GITHUB_URL: VEXA_IDENTITY.REPOSITORY_URL,
 	TELEGRAM_URL: "https://t.me/foxdebug_acode",
