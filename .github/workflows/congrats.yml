@@ -1,4 +1,4 @@
-name: Congrats
+name: Vexa merge notifier
 
 on:
   push:
@@ -7,71 +7,45 @@ on:
 
 permissions:
   contents: read
+  pull-requests: write
 
 jobs:
-  check-author:
+  congratulate:
+    name: Notify merged Vexa change
     runs-on: ubuntu-latest
-    if: github.repository_owner == 'acode-foundation' && github.event.head_commit.message != ''
-    outputs:
-      should_congratulate: ${{ steps.check.outputs.should_congratulate }}
     steps:
-      - name: Check PR author
-        id: check
-        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+      - name: Find merged pull request
+        id: merged-pr
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b # v9.0.0
         with:
-          github-token: ${{ secrets.CONGRATSBOT_GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const { owner, repo } = context.repo;
-            const sha = context.sha;
-
-            // Find the merged PR associated with this push commit
             const { data: prs } = await github.rest.repos.listPullRequestsAssociatedWithCommit({
               owner,
               repo,
-              commit_sha: sha,
+              commit_sha: context.sha,
             });
-
-            const mergedPr = prs.find(pr => pr.merged_at !== null);
-
+            const mergedPr = prs.find((pr) => pr.merged_at);
             if (!mergedPr) {
-              core.info('No merged PR found for this push.');
-              core.setOutput('should_congratulate', 'false');
+              core.setOutput('merged', 'false');
               return;
             }
+            core.setOutput('merged', 'true');
+            core.setOutput('number', String(mergedPr.number));
+            core.setOutput('title', mergedPr.title);
 
-            const author = mergedPr.user;
-
-            // Skip bots
-            if (author.type === 'Bot') {
-              core.info(`Skipping bot user: ${author.login}`);
-              core.setOutput('should_congratulate', 'false');
-              return;
-            }
-
-            // Check organization membership in team slug 'acode'
-            try {
-              await github.rest.teams.getMembershipForUserInOrg({
-                org: owner,
-                team_slug: 'acode',
-                username: author.login,
-              });
-
-              core.info(`User ${author.login} is a member of team 'acode'. Skipping congrats.`);
-              core.setOutput('should_congratulate', 'false');
-            } catch (error) {
-              if (error.status === 404) {
-                core.info(`User ${author.login} is not a member of team 'acode'. Sending congrats.`);
-                core.setOutput('should_congratulate', 'true');
-              } else {
-                core.setFailed(`Error checking team membership: ${error.message}`);
-              }
-            }
-
-  congrats:
-    needs: check-author
-    if: needs.check-author.outputs.should_congratulate == 'true'
-    uses: UnschooledGamer/automation/.github/workflows/congratsbot.yml@patch-1 # patch-1 for now
-    with:
-      EMOJIS: 🎉,🎊,🧑‍🚀,🥳,🙌,🚀,🦀,🔥,🚢
-    secrets:
-      DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_CONGRATS }}
+      - name: Post merge notification
+        if: steps.merged-pr.outputs.merged == 'true'
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b # v9.0.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const number = Number('${{ steps.merged-pr.outputs.number }}');
+            const title = '${{ steps.merged-pr.outputs.title }}';
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: number,
+              body: '🎉 Vexa change merged: **' + title + '**',
+            });
