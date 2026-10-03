@@ -1,8 +1,8 @@
 /**
  * Canonical Vexa application identity.
  *
- * Keep this separate from upstream service endpoints so a rebrand does not
- * accidentally break services that are still hosted by the upstream project.
+ * Keep product identity separate from upstream service/repository endpoints so
+ * rebranding does not accidentally break services that are still hosted upstream.
  */
 export const VEXA_IDENTITY = Object.freeze({
 	NAME: "Vexa",
@@ -11,6 +11,7 @@ export const VEXA_IDENTITY = Object.freeze({
 	URL_SCHEME: "vexa",
 	LEGACY_URL_SCHEME: "acode",
 	REPOSITORY_URL: "https://github.com/Fyooryx/Vexa",
+	UPSTREAM_REPOSITORY_URL: "https://github.com/Acode-Foundation/Acode",
 	UPSTREAM_SERVICE_URL: "https://acode.app",
 });
 
