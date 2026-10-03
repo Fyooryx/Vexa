@@ -418,66 +418,84 @@ async function onDeviceReady() {
 		settings.value.checkForAppUpdates &&
 		navigator.onLine
 	) {
-		cordova.plugin.http.sendRequest(
-			`https://api.github.com/repos/Fyooryx/Vexa/releases/latest`,
+		const releaseSources = [
+			{ url: VEXA_IDENTITY.VEXA_RELEASE_API_URL, label: "Vexa" },
 			{
-				method: "GET",
-				responseType: "json",
+				url: VEXA_IDENTITY.UPSTREAM_RELEASE_API_URL,
+				label: "upstream",
 			},
-			(response) => {
-				const release = response.data;
-				// assuming version is in format v1.2.3
-				const versionFormat = /^v?(\d+(?:\.\d+)*)/;
-				const latestVersion = release.tag_name
-					.match(versionFormat)?.[1]
-					.split(".")
-					.map(Number);
-				const currentVersion = BuildInfo.version
-					.match(versionFormat)?.[1]
-					.split(".")
-					.map(Number);
-				if (!(latestVersion && currentVersion)) {
+		];
+
+		const parseVersion = (value) => {
+			const match = String(value || "").match(/^v?(\d+(?:\.\d+)*)/);
+			return match?.[1]?.split(".").map(Number);
+		};
+
+		const isNewerVersion = (latest, current) => {
+			const length = Math.max(latest.length, current.length);
+			for (let i = 0; i < length; i++) {
+				const latestPart = latest[i] || 0;
+				const currentPart = current[i] || 0;
+				if (latestPart !== currentPart) return latestPart > currentPart;
+			}
+			return false;
+		};
+
+		const requestRelease = (index) => {
+			const source = releaseSources[index];
+			if (!source) {
+				window.log("error", "Failed to check for app updates.");
+				return;
+			}
+
+			cordova.plugin.http.sendRequest(
+				source.url,
+				{
+					method: "GET",
+					responseType: "json",
+				},
+				(response) => {
+					const release = response.data;
+					const latestVersion = parseVersion(release?.tag_name);
+					const currentVersion = parseVersion(BuildInfo.version);
+					if (!(release?.tag_name && latestVersion && currentVersion)) {
+						window.log(
+							"error",
+							`Failed to parse version from ${source.label} release metadata.`,
+						);
+						if (index + 1 < releaseSources.length) requestRelease(index + 1);
+						return;
+					}
+
+					if (isNewerVersion(latestVersion, currentVersion)) {
+						acode.pushNotification(
+							strings["update available"],
+							strings["update available info"].replace(
+								/\{version\}/,
+								release.tag_name,
+							),
+							{
+								icon: "update",
+								type: "warning",
+								action: () => {
+									system.openInBrowser(release.html_url);
+								},
+							},
+						);
+					}
+				},
+				(err) => {
 					window.log(
 						"error",
-						"Failed to parse version while checking for updates.",
+						`Failed to check for updates from ${source.label}; trying fallback.`,
 					);
-					return;
-				}
+					window.log("error", err);
+					requestRelease(index + 1);
+				},
+			);
+		};
 
-				let hasUpdate = false;
-				for (let i = 0; i < latestVersion.length; i++) {
-					const latest = latestVersion[i];
-					const current = currentVersion[i] || 0;
-					if (latest > current) {
-						hasUpdate = true;
-						break;
-					} else if (latest < current) {
-						break;
-					}
-				}
-
-				if (hasUpdate) {
-					acode.pushNotification(
-						strings["update available"],
-						strings["update available info"].replace(
-							/\{version\}/,
-							release.tag_name,
-						),
-						{
-							icon: "update",
-							type: "warning",
-							action: () => {
-								system.openInBrowser(release.html_url);
-							},
-						},
-					);
-				}
-			},
-			(err) => {
-				window.log("error", "Failed to check for updates");
-				window.log("error", err);
-			},
-		);
+		requestRelease(0);
 	}
 	const { default: checkPluginsUpdate } = await import(
 		/* webpackChunkName: "checkPluginsUpdate" */ "lib/checkPluginsUpdate"
@@ -646,7 +664,7 @@ async function loadApp() {
 	);
 	const $header = tile({
 		type: "header",
-		text: "Acode",
+		text: VEXA_IDENTITY.NAME,
 		lead: $navToggler,
 		tail: $menuToggler,
 	});
