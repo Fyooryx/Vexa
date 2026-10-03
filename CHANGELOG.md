@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.14.0 — Vexa tooling and diagnostics
+
+### Added
+- centralized Vexa identity metadata for package, URL scheme, repository, and upstream service boundaries
+- new `Vexa: Copy Diagnostics` command for support/debug reports
+- automated Vexa branding/release guard in CI
+- regression coverage for Vexa diagnostics output
+
+### Improved
+- hardened Android build script argument handling and failure propagation
+- standardized adaptive launcher resources on the supplied Vexa logo
+- cleaned remaining user-facing Acode references from Vexa issue templates and icon settings
+
+### Compatibility
+- `com.foxdebug.acode.documents` and `acode://` legacy storage/deep-link compatibility remain supported where required
+
 ## 1.13.6 — Vexa identity and Android asset hardening
 
 ### Changed
