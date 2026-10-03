@@ -26,7 +26,9 @@ import appSettings from "./settings";
 const isTermuxSafUri = (value = "") =>
 	value.startsWith("content://com.termux.documents/tree/");
 const isTerminalPublicSafUri = (value = "") =>
-	/^content:\/\/(?:com\.vexa\.app|com\.foxdebug\.acode)\.documents\/tree\//i.test(value);
+	/^content:\/\/(?:com\.vexa\.app|com\.foxdebug\.acode)\.documents\/tree\//i.test(
+		value,
+	);
 const isTerminalSafUri = (value = "") =>
 	isTermuxSafUri(value) || isTerminalPublicSafUri(value);
 
