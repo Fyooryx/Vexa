@@ -122,8 +122,8 @@ expect(
 
 const helpers = read("src/utils/helpers.js");
 expect(
-	helpers.includes("com\\.vexa\\.app") &&
-		helpers.includes("com\\.foxdebug\\.acode"),
+	helpers.includes("com.vexa.app.documents") &&
+		helpers.includes("com.foxdebug.acode.documents"),
 	"helpers.js must support Vexa SAF and legacy Acode SAF URIs",
 );
 
