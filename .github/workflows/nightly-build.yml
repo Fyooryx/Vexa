@@ -64,7 +64,6 @@ jobs:
     if: github.repository == 'Fyooryx/Vexa'
     permissions:
       contents: read
-      pull-requests: read
 
     outputs:
       updated_version: ${{ steps.version.outputs.updated_version }}
