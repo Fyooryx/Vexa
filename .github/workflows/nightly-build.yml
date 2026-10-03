@@ -103,8 +103,6 @@ jobs:
           fetch-depth: 0 # Required for tags
           persist-credentials: false
           submodules: recursive
-          ref: ${{ (inputs.is_PR && inputs.PR_NUMBER) && github.event.pull_request.head.sha || '' }}
-          allow-unsafe-pr-checkout: ${{ !!(inputs.is_PR && inputs.PR_NUMBER && github.event.pull_request.head.sha) }}
 
       - name: Setup Java
         uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
