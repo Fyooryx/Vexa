@@ -10,7 +10,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import okhttp3.OkHttpClient;
 
-// TODO: plugin init & plugin destroy(closing okhttp clients) lifecycles. (✅)
+// Own one OkHttp client per Cordova plugin lifecycle and close all websocket
+// instances when the plugin is destroyed.
 public class WebSocketPlugin extends CordovaPlugin {
     private static final ConcurrentHashMap<String, WebSocketInstance> instances = new ConcurrentHashMap<>();
     public OkHttpClient okHttpMainClient = null;
