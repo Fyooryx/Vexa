@@ -76,4 +76,4 @@ Isi kalo sudah ada Contributor
 Untuk dokumentasi komprehensif tentang membuat plugin untuk Vexa Editor, kunjungi [repository] 
 (https://github.com/Acode-Foundation/acode-plugin).
 
-For plugin development information, refer to: [upstream plugin documentation](https://github.com/Acode-Foundation/acode-plugin)
+Untuk kompatibilitas API/plugin, gunakan dokumentasi upstream sebagai referensi(https://github.com/Acode-Foundation/acode-plugin)
