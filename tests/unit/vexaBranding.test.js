@@ -32,4 +32,13 @@ describe("Vexa branding", () => {
 	it("uses the Vexa log filename", () => {
 		expect(read("src/lib/config.js")).toMatch(/LOG_FILE_NAME:\s*"Vexa\.log"/);
 	});
+	it("exposes safe Vexa repository commands", () => {
+		const commands = read("src/cm/commandRegistry.js");
+
+		expect(commands).toContain('name: "vexa:copyDiagnostics"');
+		expect(commands).toContain('name: "vexa:openRepository"');
+		expect(commands).toContain('name: "vexa:openReleases"');
+		expect(commands).toContain("VEXA_IDENTITY.REPOSITORY_URL");
+	});
+
 });
