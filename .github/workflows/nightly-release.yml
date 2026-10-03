@@ -17,9 +17,6 @@ jobs:
   build:
     if: ${{ github.repository == 'Fyooryx/Vexa' }}
     uses: ./.github/workflows/nightly-build.yml
-    permissions:
-      contents: read
-      pull-requests: read
     secrets:
       KEYSTORE_CONTENT: ${{ secrets.KEYSTORE_CONTENT }}
       BUILD_JSON_CONTENT: ${{ secrets.BUILD_JSON_CONTENT }}
