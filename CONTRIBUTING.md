@@ -165,10 +165,11 @@ git clone --recurse-submodules https://github.com/Fyooryx/Vexa.git
 
 1. **Fork** the repository and create a branch from `main`
 2. **Make changes** - keep commits focused and atomic
-3. **Check code quality:**
+3. **Run the full Vexa validation gate:**
    ```bash
-   npm run check
+   npm run check:vexa
    ```
+   This verifies branding/identity, immutable GitHub Actions, TypeScript, and unit tests.
 4. **Test** on a device or emulator if possible
 
 ### Pull Request Checklist
@@ -181,7 +182,7 @@ git clone --recurse-submodules https://github.com/Fyooryx/Vexa.git
 ### Code Style
 
 We use [Biome](https://biomejs.dev/) for linting and formatting:
-- Run `npm run check` before committing
+- Run `npm run check:vexa` before committing
 - Install the Biome VS Code extension for auto-formatting
 
 ### Commit Messages
