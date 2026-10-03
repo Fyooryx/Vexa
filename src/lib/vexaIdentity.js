@@ -14,6 +14,6 @@ export const VEXA_IDENTITY = Object.freeze({
 	UPSTREAM_SERVICE_URL: "https://acode.app",
 });
 
-export function getRuntimePackageName() {
-	return globalThis.BuildInfo?.packageName || VEXA_IDENTITY.PACKAGE_NAME;
+export function getRuntimePackageName(buildInfo = globalThis.BuildInfo) {
+	return buildInfo?.packageName || VEXA_IDENTITY.PACKAGE_NAME;
 }
