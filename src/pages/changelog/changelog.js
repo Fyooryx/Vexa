@@ -13,7 +13,7 @@ import markdownItTaskLists from "markdown-it-task-lists";
 import helpers from "utils/helpers";
 
 const VEXA_REPO_URL = VEXA_IDENTITY.REPOSITORY_URL;
-const UPSTREAM_REPO_URL = "https://github.com/Acode-Foundation/Acode";
+const UPSTREAM_REPO_URL = VEXA_IDENTITY.UPSTREAM_REPOSITORY_URL;
 const VEXA_RELEASES_URL =
 	"https://api.github.com/repos/Fyooryx/Vexa/releases";
 const UPSTREAM_RELEASES_URL =
