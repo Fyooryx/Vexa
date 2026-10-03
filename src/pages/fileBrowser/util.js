@@ -1,3 +1,4 @@
+import config from "lib/config";
 import multiPrompt from "dialogs/multiPrompt";
 import helpers from "utils/helpers";
 
@@ -64,7 +65,7 @@ export default {
 					value: name ?? "",
 				},
 			],
-			"https://acode.app/faqs/224761680",
+			`${config.BASE_URL}/faqs/224761680`,
 		);
 
 		if (!res) return;
