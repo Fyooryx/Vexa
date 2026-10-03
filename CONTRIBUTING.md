@@ -21,7 +21,7 @@ Thank you for your interest in contributing to Vexa! This guide will help you ge
 
 5. Once ready, build the APK:
    ```bash
-   pnpm run build paid dev apk
+   npm run build paid dev apk
    ```
 
    > Use any package manager (pnpm, bun, npm, yarn, etc.)
@@ -50,8 +50,8 @@ docker run -it --rm \
 
 # Inside the container, run setup and build
 # bun run setup && bun run build paid dev apk
-pnpm run setup
-pnpm run build paid dev apk # or pnpm run build p d
+npm run setup
+npm run build paid dev apk # or npm run build p d
 ```
 
 **Keep container running for repeated use:**
@@ -64,8 +64,8 @@ docker run -d --name vexa-dev \
   sleep infinity
 
 # Execute commands in the running container
-docker exec -it vexa-dev bash -c "pnpm run setup"
-docker exec -it vexa-dev pnpm run build paid dev apk
+docker exec -it vexa-dev bash -c "npm run setup"
+docker exec -it vexa-dev npm run build paid dev apk
 
 # Stop and remove when done
 docker stop vexa-dev && docker rm vexa-dev
@@ -81,10 +81,10 @@ If you prefer not to use Docker at all:
 
 | Requirement | Version |
 |------------|---------|
-| **Node.js** | 18+ (22 recommended) |
+| **Node.js** | 22+ |
 | **pnpm** or **bun** | Latest |
-| **Java JDK** | 17+ (21 recommended) |
-| **Android SDK** | API 35 | 
+| **Java JDK** | 21+ |
+| **Android SDK** | API 36 | 
 | **Gradle** | 8.x |
 
 ### Environment Setup
@@ -113,10 +113,10 @@ git clone --recurse-submodules https://github.com/Fyooryx/Vexa.git
 cd Vexa
 
 # Install dependencies and set up Cordova
-pnpm run setup
+npm run setup
 
 # Build the APK
-pnpm run build paid dev apk # or pnpm run build p d
+npm run build paid dev apk # or npm run build p d
 ```
 
 The APK will be at: `platforms/android/app/build/outputs/apk/debug/app-debug.apk`
@@ -132,7 +132,7 @@ The APK will be at: `platforms/android/app/build/outputs/apk/debug/app-debug.apk
 [`codemirror-lsp-client`](https://github.com/Acode-Foundation/codemirror-lsp-client)
 git submodule and is installed as a local `file:` dependency.
 
-Before installing dependencies, `pnpm run setup` reads `.gitmodules` and verifies that
+Before installing dependencies, `npm run setup` reads `.gitmodules` and verifies that
 every submodule it declares has actually been cloned — a directory only counts as cloned
 when it contains at least one non-hidden file. An empty, missing, or partial checkout (for
 example one holding only `.git` or `node_modules`) therefore stops setup with:
@@ -145,7 +145,7 @@ To fix it, initialize the submodules from the repository root and re-run setup:
 
 ```bash
 git submodule update --init --recursive
-pnpm run setup
+npm run setup
 ```
 
 This usually means the repository was cloned without `--recurse-submodules`. Cloning with
@@ -167,7 +167,7 @@ git clone --recurse-submodules https://github.com/Fyooryx/Vexa.git
 2. **Make changes** - keep commits focused and atomic
 3. **Check code quality:**
    ```bash
-   pnpm run check
+   npm run check
    ```
 4. **Test** on a device or emulator if possible
 
@@ -181,7 +181,7 @@ git clone --recurse-submodules https://github.com/Fyooryx/Vexa.git
 ### Code Style
 
 We use [Biome](https://biomejs.dev/) for linting and formatting:
-- Run `pnpm run check` before committing
+- Run `npm run check` before committing
 - Install the Biome VS Code extension for auto-formatting
 
 ### Commit Messages
@@ -200,10 +200,10 @@ refactor: simplify file loading logic
 2. Add it to `src/lib/lang.js`
 3. Use the translation utilities:
    ```bash
-   pnpm run lang add       # Add new string
-   pnpm run lang remove    # Remove string
-   pnpm run lang search    # Search strings
-   pnpm run lang update    # Update translations
+   npm run lang add       # Add new string
+   npm run lang remove    # Remove string
+   npm run lang search    # Search strings
+   npm run lang update    # Update translations
    ```
 
 ## ℹ️ Adding New Icons (to the existing font family)
@@ -221,7 +221,7 @@ Many font editing software and web-based tools exist for this purpose. Some of t
 
 ### Steps in Icomoon to add new Icons
 
-1. Download the `code-editor-icon.icomoon.json` file from https://github.com/Acode-Foundation/Acode/tree/main/utils
+1. Download the `code-editor-icon.icomoon.json` file from https://github.com/Fyooryx/Vexa/tree/main/utils
 2. Go to https://icomoon.io/ > Import
 3. Import the `code-editor-icon.icomoon.json` downloaded (in step 1)
 4. All icons will be displayed after importing.
@@ -236,8 +236,8 @@ Many font editing software and web-based tools exist for this purpose. Some of t
 ### Updating Project files for Icon Contribution
 1. Extract the downloaded zip file; navigate to the `fonts` folder inside it.
 2. Rename `code-editor-icon.ttf` to `icons.ttf`.
-3. Copy & paste the renamed `icons.ttf` into https://github.com/Acode-Foundation/Acode/tree/main/src/res/icons
-4. Copy and paste the `code-editor-icon.icomoon.json` file (downloaded in the adding icons steps) onto https://github.com/Acode-Foundation/Acode/tree/main/utils (yes, replace it with the newer one; we downloaded!)
+3. Copy & paste the renamed `icons.ttf` into https://github.com/Fyooryx/Vexa/tree/main/src/res/icons
+4. Copy and paste the `code-editor-icon.icomoon.json` file (downloaded in the adding icons steps) onto https://github.com/Fyooryx/Vexa/tree/main/utils (yes, replace it with the newer one; we downloaded!)
 4. Commit the changes **ON A NEW branch** (by following: [Commit Messages guide](#commit-messages))
 
 ## 🔌 Plugin Development
