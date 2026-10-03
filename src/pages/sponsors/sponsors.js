@@ -39,7 +39,7 @@ export default function Sponsors() {
 				</button>
 			</div>
 			<div className="sponsors-container">
-				<h2>Acode's Sponsors</h2>
+				<h2>Vexa's Sponsors</h2>
 				<div className="sponsors-list" onclick={handleLinkClick}>
 					<div className="tier">
 						<div className="tier-name">
@@ -196,7 +196,7 @@ function SponsorCard({ name, image, website, tier, tagline }) {
 		>
 			{image && (
 				<div className="sponsor-avatar">
-					<img src={`https://acode.app/sponsor/image/${image}`} />
+					<img src={`${config.BASE_URL}/sponsor/image/${image}`} />
 				</div>
 			)}
 			<div className="sponsor-name">{name}</div>
