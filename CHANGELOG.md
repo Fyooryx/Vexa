@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.14.1 — Vexa post-migration hardening
+
+### Fixed
+- made the in-app changelog repository-aware, with Vexa-first release/changelog sources and upstream fallback
+- fixed bare changelog issue/PR references so they resolve against the source repository currently being displayed
+- centralized Vexa/upstream repository identity to reduce hard-coded endpoint drift
+
+### Improved
+- added a prebuild Vexa identity gate
+- added `npm run check:vexa` for branding, typecheck, and unit-test validation
+- aligned contributor and devcontainer instructions with the Vexa repository and workspace
+- hardened support and project documentation after the Acode → Vexa migration
+
 ## 1.14.0 — Vexa tooling and diagnostics
 
 ### Added
