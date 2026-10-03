@@ -108,6 +108,7 @@ import keyBindings, {
 } from "lib/keyBindings";
 import settings from "lib/settings";
 import Url from "utils/Url";
+import { copyVexaDiagnostics } from "lib/vexaDiagnostics";
 
 const commandKeymapCompartment = new Compartment();
 
@@ -618,6 +619,21 @@ function registerCoreCommands() {
 		run() {
 			acode.exec("open", "file_browser");
 			return true;
+		},
+	});
+	addCommand({
+		name: "vexa:copyDiagnostics",
+		description: "Copy Vexa diagnostics",
+		readOnly: true,
+		requiresView: false,
+		async run() {
+			const copied = await copyVexaDiagnostics();
+			toast(
+				copied
+					? "Vexa diagnostics copied to clipboard"
+					: "Clipboard is unavailable",
+			);
+			return copied;
 		},
 	});
 	addCommand({
