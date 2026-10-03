@@ -141,6 +141,7 @@ function hostCommands(manager, exec) {
 			"handlers/quickTools",
 			"lib/settings",
 			"lib/vexaDiagnostics",
+			"lib/vexaIdentity",
 			"utils/Url",
 		].map((id) => [id, {}]),
 	);
