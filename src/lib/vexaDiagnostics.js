@@ -50,3 +50,4 @@ export async function copyVexaDiagnostics(runtime) {
 	// Intentionally keep diagnostics side-effect free until copy is requested.
 	return false;
 }
+export const VEXA_DIAGNOSTICS_VERSION = 1;
