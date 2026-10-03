@@ -1,8 +1,14 @@
-// automatically include credentials for the hosted upstream API requests
+import config from "./config";
+
+// Automatically include credentials only for the configured upstream API.
+// This avoids scattering the legacy service hostname through request middleware.
 (function () {
 	const _fetch = window.fetch;
 	window.fetch = function (url, options) {
-		if (typeof url === "string" && url.includes("acode.app/api")) {
+		if (
+			typeof url === "string" &&
+			(url === config.API_BASE || url.startsWith(config.API_BASE + "/"))
+		) {
 			options = { ...options, credentials: "include" };
 		}
 		return _fetch.call(this, url, options);
