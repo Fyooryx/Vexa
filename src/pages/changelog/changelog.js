@@ -6,16 +6,32 @@ import toast from "components/toast";
 import DOMPurify from "dompurify";
 import Ref from "html-tag-js/ref";
 import actionStack from "lib/actionStack";
+import { VEXA_IDENTITY } from "lib/vexaIdentity";
 import markdownIt from "markdown-it";
 import markdownItFootnote from "markdown-it-footnote";
 import markdownItTaskLists from "markdown-it-task-lists";
 import helpers from "utils/helpers";
 
+const VEXA_REPO_URL = VEXA_IDENTITY.REPOSITORY_URL;
+const UPSTREAM_REPO_URL = "https://github.com/Acode-Foundation/Acode";
+const VEXA_RELEASES_URL =
+	"https://api.github.com/repos/Fyooryx/Vexa/releases";
+const UPSTREAM_RELEASES_URL =
+	"https://api.github.com/repos/Acode-Foundation/Acode/releases";
+const VEXA_CHANGELOG_URL =
+	"https://raw.githubusercontent.com/Fyooryx/Vexa/main/CHANGELOG.md";
+const UPSTREAM_CHANGELOG_URL =
+	"https://raw.githubusercontent.com/Acode-Foundation/Acode/main/CHANGELOG.md";
+const RELEASE_SOURCES = [
+	{ releases: VEXA_RELEASES_URL, repository: VEXA_REPO_URL },
+	{ releases: UPSTREAM_RELEASES_URL, repository: UPSTREAM_REPO_URL },
+];
+const CHANGELOG_SOURCES = [
+	{ url: VEXA_CHANGELOG_URL, repository: VEXA_REPO_URL },
+	{ url: UPSTREAM_CHANGELOG_URL, repository: UPSTREAM_REPO_URL },
+];
+
 export default async function Changelog() {
-	const GITHUB_API_URL =
-		"https://api.github.com/repos/Acode-Foundation/Acode/releases";
-	const CHANGELOG_FILE_URL =
-		"https://raw.githubusercontent.com/Acode-Foundation/Acode/main/CHANGELOG.md";
 	const currentVersion = BuildInfo.version;
 
 	let selectedVersion = currentVersion;
@@ -82,84 +98,115 @@ export default async function Changelog() {
 
 	async function loadLatestRelease() {
 		try {
-			const releases = await fsOperation(`${GITHUB_API_URL}/latest`).readFile(
-				"json",
-			);
-			selectedVersion = releases.tag_name.replace("v", "");
+			const result = await fetchRelease("/latest");
+			selectedVersion = result.release.tag_name.replace(/^v/, "");
 			selectedStatus = "latest";
 			updateVersionSelector();
-			return renderChangelog(releases.body);
+			return renderChangelog(result.release.body, result.repository);
 		} catch (error) {
 			toast("Failed to load latest release notes");
-			renderChangelog(changelogMd.default);
+			renderChangelog(changelogMd.default, VEXA_REPO_URL);
 		}
 	}
 
 	async function loadBetaRelease() {
 		try {
-			const releases = await fsOperation(GITHUB_API_URL).readFile("json");
-			const betaRelease = releases.find((r) => r.prerelease);
+			const result = await fetchReleaseList();
+			const betaRelease = result.releases.find((release) => release.prerelease);
 			if (!betaRelease) {
 				body.content = <div className="error">No beta release found</div>;
 				return;
 			}
-			selectedVersion = betaRelease.tag_name.replace("v", "");
+			selectedVersion = betaRelease.tag_name.replace(/^v/, "");
 			selectedStatus = "prerelease";
 			updateVersionSelector();
-			return renderChangelog(betaRelease.body);
+			return renderChangelog(betaRelease.body, result.repository);
 		} catch (error) {
 			toast("Failed to load beta release notes");
-			renderChangelog(changelogMd.default);
+			renderChangelog(changelogMd.default, VEXA_REPO_URL);
 		}
 	}
 
 	async function loadFullChangelog() {
 		try {
-			const changeLogText =
-				await fsOperation(CHANGELOG_FILE_URL).readFile("utf8");
-			const cleanedText = changeLogText.replace(/^#\s*Change\s*Log\s*\n*/i, "");
+			const result = await fetchText(CHANGELOG_SOURCES);
+			const cleanedText = result.text.replace(/^#\s*Change\s*Log\s*\n*/i, "");
 			selectedVersion = "Changelogs.md";
 			selectedStatus = "current";
 			updateVersionSelector();
-			return renderChangelog(cleanedText);
+			return renderChangelog(cleanedText, result.repository);
 		} catch (error) {
 			toast("Failed to load full changelog");
-			renderChangelog(changelogMd.default);
+			renderChangelog(changelogMd.default, VEXA_REPO_URL);
 		}
 	}
 
 	async function loadVersionChangelog() {
 		try {
-			const releases = await fsOperation(GITHUB_API_URL).readFile("json");
-			const currentRelease = releases.find(
-				(r) => r.tag_name.replace("v", "") === currentVersion,
+			const result = await fetchReleaseList();
+			const currentRelease = result.releases.find(
+				(release) => release.tag_name.replace(/^v/, "") === currentVersion,
 			);
 			selectedVersion = currentVersion;
 			selectedStatus = "current";
 			updateVersionSelector();
 			if (currentRelease) {
-				return renderChangelog(currentRelease.body);
-			} else {
-				return loadLatestRelease();
+				return renderChangelog(currentRelease.body, result.repository);
 			}
+			return loadLatestRelease();
 		} catch (error) {
 			toast("Failed to load version changelog");
-			renderChangelog(changelogMd.default);
+			renderChangelog(changelogMd.default, VEXA_REPO_URL);
 		}
 	}
 
-	function renderChangelog(text) {
+	async function fetchRelease(path) {
+		let lastError;
+		for (const source of RELEASE_SOURCES) {
+			try {
+				const release = await fsOperation(
+					`${source.releases}${path}`,
+				).readFile("json");
+				return { release, repository: source.repository };
+			} catch (error) {
+				lastError = error;
+			}
+		}
+		throw lastError || new Error("No release source available");
+	}
+
+	async function fetchReleaseList() {
+		let lastError;
+		for (const source of RELEASE_SOURCES) {
+			try {
+				const releases = await fsOperation(source.releases).readFile("json");
+				return { releases, repository: source.repository };
+			} catch (error) {
+				lastError = error;
+			}
+		}
+		throw lastError || new Error("No release source available");
+	}
+
+	async function fetchText(sources) {
+		let lastError;
+		for (const source of sources) {
+			try {
+				const text = await fsOperation(source.url).readFile("utf8");
+				return { text, repository: source.repository };
+			} catch (error) {
+				lastError = error;
+			}
+		}
+		throw lastError || new Error("No changelog source available");
+	}
+
+	function renderChangelog(text, repositoryUrl = VEXA_REPO_URL) {
 		const md = markdownIt({ html: true, linkify: true });
-		const REPO_URL = "https://github.com/Acode-Foundation/Acode";
 		let processedText = text
-			// Convert full PR URLs to #number format with links preserved in markdown
-			.replace(
-				/https:\/\/github\.com\/Acode-Foundation\/Acode\/pull\/(\d+)/g,
-				`[#$1](${REPO_URL}/pull/$1)`,
-			)
-			// Convert existing #number references to links if they aren't already
-			.replace(/#(?<!\[#)(\d+)(?!\])/g, `[#$1](${REPO_URL}/pull/$1)`)
-			// Convert @username mentions to GitHub profile links
+			// Keep upstream and Vexa full PR URLs intact; only bare #numbers need context.
+			.replace(/#(?<!\[#)(\d+)(?!\])/g, `[#$1](${repositoryUrl}/pull/$1)`)
+			// Convert @username mentions to GitHub profile links.
 			.replace(/@(\w+)/g, "[@$1](https://github.com/$1)");
 
 		md.use(markdownItTaskLists);
