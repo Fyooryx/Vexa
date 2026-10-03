@@ -1,6 +1,6 @@
-import config from "lib/config";
 import fsOperation from "fileSystem";
 import loader from "dialogs/loader";
+import config from "lib/config";
 import helpers from "utils/helpers";
 import Url from "utils/Url";
 import firaCode from "../res/fonts/FiraCode.ttf";
