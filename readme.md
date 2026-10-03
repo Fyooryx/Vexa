@@ -63,6 +63,17 @@ npm run lang search
 npm run lang update
 ```
 
+## • Development Validation
+
+Before submitting changes, run the same validation gate used by Vexa CI:
+
+```shell
+npm ci
+npm run check:vexa
+```
+
+This checks Vexa identity/branding, immutable GitHub Actions, TypeScript, and unit tests.
+
 ## • Contributing & Building the Application
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed instructions.
