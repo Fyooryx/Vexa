@@ -15,8 +15,8 @@ concurrency:
 
 jobs:
   build:
-    if: ${{ github.repository_owner == 'Acode-Foundation' }}
-    uses: Acode-Foundation/acode/.github/workflows/nightly-build.yml@main
+    if: ${{ github.repository == 'Fyooryx/Vexa' }}
+    uses: ./.github/workflows/nightly-build.yml
     permissions:
       contents: read
       pull-requests: read
@@ -30,7 +30,7 @@ jobs:
   release:
     needs: build
     runs-on: ubuntu-latest
-    if: ${{ github.repository_owner == 'Acode-Foundation' && needs.build.result == 'success' }}
+    if: ${{ github.repository == 'Fyooryx/Vexa' && needs.build.result == 'success' }}
     permissions:
       contents: write
       id-token: write
@@ -153,7 +153,7 @@ jobs:
         continue-on-error: true
         run: |
           RELEASE_NOTES="$(node utils/scripts/generate-release-notes.js \
-            ${{ github.repository_owner }} Acode ${{ github.sha }} \
+            ${{ github.repository_owner }} Vexa ${{ github.sha }} \
             --format md --from-tag ${{ steps.prev.outputs.tag_commit }} --important-only --quiet --changelog-only || true)"
           {
             echo "RELEASE_NOTES<<EOF"
@@ -216,7 +216,7 @@ jobs:
     if: ${{ needs.release.outputs.should_publish == 'true' && needs.release.outputs.release_output_url }}
     permissions:
       contents: read
-    uses: Acode-Foundation/acode/.github/workflows/community-release-notifier.yml@main
+    uses: ./.github/workflows/community-release-notifier.yml
     with:
       url: ${{ needs.release.outputs.release_output_url }}
       tag_name: ${{ needs.release.outputs.nightly_tag_name }}
