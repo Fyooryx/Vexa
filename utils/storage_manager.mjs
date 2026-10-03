@@ -4,11 +4,20 @@ import readline from 'node:readline';
 import { stdin as input, stdout as output } from 'node:process';
 import { readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { execSync } from 'node:child_process';
+import { existsSync, readFileSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 
 
-const npmPrefix = execSync('npm prefix').toString().trim();
+const npmPrefix = execFileSync('npm', ['prefix'], { encoding: 'utf8' }).trim();
 const pluginXmlPath = join(npmPrefix, 'src/plugins/terminal/plugin.xml');
+
+function getTerminalPluginId(xml) {
+  const match = xml.match(/<plugin\b[^>]*\bid=["']([^"']+)["']/i);
+  if (!match?.[1]) {
+    throw new Error('Unable to determine the terminal plugin id from plugin.xml.');
+  }
+  return match[1];
+}
 const permissionLine = `        <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />`;
 const permissionRegex = /^\s*<uses-permission android:name="android\.permission\.MANAGE_EXTERNAL_STORAGE"\s*\/>\s*$/gm;
 
@@ -66,16 +75,21 @@ async function removePermission() {
 
 function updatePlugin() {
   try {
-    const prefix = execSync('npm prefix').toString().trim();
+    const prefix = execFileSync('npm', ['prefix'], { encoding: 'utf8' }).trim();
     const pluginPath = join(prefix, 'src/plugins/terminal');
+    const pluginXml = readFileSync(join(pluginPath, 'plugin.xml'), 'utf8');
+    const pluginId = getTerminalPluginId(pluginXml);
+    const installedPluginPath = join(prefix, 'plugins', pluginId);
 
-    execSync('cordova plugin remove com.foxdebug.acode.rk.exec.terminal', { stdio: 'inherit' });
-    execSync(`cordova plugin add "${pluginPath}"`, { stdio: 'inherit' });
+    if (existsSync(installedPluginPath)) {
+      execFileSync('cordova', ['plugin', 'remove', pluginId], { stdio: 'inherit' });
+    }
 
-    console.log('✅ Plugin updated successfully.');
+    execFileSync('cordova', ['plugin', 'add', pluginPath], { stdio: 'inherit' });
+    console.log(`Plugin updated successfully: ${pluginId}`);
   } catch (err) {
-    console.error(err.message);
-    process.exit(1);
+    console.error(`Failed to update terminal plugin: ${err.message}`);
+    process.exitCode = 1;
   }
 }
 
