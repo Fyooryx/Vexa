@@ -49,7 +49,7 @@ on:
 
 jobs:
   notify:
-    if: github.repository_owner == 'Acode-Foundation'
+    if: github.repository == 'Fyooryx/Vexa'
     runs-on: ubuntu-latest
     steps:
       - name: Prepare release variables
@@ -85,7 +85,7 @@ jobs:
           fi
 
           # Announcement line — also escape for safety
-          ANNOUNCE_SAFE="📢 Acode [$TAG_SAFE]($URL) was just Released 🎉${SUFFIX}\\!"
+          ANNOUNCE_SAFE="📢 Vexa [$TAG_SAFE]($URL) was just Released 🎉${SUFFIX}\\!"
 
           echo "announce=$ANNOUNCE_SAFE" >> $GITHUB_OUTPUT
           {
@@ -95,7 +95,7 @@ jobs:
           } >> $GITHUB_OUTPUT
 
           # Plain (MD) Announcement for Discord
-          ANNOUNCE_PLAIN="📢 Acode [$TAG](<$URL>) was just Released 🎉${SUFFIXPLAIN}!"
+          ANNOUNCE_PLAIN="📢 Vexa [$TAG](<$URL>) was just Released 🎉${SUFFIXPLAIN}!"
           echo "announce_plain=$ANNOUNCE_PLAIN" >> $GITHUB_OUTPUT
           {
             echo "body_plain<<$DELIMITER"
