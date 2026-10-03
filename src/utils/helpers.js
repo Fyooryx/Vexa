@@ -372,9 +372,7 @@ export default {
 			? decodeURIComponent(treeSegment.split("::")[0] || "")
 			: "";
 		const getTargetUri = (baseUri, name, index) => {
-			if (
-				!(isExternalStorageUri || isTermuxUri || isTerminalPublicSafUri)
-			) {
+			if (!(isExternalStorageUri || isTermuxUri || isTerminalPublicSafUri)) {
 				return Url.join(baseUri, name);
 			}
 
