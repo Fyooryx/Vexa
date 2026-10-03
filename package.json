@@ -20,7 +20,8 @@
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "updateAce": "node ./utils/updateAce.js",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "verify:branding": "node utils/verify-vexa-branding.js"
   },
   "keywords": [
     "ecosystem:cordova"

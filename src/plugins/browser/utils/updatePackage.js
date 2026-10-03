@@ -4,11 +4,11 @@ const path = require("path");
 const configXML = path.resolve(__dirname, "../../../config.xml");
 const menuJava = path.resolve(
   __dirname,
-  "../../../platforms/android/app/src/main/java/com/foxdebug/browser/Menu.java"
+  "../../../platforms/android/app/src/main/java/com/foxdebug/browser/Menu.java",
 );
 const docProvider = path.resolve(
   __dirname,
-  "../../../platforms/android/app/src/main/java/com/foxdebug/acode/rk/exec/terminal/AlpineDocumentProvider.java"
+  "../../../platforms/android/app/src/main/java/com/foxdebug/acode/rk/exec/terminal/AlpineDocumentProvider.java",
 );
 
 const repeatChar = (char, times) => char.repeat(times);
@@ -20,38 +20,30 @@ function replaceImport(filePath, packageName) {
   }
 
   const data = fs.readFileSync(filePath, "utf8");
-
   const updated = data.replace(
-    /(import\s+com\.foxdebug\.)(acode|acodefree)(\.R;)/,
-    `$1${appName}$3`
+    /import\s+com\.foxdebug\.(?:acode|acodefree)\.R;/,
+    "import " + packageName + ".R;",
   );
 
-  fs.writeFileSync(filePath, updated);
+  if (updated !== data) fs.writeFileSync(filePath, updated);
 }
 
 try {
-  if (!fs.existsSync(configXML)) {
-    throw new Error("config.xml not found");
-  }
+  if (!fs.existsSync(configXML)) throw new Error("config.xml not found");
 
   const config = fs.readFileSync(configXML, "utf8");
   const match = /widget\s+id="([0-9a-zA-Z.\-_]+)"/.exec(config);
 
-  if (!match) {
-    throw new Error("Could not extract widget id from config.xml");
-  }
+  if (!match) throw new Error("Could not extract widget id from config.xml");
 
-  const appName = match[1].split(".").pop();
+  const packageName = match[1];
+  replaceImport(docProvider, packageName);
+  replaceImport(menuJava, packageName);
 
-  replaceImport(docProvider, appName);
-  replaceImport(menuJava, appName);
-
-  const msg = `==== Changed package to com.foxdebug.${appName} ====`;
-
+  const msg = `==== Updated Android R imports for ${packageName} ====`;
   console.log("\n" + repeatChar("=", msg.length));
   console.log(msg);
   console.log(repeatChar("=", msg.length) + "\n");
-
 } catch (error) {
   console.error("❌ Error:", error.message);
   process.exit(1);

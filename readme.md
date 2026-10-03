@@ -4,7 +4,7 @@
   <img src='res/logo_1.png' width='250'>
 </p>
 
-[![](https://img.shields.io/endpoint?logo=telegram&label=Vexa&style=flat&url=https%3A%2F%2Facode.app%2Fapi%2Ftelegram-members-count)](https://t.me/foxdebug_acode) [![](https://dcbadge.vercel.app/api/server/vVxVWYUAWD?style=flat)](https://discord.gg/vVxVWYUAWD)
+[![GitHub Stars](https://img.shields.io/github/stars/Fyooryx/Vexa?style=flat)](https://github.com/Fyooryx/Vexa) [![](https://dcbadge.vercel.app/api/server/vVxVWYUAWD?style=flat)](https://discord.gg/vVxVWYUAWD)
 
 ## • Lineage
 
@@ -47,7 +47,7 @@ Vexa/
 
 ## • Multi-language Support
 
-Tingkatkan kemampuan Vexa dengan menambahkan bahasa baru dengan mudah. Cukup buat file dengan kode bahasa (misalnya, en-us untuk bahasa Inggris) di ['src/lang/'](https://github.com/Vexa-Foundation/Vexa/tree/main/src/lang) dan sertakan di ['src/lib/lang.js'](https://github.com/Vexa-Foundation/Vexa/blob/main/src/lib/lang.js). Kelola string lintas bahasa dengan mudah menggunakan perintah utilitas: 
+Tingkatkan kemampuan Vexa dengan menambahkan bahasa baru dengan mudah. Cukup buat file dengan kode bahasa (misalnya, en-us untuk bahasa Inggris) di ['src/lang/'](https://github.com/Fyooryx/Vexa/tree/main/src/lang) dan sertakan di ['src/lib/lang.js'](https://github.com/Fyooryx/Vexa/blob/main/src/lib/lang.js). Kelola string lintas bahasa dengan mudah menggunakan perintah utilitas: 
 
 ```shell
 pnpm run lang add
@@ -67,6 +67,6 @@ Isi kalo sudah ada Contributor
 ## • Developing a Plugin for Vexa
 
 Untuk dokumentasi komprehensif tentang membuat plugin untuk Vexa Editor, kunjungi [repository] 
-(https://github.com/Vexa-Foundation/acode-plugin).
+(https://github.com/Acode-Foundation/acode-plugin).
 
-For plugin development information, refer to: [Vexa Plugin Documentation](https://docs.acode.app/)
+For plugin development information, refer to: [upstream plugin documentation](https://github.com/Acode-Foundation/acode-plugin)
