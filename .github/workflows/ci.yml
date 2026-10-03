@@ -127,3 +127,6 @@ jobs:
 
       - name: Typecheck
         run: npm run typecheck
+
+      - name: Verify immutable workflow actions
+        run: npm run verify:workflows
