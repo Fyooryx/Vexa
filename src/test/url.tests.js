@@ -21,7 +21,16 @@ const JOIN_CASES = [
 			"content://com.termux.documents/tree/%2Fdata%2Fdata%2Fcom.termux%2Ffiles%2Fhome%2Facode-site-ui::/data/data/com.termux/files/home/acode-site-ui/index.html",
 	},
 	{
-		name: "Acode SAF join",
+		name: "Vexa terminal SAF join",
+		folderUrl:
+			"content://com.vexa.app.documents/tree/%2Fdata%2Fuser%2F0%2Fcom.vexa.app%2Ffiles%2Fpublic",
+		activeLocation:
+			"content://com.vexa.app.documents/tree/%2Fdata%2Fuser%2F0%2Fcom.vexa.app%2Ffiles%2Fpublic::/data/user/0/com.vexa.app/files/public/",
+		expectedJoined:
+			"content://com.vexa.app.documents/tree/%2Fdata%2Fuser%2F0%2Fcom.vexa.app%2Ffiles%2Fpublic::/data/user/0/com.vexa.app/files/public/index.html",
+	},
+	{
+		name: "Legacy Acode SAF join",
 		folderUrl:
 			"content://com.foxdebug.acode.documents/tree/%2Fdata%2Fuser%2F0%2Fcom.foxdebug.acode%2Ffiles%2Fpublic",
 		activeLocation:
@@ -43,7 +52,7 @@ const TRAILING_SLASH_CASES = [
 		b: "content://com.termux.documents/tree/%2Fdata%2Fdata%2Fcom.termux%2Ffiles%2Fhome%2Facode-site-ui",
 	},
 	{
-		name: "Acode SAF trailing slash",
+		name: "Legacy Acode SAF trailing slash",
 		a: "content://com.foxdebug.acode.documents/tree/%2Fdata%2Fuser%2F0%2Fcom.foxdebug.acode%2Ffiles%2Fpublic/",
 		b: "content://com.foxdebug.acode.documents/tree/%2Fdata%2Fuser%2F0%2Fcom.foxdebug.acode%2Ffiles%2Fpublic",
 	},

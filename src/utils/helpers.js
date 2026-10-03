@@ -359,16 +359,21 @@ export default {
 			"com.android.externalstorage.documents",
 		);
 		const isTermuxUri = currentUri.includes("com.termux.documents");
-		const isAcodeTerminalPublicSafUri = currentUri.includes(
+		const isVexaTerminalPublicSafUri = currentUri.includes(
+			"com.vexa.app.documents",
+		);
+		const isLegacyAcodeTerminalPublicSafUri = currentUri.includes(
 			"com.foxdebug.acode.documents",
 		);
+		const isTerminalPublicSafUri =
+			isVexaTerminalPublicSafUri || isLegacyAcodeTerminalPublicSafUri;
 		const [, treeSegment = ""] = currentUri.split("/tree/");
-		const terminalBasePath = isAcodeTerminalPublicSafUri
+		const terminalBasePath = isTerminalPublicSafUri
 			? decodeURIComponent(treeSegment.split("::")[0] || "")
 			: "";
 		const getTargetUri = (baseUri, name, index) => {
 			if (
-				!(isExternalStorageUri || isTermuxUri || isAcodeTerminalPublicSafUri)
+				!(isExternalStorageUri || isTermuxUri || isTerminalPublicSafUri)
 			) {
 				return Url.join(baseUri, name);
 			}
@@ -386,7 +391,7 @@ export default {
 				} else {
 					fullUri += `/${name}`;
 				}
-			} else if (isAcodeTerminalPublicSafUri) {
+			} else if (isTerminalPublicSafUri) {
 				if (!isSpecialCase && index === 0) {
 					const sanitizedBase = terminalBasePath.endsWith("/")
 						? `${terminalBasePath}${name}`

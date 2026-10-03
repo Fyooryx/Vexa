@@ -1,3 +1,21 @@
+# Changelog
+
+## 1.13.6 — Vexa identity and Android asset hardening
+
+### Changed
+- aligned app version metadata to 1.13.6 and Android version code 1012
+- aligned Bun and npm lockfile root identity with `com.vexa.app`
+- moved the free-build package namespace to `com.vexa.appfree`
+- fixed generated Android `R` imports so they use the configured application package
+- updated Vexa/legacy terminal SAF handling so the rebranded package works without dropping old saved URIs
+- replaced legacy launcher/WebP and icon-preview assets with the supplied Vexa logo
+- normalized launcher fallback background resources for the Vexa branding
+- refreshed Play/F-Droid metadata and repository documentation
+
+### Verification
+- added regression coverage for the new `com.vexa.app.documents` terminal SAF URI
+- legacy `com.foxdebug.acode.documents` SAF compatibility remains covered
+
 # Change Log
 
 ## v1.13.5

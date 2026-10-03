@@ -1,8 +1,8 @@
-Acode is an open-source code editor and web IDE for Android. Edit projects, manage files, use a Linux terminal, work with Git and SSH, and extend your setup with community plugins.
+Vexa is an Android code editor and web IDE based on the open-source Acode project. Edit projects, manage files, use a Linux terminal, work with Git and SSH, and extend your setup with community plugins.
 
 LINUX TERMINAL
 
-Acode includes an Alpine Linux terminal powered by proot, with no root required. Use apk to install supported command-line packages, keep multiple terminal tabs, customize your shell, and back up or restore your terminal setup.
+Vexa includes an Alpine Linux terminal powered by proot, with no root required. Use apk to install supported command-line packages, keep multiple terminal tabs, customize your shell, and back up or restore your terminal setup.
 
 AI CODING SUPPORT
 
@@ -10,7 +10,7 @@ Use the terminal and plugin ecosystem with AI-assisted coding tools where suppor
 
 JAVASCRIPT AND WEB DEVELOPMENT
 
-Set up mobile web projects with Node.js and npm, run package scripts, build APIs with server-side JavaScript, preview HTML and Markdown, and test front-end projects inside Acode.
+Set up mobile web projects with Node.js and npm, run package scripts, build APIs with server-side JavaScript, preview HTML and Markdown, and test front-end projects inside Vexa.
 
 PROFESSIONAL CODE EDITOR
 
@@ -36,7 +36,7 @@ GIT, SSH AND REMOTE TOOLS
 
 COMMUNITY PLUGINS
 
-Extend Acode with plugins from the in-app Plugin Store:
+Extend Vexa with the in-app Plugin Store:
 - Language servers for IntelliSense
 - Themes and icon packs
 - AI-assisted coding tools
@@ -46,15 +46,13 @@ Extend Acode with plugins from the in-app Plugin Store:
 
 OPEN SOURCE
 
-Acode is free and open source under the MIT license. Source code is available at github.com/Acode-Foundation/Acode. Documentation and community links are available at acode.app.
-
-Pro version is available with ad removal and premium themes. In-app purchases may vary by region.
+Vexa is released under the MIT license. The project is based on the Acode open-source codebase; original upstream attribution remains in the repository.
 
 GET STARTED
 
-1. Install Acode
+1. Install Vexa
 2. Open the terminal and complete the one-time setup
 3. Install the packages and plugins you need
 4. Start editing, previewing and managing projects from your Android device
 
-Acode requires Android 7.0+. The free version contains ads.
+Vexa requires Android 7.0+. Free builds may contain ads.

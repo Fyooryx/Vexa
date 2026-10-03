@@ -4,11 +4,15 @@
   <img src='res/logo_1.png' width='250'>
 </p>
 
-[![](https://img.shields.io/endpoint?logo=telegram&label=Acode&style=flat&url=https%3A%2F%2Facode.app%2Fapi%2Ftelegram-members-count)](https://t.me/foxdebug_acode) [![](https://dcbadge.vercel.app/api/server/vVxVWYUAWD?style=flat)](https://discord.gg/vVxVWYUAWD)
+[![](https://img.shields.io/endpoint?logo=telegram&label=Vexa&style=flat&url=https%3A%2F%2Facode.app%2Fapi%2Ftelegram-members-count)](https://t.me/foxdebug_acode) [![](https://dcbadge.vercel.app/api/server/vVxVWYUAWD?style=flat)](https://discord.gg/vVxVWYUAWD)
+
+## • Lineage
+
+Vexa is a customized/rebranded build based on the upstream Acode open-source codebase. Original upstream attribution remains part of the repository.
 
 ## • Overview
 
-Selamat datang di Acode Editor - alat pengeditan kode yang kuat dan serbaguna yang dirancang khusus untuk perangkat Android. Apakah Anda sedang mengerjakan HTML, CSS, JavaScript, atau bahasa pemrograman lainnya, Acode memberdayakan Anda untuk mengkode di mana saja dengan percaya diri. 
+Selamat datang di Vexa Editor - alat pengeditan kode yang kuat dan serbaguna yang dirancang khusus untuk perangkat Android. Apakah Anda sedang mengerjakan HTML, CSS, JavaScript, atau bahasa pemrograman lainnya, Vexa memberdayakan Anda untuk mengkode di mana saja dengan percaya diri. 
 
 ## • Features
 
@@ -22,7 +26,7 @@ Selamat datang di Acode Editor - alat pengeditan kode yang kuat dan serbaguna ya
 
 ## • Installation
 
-Anda dapat mendapatkan Acode Editor dari platform populer: 
+Anda dapat mendapatkan Vexa Editor dari platform populer: 
 
 Link playstore isi nanti belum diupload/tahap pengembangan
 Link F-droid isi nanti belum diupload/tahap pengembangan
@@ -43,7 +47,7 @@ Vexa/
 
 ## • Multi-language Support
 
-Tingkatkan kemampuan Acode dengan menambahkan bahasa baru dengan mudah. Cukup buat file dengan kode bahasa (misalnya, en-us untuk bahasa Inggris) di ['src/lang/'](https://github.com/Acode-Foundation/Acode/tree/main/src/lang) dan sertakan di ['src/lib/lang.js'](https://github.com/Acode-Foundation/Acode/blob/main/src/lib/lang.js). Kelola string lintas bahasa dengan mudah menggunakan perintah utilitas: 
+Tingkatkan kemampuan Vexa dengan menambahkan bahasa baru dengan mudah. Cukup buat file dengan kode bahasa (misalnya, en-us untuk bahasa Inggris) di ['src/lang/'](https://github.com/Vexa-Foundation/Vexa/tree/main/src/lang) dan sertakan di ['src/lib/lang.js'](https://github.com/Vexa-Foundation/Vexa/blob/main/src/lib/lang.js). Kelola string lintas bahasa dengan mudah menggunakan perintah utilitas: 
 
 ```shell
 pnpm run lang add
@@ -60,9 +64,9 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed instructions.
 Isi kalo sudah ada Contributor
 
 
-## • Developing a Plugin for Acode
+## • Developing a Plugin for Vexa
 
-Untuk dokumentasi komprehensif tentang membuat plugin untuk Acode Editor, kunjungi [repository] 
-(https://github.com/Acode-Foundation/acode-plugin).
+Untuk dokumentasi komprehensif tentang membuat plugin untuk Vexa Editor, kunjungi [repository] 
+(https://github.com/Vexa-Foundation/acode-plugin).
 
-For plugin development information, refer to: [Acode Plugin Documentation](https://docs.acode.app/)
+For plugin development information, refer to: [Vexa Plugin Documentation](https://docs.acode.app/)

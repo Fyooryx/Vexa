@@ -1,4 +1,4 @@
-// setup acode for the first time
+// setup Vexa for the first time
 // 1. verify git submodules are checked out
 // 2. install dependencies
 // 3. add cordova platform android@10.2
@@ -6,7 +6,7 @@
 // cordova-plugin-buildinfo
 // cordova-plugin-device
 // cordova-plugin-file
-// all the plugins in ./src/plugins
+// all bundled plugins in ./src/plugins
 
 const { execSync } = require("node:child_process");
 const fs = require("node:fs");

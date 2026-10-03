@@ -1,7 +1,7 @@
 {
   "name": "com.vexa.app",
   "displayName": "Vexa",
-  "version": "1.13.5",
+  "version": "1.13.6",
   "description": "Vexa is a code editor and web IDE for Android",
   "scripts": {
     "lang": "node ./utils/lang.js",

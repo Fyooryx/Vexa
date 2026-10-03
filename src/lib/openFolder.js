@@ -25,10 +25,10 @@ import appSettings from "./settings";
 
 const isTermuxSafUri = (value = "") =>
 	value.startsWith("content://com.termux.documents/tree/");
-const isAcodeTerminalPublicSafUri = (value = "") =>
-	value.startsWith("content://com.vexa.app.documents/tree/");
+const isTerminalPublicSafUri = (value = "") =>
+	/^content:\/\/(?:com\.vexa\.app|com\.foxdebug\.acode)\.documents\/tree\//i.test(value);
 const isTerminalSafUri = (value = "") =>
-	isTermuxSafUri(value) || isAcodeTerminalPublicSafUri(value);
+	isTermuxSafUri(value) || isTerminalPublicSafUri(value);
 
 const getTerminalPaths = () => {
 	const packageName = window.BuildInfo?.packageName || "com.vexa.app";
@@ -39,7 +39,7 @@ const getTerminalPaths = () => {
 };
 
 const isTerminalAccessiblePath = (url = "") => {
-	if (isAcodeTerminalPublicSafUri(url)) return true;
+	if (isTerminalPublicSafUri(url)) return true;
 	const { alpineRoot, publicDir } = getTerminalPaths();
 	const cleanUrl = url.replace(/^file:\/\//, "");
 	if (cleanUrl.startsWith(alpineRoot) || cleanUrl.startsWith(publicDir)) {
@@ -50,7 +50,7 @@ const isTerminalAccessiblePath = (url = "") => {
 
 const convertToProotPath = (url = "") => {
 	const { alpineRoot, publicDir } = getTerminalPaths();
-	if (isAcodeTerminalPublicSafUri(url)) {
+	if (isTerminalPublicSafUri(url)) {
 		try {
 			const { docId } = Uri.parse(url);
 			const cleanDocId = /::/.test(url)

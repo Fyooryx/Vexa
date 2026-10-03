@@ -13,7 +13,7 @@ const docProvider = path.resolve(
 
 const repeatChar = (char, times) => char.repeat(times);
 
-function replaceImport(filePath, appName) {
+function replaceImport(filePath, packageName) {
   if (!fs.existsSync(filePath)) {
     console.warn(`⚠ File not found: ${filePath}`);
     return;
