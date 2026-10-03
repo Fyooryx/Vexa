@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased — Vexa hardening
+
+### Improved
+- pinned remaining third-party GitHub Actions to immutable commit SHAs
+- standardized nightly builds on Node.js 22 and `npm ci` for reproducibility
+- added a CI verifier that rejects unpinned workflow actions
+- updated Vexa contributor documentation and diagnostics regression data to the current 1.14.1 baseline
+
+
 ## 1.14.1 — Vexa post-migration hardening
 
 ### Fixed
