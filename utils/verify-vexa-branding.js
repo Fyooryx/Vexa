@@ -69,15 +69,15 @@ expect(
 
 const helpers = read("src/utils/helpers.js");
 expect(
-	helpers.includes("com.vexa.app.documents") &&
-		helpers.includes("com.foxdebug.acode.documents"),
+	/com\\.vexa\\.app(?:free)?\\.documents/.test(helpers) &&
+		/com\\.foxdebug\\.acode(?:free)?\\.documents/.test(helpers),
 	"helpers.js must support Vexa SAF and legacy Acode SAF URIs",
 );
 
 const openFolder = read("src/lib/openFolder.js");
 expect(
-	openFolder.includes("com.vexa.app.documents") &&
-		openFolder.includes("com.foxdebug.acode"),
+	/com\\.vexa\\.app(?:free)?\\.documents/.test(openFolder) &&
+		/com\\.foxdebug\\.acode/.test(openFolder),
 	"openFolder.js must support Vexa SAF and legacy compatibility",
 );
 
