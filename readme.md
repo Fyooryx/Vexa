@@ -10,6 +10,13 @@
 
 Vexa is a customized/rebranded build based on the upstream Acode open-source codebase. Original upstream attribution remains part of the repository.
 
+## • Vexa 1.14.0 additions
+
+- centralized Vexa identity metadata without conflating it with upstream service endpoints
+- `Vexa: Copy Diagnostics` command for support reports
+- density-specific Vexa launcher assets across Android mipmap resources
+- automated branding/release checks in CI
+
 ## • Overview
 
 Selamat datang di Vexa Editor - alat pengeditan kode yang kuat dan serbaguna yang dirancang khusus untuk perangkat Android. Apakah Anda sedang mengerjakan HTML, CSS, JavaScript, atau bahasa pemrograman lainnya, Vexa memberdayakan Anda untuk mengkode di mana saja dengan percaya diri. 
