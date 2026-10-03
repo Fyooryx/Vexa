@@ -43,7 +43,6 @@ import applySettings from "lib/applySettings";
 import checkFiles from "lib/checkFiles";
 import { canSaveFile } from "lib/commands";
 import config from "lib/config";
-import { VEXA_IDENTITY } from "lib/vexaIdentity";
 import EditorFile from "lib/editorFile";
 import EditorManager from "lib/editorManager";
 import fileIcons from "lib/fileIcons";
@@ -62,6 +61,7 @@ import startAd, {
 	BANNER_SUPPRESSION_REASON,
 	setBannerSuppressed,
 } from "lib/startAd";
+import { VEXA_IDENTITY } from "lib/vexaIdentity";
 import mustache from "mustache";
 import themes from "theme/list";
 import { initHighlighting } from "utils/codeHighlight";
