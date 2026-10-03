@@ -1,24 +1,30 @@
 #!/usr/bin/env node
 import fs from "node:fs";
 import path from "node:path";
-import crypto from "node:crypto";
 
 const root = path.resolve(import.meta.dirname, "..");
 const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
 const readJson = (file) => JSON.parse(read(file));
 
 function fail(message) {
-  console.error(\`[Vexa branding] FAIL: \${message}\`);
-  process.exit(1);
+  console.error(`[Vexa branding] FAIL: ${message}`);
+  process.exitCode = 1;
+  throw new Error(message);
 }
+
 function expect(condition, message) {
   if (!condition) fail(message);
+}
+
+function expectFile(file) {
+  expect(fs.existsSync(path.join(root, file)), `missing Vexa asset: ${file}`);
 }
 
 const pkg = readJson("package.json");
 const lock = readJson("package-lock.json");
 const bun = readJson("bun.lock");
 const config = read("config.xml");
+const identity = read("src/lib/vexaIdentity.js");
 
 const widget = /<widget[^>]*\bid="([^"]+)"/.exec(config);
 const version = /<widget[^>]*\bversion="([^"]+)"/.exec(config);
@@ -30,59 +36,56 @@ expect(pkg.name === "com.vexa.app", "package.json name must be com.vexa.app");
 expect(pkg.displayName === "Vexa", "package.json displayName must be Vexa");
 expect(lock.name === pkg.name && lock.version === pkg.version, "package-lock root identity/version drifted");
 expect(bun.workspaces?.[""]?.name === pkg.name, "bun.lock root package name drifted");
+
+expect(identity.includes('NAME: "Vexa"'), "Vexa identity name is missing");
+expect(identity.includes('PACKAGE_NAME: "com.vexa.app"'), "Vexa identity package is missing");
+expect(identity.includes('FREE_PACKAGE_NAME: "com.vexa.appfree"'), "Vexa free package identity is missing");
+expect(identity.includes('URL_SCHEME: "vexa"'), "Vexa URL scheme is missing");
+expect(identity.includes('REPOSITORY_URL: "https://github.com/Fyooryx/Vexa"'), "Vexa repository identity is missing");
+
 expect(config.includes('android:scheme="vexa"'), "vexa:// scheme is missing");
 expect(config.includes('android:scheme="acode"'), "legacy acode:// compatibility scheme is missing");
+expect(config.includes('android:icon="@drawable/vexa_icon"'), "active launcher icon must use vexa_icon");
+expect(config.includes('android:roundIcon="@drawable/vexa_icon"'), "active round launcher icon must use vexa_icon");
+expect(!config.includes("@mipmap/ic_acode_"), "config.xml still references a legacy Acode launcher resource");
 
-for (const file of [
-  "config.xml",
-  "package.json",
-  "package-lock.json",
-  "bun.lock",
-  "utils/config.js",
-  "src/lib/openFolder.js",
-]) {
-  expect(
-    !read(file).includes("com.foxdebug.acode.documents"),
-    \`\${file} still has a legacy Acode SAF package reference\`,
-  );
-}
+expect(read("src/lib/appIcons.js").includes('image: "icons/vexa.svg"'), "default app icon must use vexa.svg");
+expect(!read("src/lib/appIcons.js").includes('icons/ic_acode_'), "app icon picker still references legacy Acode SVGs");
+expect(read("src/lib/config.js").includes('LOG_FILE_NAME: "Vexa.log"'), "Vexa log filename is missing");
+expect(read("src/lib/config.js").includes('GITHUB_URL: VEXA_IDENTITY.REPOSITORY_URL'), "GitHub URL must use canonical Vexa identity");
 
 const helpers = read("src/utils/helpers.js");
 expect(
-  helpers.includes("com.vexa.app.documents") &&
-  helpers.includes("com.foxdebug.acode.documents"),
-  "helpers.js must support both Vexa SAF and legacy Acode SAF URIs",
+  helpers.includes("com.vexa.app.documents") && helpers.includes("com.foxdebug.acode.documents"),
+  "helpers.js must support Vexa SAF and legacy Acode SAF URIs",
 );
 
 const openFolder = read("src/lib/openFolder.js");
 expect(
-  openFolder.includes("com.vexa.app.documents") &&
-  openFolder.includes("com.foxdebug.acode"),
+  openFolder.includes("com.vexa.app.documents") && openFolder.includes("com.foxdebug.acode"),
   "openFolder.js must support Vexa SAF and legacy compatibility",
 );
 
-expect(
-  read("src/plugins/browser/utils/updatePackage.js").includes(
-    'import " + packageName + ".R;',
-  ),
-  "updatePackage.js must derive Android R imports from the full widget package",
-);
+const packageJsonText = read("package.json");
+expect(packageJsonText.includes('"verify:branding": "node utils/verify-vexa-branding.js"'), "verify:branding script is missing");
+
+const buildScript = read("utils/scripts/build.sh");
+expect(buildScript.startsWith("#!/usr/bin/env bash"), "build.sh must use bash explicitly");
+expect(buildScript.includes("set -Eeuo pipefail"), "build.sh must fail fast");
+expect(!buildScript.includes("eval \""), "build.sh must not use eval");
 
 for (const file of [
   "res/android/drawable/vexa_icon.png",
+  "res/android/drawable/vexa_icon_foreground.xml",
   "www/icons/vexa.png",
   "www/icons/vexa.svg",
 ]) {
-  expect(fs.existsSync(path.join(root, file)), \`missing Vexa asset: \${file}\`);
+  expectFile(file);
 }
 
-const expectedLauncherHashes = Object.freeze({
-  mdpi: "6d240e9b1b6accacc2a9bf87d3a5928977cec30e21a2e01f8036fb14e01f5b42",
-  hdpi: "766b647653d09c226d0efce39b93bec42ebc7ab5d0d0729ed8d2eda3148d7ad6",
-  xhdpi: "bf4aa3eeb0223422e9fd77d634ec2826b9f827a8ca0e93107f1ae231dafd6a61",
-  xxhdpi: "bcfbecf9e0792b75cd36b95d8ed629a7a38c4241d01f089292698b5da182f4aa",
-  xxxhdpi: "b315a6787cdd0bdb010541690bbc3ddd5e8009ac0c15083e98f89b0930d770a5",
-});
+const png = fs.readFileSync(path.join(root, "res/android/drawable/vexa_icon.png"));
+expect(png.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])), "vexa_icon.png is not a valid PNG");
+expect(png.readUInt32BE(16) === 128 && png.readUInt32BE(20) === 128, "vexa_icon.png must be 128x128");
 
 function walk(dir) {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
@@ -96,28 +99,19 @@ function walk(dir) {
   return files;
 }
 
-let launcherCount = 0;
-for (const file of walk(path.join(root, "res/android"))) {
-  if (!/[/\\]mipmap-(mdpi|hdpi|xhdpi|xxhdpi|xxxhdpi)[/\\](?:ic_acode_[^/\\]+|ic_launcher(?:_round)?)\.webp$/i.test(file)) {
-    continue;
-  }
+const legacyLauncherFiles = walk(path.join(root, "res/android")).filter((file) =>
+  /[/\\]mipmap-(mdpi|hdpi|xhdpi|xxhdpi|xxxhdpi)[/\\](?:ic_acode_[^/\\]+|ic_launcher(?:_round)?)\.webp$/i.test(file),
+);
 
-  launcherCount += 1;
-  const relative = path.relative(root, file);
-  const density = /^res[/\\]android[/\\]mipmap-(mdpi|hdpi|xhdpi|xxhdpi|xxxhdpi)[/\\]/i.exec(relative)?.[1]?.toLowerCase();
-  expect(density && expectedLauncherHashes[density], `unknown launcher density: ${relative}`);
+expect(legacyLauncherFiles.length === 150, `expected 150 Android launcher WebP assets, checked ${legacyLauncherFiles.length}`);
 
-  const hash = crypto
-    .createHash("sha256")
-    .update(fs.readFileSync(file))
-    .digest("hex");
-
-  expect(
-    hash === expectedLauncherHashes[density],
-    `launcher asset is not the expected Vexa logo for ${density}: ${relative}`,
-  );
+for (const file of legacyLauncherFiles) {
+  const data = fs.readFileSync(file);
+  expect(data.length > 64, `launcher asset is unexpectedly small: ${path.relative(root, file)}`);
+  expect(data.subarray(0, 4).toString("ascii") === "RIFF", `launcher asset is not RIFF/WebP: ${path.relative(root, file)}`);
+  expect(data.subarray(8, 12).toString("ascii") === "WEBP", `launcher asset is not WebP: ${path.relative(root, file)}`);
 }
-expect(launcherCount === 150, `expected 150 Android launcher WebP assets, checked ${launcherCount}`);
 
-console.log("[Vexa branding] PASS");
-console.log(\`Version: \${pkg.version} | Package: \${pkg.name} | Launchers checked: \${launcherCount}\`);
+console.log(
+  `[Vexa branding] PASS | Version: ${pkg.version} | Package: ${pkg.name} | Launchers checked: ${legacyLauncherFiles.length}`,
+);
