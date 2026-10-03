@@ -53,7 +53,7 @@ for (const file of workflowFiles) {
 expect(
 	unpinned.length === 0,
 	`third-party GitHub Actions must be pinned to immutable commit SHAs: ${unpinned
-			.map(({ file, reference }) => `${file} -> ${reference}`)
+		.map(({ file, reference }) => `${file} -> ${reference}`)
 		.join("; ")}`,
 );
 
