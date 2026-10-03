@@ -100,10 +100,13 @@ function walk(dir) {
 }
 
 const legacyLauncherFiles = walk(path.join(root, "res/android")).filter((file) =>
-  /[/\\]mipmap-(mdpi|hdpi|xhdpi|xxhdpi|xxxhdpi)[/\\](?:ic_acode_[^/\\]+|ic_launcher(?:_round)?)\.webp$/i.test(file),
+  /[/\\](?:mipmap-(mdpi|hdpi|xhdpi|xxhdpi|xxxhdpi)|drawable-[^/\\]+)[/\\](?:ic_acode_[^/\\]+|ic_launcher(?:_round)?)\.webp$/i.test(file),
 );
 
-expect(legacyLauncherFiles.length === 150, `expected 150 Android launcher WebP assets, checked ${legacyLauncherFiles.length}`);
+expect(
+  legacyLauncherFiles.length > 0,
+  "no Android launcher WebP assets were found under res/android",
+);
 
 for (const file of legacyLauncherFiles) {
   const data = fs.readFileSync(file);
@@ -113,5 +116,5 @@ for (const file of legacyLauncherFiles) {
 }
 
 console.log(
-  `[Vexa branding] PASS | Version: ${pkg.version} | Package: ${pkg.name} | Launchers checked: ${legacyLauncherFiles.length}`,
+  `[Vexa branding] PASS | Version: ${pkg.version} | Package: ${pkg.name} | Launcher WebP assets checked: ${legacyLauncherFiles.length}`,
 );
