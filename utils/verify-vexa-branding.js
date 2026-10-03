@@ -131,8 +131,9 @@ expect(
 
 const openFolder = read("src/lib/openFolder.js");
 expect(
-	openFolder.includes("com.vexa.app") &&
-		openFolder.includes("com.foxdebug.acode"),
+	openFolder.includes("isTerminalPublicSafUri") &&
+		openFolder.includes("com\\.vexa\\.app") &&
+		openFolder.includes("com\\.foxdebug\\.acode"),
 	"openFolder.js must support Vexa SAF and legacy compatibility",
 );
 
