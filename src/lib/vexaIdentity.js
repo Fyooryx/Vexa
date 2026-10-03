@@ -13,7 +13,8 @@ export const VEXA_IDENTITY = Object.freeze({
 	REPOSITORY_URL: "https://github.com/Fyooryx/Vexa",
 	UPSTREAM_REPOSITORY_URL: "https://github.com/Acode-Foundation/Acode",
 	UPSTREAM_SERVICE_URL: "https://acode.app",
-	VEXA_RELEASE_API_URL: "https://api.github.com/repos/Fyooryx/Vexa/releases/latest",
+	VEXA_RELEASE_API_URL:
+		"https://api.github.com/repos/Fyooryx/Vexa/releases/latest",
 	UPSTREAM_RELEASE_API_URL:
 		"https://api.github.com/repos/Acode-Foundation/Acode/releases/latest",
 });
