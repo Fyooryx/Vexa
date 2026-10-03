@@ -15,8 +15,8 @@ concurrency:
 
 jobs:
   build:
-    if: ${{ github.repository_owner == 'Acode-Foundation' }}
-    uses: Acode-Foundation/acode/.github/workflows/nightly-build.yml@main
+    if: ${{ github.repository == 'Fyooryx/Vexa' }}
+    uses: ./.github/workflows/nightly-build.yml
     permissions:
       contents: read
       pull-requests: read
@@ -30,7 +30,7 @@ jobs:
   release:
     needs: build
     runs-on: ubuntu-latest
-    if: ${{ github.repository_owner == 'Acode-Foundation' && needs.build.result == 'success' }}
+    if: ${{ github.repository == 'Fyooryx/Vexa' && needs.build.result == 'success' }}
     permissions:
       contents: write
       id-token: write
@@ -45,7 +45,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.2.2
         with:
           fetch-depth: 0 # Required for tags
           persist-credentials: true
@@ -67,7 +67,7 @@ jobs:
 
 
       - name: Download normal APK artifact
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: ${{ needs.build.outputs.normal_artifact_name }}
           path: ${{ env.ARTIFACTS_DIR }}/normal
