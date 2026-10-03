@@ -43,6 +43,7 @@ import applySettings from "lib/applySettings";
 import checkFiles from "lib/checkFiles";
 import { canSaveFile } from "lib/commands";
 import config from "lib/config";
+import { VEXA_IDENTITY } from "lib/vexaIdentity";
 import EditorFile from "lib/editorFile";
 import EditorManager from "lib/editorManager";
 import fileIcons from "lib/fileIcons";
@@ -418,7 +419,7 @@ async function onDeviceReady() {
 		navigator.onLine
 	) {
 		cordova.plugin.http.sendRequest(
-			"https://api.github.com/repos/Acode-Foundation/Acode/releases/latest",
+			`https://api.github.com/repos/Fyooryx/Vexa/releases/latest`,
 			{
 				method: "GET",
 				responseType: "json",
@@ -518,7 +519,7 @@ function showSftpMigrationReport({
 
 	alert(
 		"Some SFTP connections were removed",
-		`Acode could not move ${failures.length} saved SFTP connection${failures.length === 1 ? "" : "s"} into encrypted storage. The affected connection data and ${removedReferences} saved reference${removedReferences === 1 ? " were" : "s were"} removed so Acode could start safely. Please add the connection${failures.length === 1 ? "" : "s"} again.<br><br>${details}${recoveryMessage}`,
+		`Vexa could not move ${failures.length} saved SFTP connection${failures.length === 1 ? "" : "s"} into encrypted storage. The affected connection data and ${removedReferences} saved reference${removedReferences === 1 ? " were" : "s were"} removed so Vexa could start safely. Please add the connection${failures.length === 1 ? "" : "s"} again.<br><br>${details}${recoveryMessage}`,
 	);
 }
 
