@@ -32,4 +32,18 @@ describe("Vexa branding", () => {
 	it("uses the Vexa log filename", () => {
 		expect(read("src/lib/config.js")).toMatch(/LOG_FILE_NAME:\s*"Vexa\.log"/);
 	});
+	it("pins native authentication to trusted HTTPS origins", () => {
+		const authenticator = read(
+			"src/plugins/auth/src/android/Authenticator.java",
+		);
+
+		expect(authenticator).toMatch(/DEFAULT_BASE_URL = "https:\/\/acode\.app"/);
+		expect(authenticator).toMatch(/Unsupported authentication endpoint/);
+		expect(authenticator).toMatch(/Untrusted authentication endpoint/);
+		expect(authenticator).toMatch(/"acode\.app"\.equalsIgnoreCase\(host\)/);
+		expect(authenticator).toMatch(/"dev\.acode\.app"\.equalsIgnoreCase\(host\)/);
+		expect(authenticator).toMatch(/validateBaseUrl\(options\.optString/);
+		expect(authenticator).toMatch(/validateBaseUrl\(prefManager\.getString/);
+	});
+
 });
