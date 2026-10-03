@@ -1,5 +1,5 @@
-import config from "lib/config";
 import multiPrompt from "dialogs/multiPrompt";
+import config from "lib/config";
 import helpers from "utils/helpers";
 
 export default {
