@@ -32,9 +32,9 @@ const version = /<widget[^>]*\bversion="([^"]+)"/.exec(config);
 expect(widget?.[1] === "com.vexa.app", "config.xml widget id must be com.vexa.app");
 expect(config.includes("<name>Vexa</name>"), "config.xml app name must be Vexa");
 expect(version?.[1] === pkg.version, "config.xml and package.json versions must match");
-expect(/^1\\.14\\.1$/.test(pkg.version), "Vexa release version must be 1.14.1 for this hardening release");
 expect(pkg.name === "com.vexa.app", "package.json name must be com.vexa.app");
 expect(pkg.displayName === "Vexa", "package.json displayName must be Vexa");
+expect(pkg.engines?.node && /22/.test(pkg.engines.node), "package.json must declare Node.js 22+ support");
 expect(lock.name === pkg.name && lock.version === pkg.version, "package-lock root identity/version drifted");
 expect(bun.workspaces?.[""]?.name === pkg.name, "bun.lock root package name drifted");
 
