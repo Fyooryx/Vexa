@@ -1,3 +1,4 @@
+import config from "lib/config";
 import fsOperation from "fileSystem";
 import loader from "dialogs/loader";
 import helpers from "utils/helpers";
@@ -52,7 +53,7 @@ add(
 	"Source Code",
 	`@font-face {
   font-family: 'Source Code';
-  src: url(https://acode.app/SourceCodePro.ttf) format('truetype');
+  src: url(${config.BASE_URL}/SourceCodePro.ttf) format('truetype');
   font-weight: 300 700;
   font-style: normal;
 }`,
@@ -62,7 +63,7 @@ add(
 	"Victor Mono Italic",
 	`@font-face {
   font-family: 'Victor Mono Italic';
-  src: url(https://acode.app/VictorMono-Italic.otf) format('truetype');
+  src: url(${config.BASE_URL}/VictorMono-Italic.otf) format('truetype');
   font-style: normal;
 }`,
 );
@@ -71,7 +72,7 @@ add(
 	"Victor Mono Medium",
 	`@font-face {
   font-family: 'Victor Mono Medium';
-  src: url(https://acode.app/VictorMono-Medium.otf) format('truetype');
+  src: url(${config.BASE_URL}/VictorMono-Medium.otf) format('truetype');
   font-weight: medium;
   font-style: normal;
 }`,
@@ -81,7 +82,7 @@ add(
 	"Cascadia Code",
 	`@font-face {
   font-family: 'Cascadia Code';
-  src: url(https://acode.app/CascadiaCode.ttf) format('truetype');
+  src: url(${config.BASE_URL}/CascadiaCode.ttf) format('truetype');
   font-weight: 300 700;
   font-style: normal;
 }`,
@@ -91,7 +92,7 @@ add(
 	"Proggy Clean",
 	`@font-face {
   font-family: 'Proggy Clean';
-  src: url(https://acode.app/ProggyClean.ttf) format('truetype');
+  src: url(${config.BASE_URL}/ProggyClean.ttf) format('truetype');
   font-weight: 300 700;
   font-style: normal;
 }`,
@@ -101,7 +102,7 @@ add(
 	"JetBrains Mono Bold",
 	`@font-face {
   font-family: 'JetBrains Mono Bold';
-  src: url(https://acode.app/JetBrainsMono-Bold.ttf) format('truetype');
+  src: url(${config.BASE_URL}/JetBrainsMono-Bold.ttf) format('truetype');
   font-weight: bold;
 }`,
 );
@@ -110,7 +111,7 @@ add(
 	"JetBrains Mono Regular",
 	`@font-face {
   font-family: 'JetBrains Mono Regular';
-  src: url(https://acode.app/JetBrainsMono-Regular.ttf) format('truetype');
+  src: url(${config.BASE_URL}/JetBrainsMono-Regular.ttf) format('truetype');
   font-weight: 300 700;
   font-style: normal;
 }`,
@@ -121,7 +122,7 @@ add(
 	`@font-face {
   font-display: swap;
   font-family: 'Noto Mono';
-  src: url(https://acode.app/NotoMono-Regular.woff) format("woff");
+  src: url(${config.BASE_URL}/NotoMono-Regular.woff) format("woff");
   font-weight: 400;
   font-style: normal;
   unicode-range: U+0590-06FF;
