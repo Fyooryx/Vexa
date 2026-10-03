@@ -6,6 +6,10 @@
 - pinned remaining third-party GitHub Actions to immutable commit SHAs
 - standardized nightly builds on Node.js 22 and `npm ci` for reproducibility
 - added a CI verifier that rejects unpinned workflow actions
+- centralized Vexa/upstream release endpoints and API credential handling
+- restricted Android cleartext traffic to loopback-only local services
+- declared the terminal executor's special-use foreground-service subtype
+- cleaned failed WebSocket instances to prevent stale registry entries
 - updated Vexa contributor documentation and diagnostics regression data to the current 1.14.1 baseline
 
 
