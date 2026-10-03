@@ -189,6 +189,9 @@ public class WebSocketInstance extends WebSocketListener {
         this.readyState = 3; // CLOSED
         sendEvent("error", t.getMessage(), false, false);
         Log.e(TAG, "websocket instanceId=" + this.instanceId + " Error: " + t.getMessage());
+        // A failed socket will never reach onClosed(), so release its registry
+        // entry here to prevent stale instances from accumulating.
+        WebSocketPlugin.removeInstance(this.instanceId);
     }
 
     public void setBinaryType(String binaryType) {
