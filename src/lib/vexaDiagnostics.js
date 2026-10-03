@@ -1,8 +1,10 @@
 import config from "./config";
-import { VEXA_IDENTITY, getRuntimePackageName } from "./vexaIdentity";
+import { getRuntimePackageName, VEXA_IDENTITY } from "./vexaIdentity";
 
 function valueOrUnknown(value) {
-	return value === undefined || value === null || value === "" ? "unknown" : String(value);
+	return value === undefined || value === null || value === ""
+		? "unknown"
+		: String(value);
 }
 
 export function getVexaDiagnostics(runtime = {}) {
@@ -45,5 +47,7 @@ export async function copyVexaDiagnostics(runtime) {
 		return true;
 	}
 
+	// Intentionally keep diagnostics side-effect free until copy is requested.
 	return false;
 }
+export const VEXA_DIAGNOSTICS_VERSION = 1;
