@@ -81,8 +81,34 @@ expect(
 	),
 	"upstream repository identity is missing",
 );
+expect(
+	identity.includes(
+		'RELEASES_API_URL:\n\t\t"https://api.github.com/repos/Fyooryx/Vexa/releases"',
+	),
+	"Vexa release endpoint identity is missing",
+);
+expect(
+	identity.includes(
+		'CHANGELOG_URL:\n\t\t"https://raw.githubusercontent.com/Fyooryx/Vexa/main/CHANGELOG.md"',
+	),
+	"Vexa changelog endpoint identity is missing",
+);
 
 expect(config.includes('android:scheme="vexa"'), "vexa:// scheme is missing");
+expect(
+	config.includes('android:usesCleartextTraffic="false"'),
+	"app-wide Android cleartext traffic must be disabled",
+);
+const networkConfig = read("res/android/xml/network_security_config.xml");
+expect(
+	networkConfig.includes('<base-config cleartextTrafficPermitted="false">'),
+	"network security base config must deny cleartext traffic",
+);
+expect(
+	networkConfig.includes('<domain includeSubdomains="false">localhost</domain>') &&
+		networkConfig.includes('<domain includeSubdomains="false">127.0.0.1</domain>'),
+	"loopback HTTP exception must cover localhost and 127.0.0.1",
+);
 expect(
 	config.includes('android:scheme="acode"'),
 	"legacy acode:// compatibility scheme is missing",
@@ -94,6 +120,14 @@ expect(
 expect(
 	config.includes('android:roundIcon="@drawable/vexa_icon"'),
 	"active round launcher icon must use vexa_icon",
+);
+const terminalPlugin = read("src/plugins/terminal/plugin.xml");
+expect(
+	terminalPlugin.includes('android:foregroundServiceType="specialUse"') &&
+		terminalPlugin.includes(
+			'android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"',
+		),
+	"terminal foreground service must declare its special-use subtype",
 );
 expect(
 	!config.includes("@mipmap/ic_acode_"),
