@@ -32,6 +32,7 @@ const version = /<widget[^>]*\bversion="([^"]+)"/.exec(config);
 expect(widget?.[1] === "com.vexa.app", "config.xml widget id must be com.vexa.app");
 expect(config.includes("<name>Vexa</name>"), "config.xml app name must be Vexa");
 expect(version?.[1] === pkg.version, "config.xml and package.json versions must match");
+expect(/^1\\.14\\.1$/.test(pkg.version), "Vexa release version must be 1.14.1 for this hardening release");
 expect(pkg.name === "com.vexa.app", "package.json name must be com.vexa.app");
 expect(pkg.displayName === "Vexa", "package.json displayName must be Vexa");
 expect(lock.name === pkg.name && lock.version === pkg.version, "package-lock root identity/version drifted");
@@ -42,6 +43,7 @@ expect(identity.includes('PACKAGE_NAME: "com.vexa.app"'), "Vexa identity package
 expect(identity.includes('FREE_PACKAGE_NAME: "com.vexa.appfree"'), "Vexa free package identity is missing");
 expect(identity.includes('URL_SCHEME: "vexa"'), "Vexa URL scheme is missing");
 expect(identity.includes('REPOSITORY_URL: "https://github.com/Fyooryx/Vexa"'), "Vexa repository identity is missing");
+expect(identity.includes('UPSTREAM_REPOSITORY_URL: "https://github.com/Acode-Foundation/Acode"'), "upstream repository identity is missing");
 
 expect(config.includes('android:scheme="vexa"'), "vexa:// scheme is missing");
 expect(config.includes('android:scheme="acode"'), "legacy acode:// compatibility scheme is missing");
