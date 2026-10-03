@@ -32,4 +32,31 @@ describe("Vexa branding", () => {
 	it("uses the Vexa log filename", () => {
 		expect(read("src/lib/config.js")).toMatch(/LOG_FILE_NAME:\s*"Vexa\.log"/);
 	});
+
+	it("keeps Android network and terminal service policy hardened", () => {
+		const networkConfig = read(
+			"res/android/xml/network_security_config.xml",
+		);
+		const appConfig = read("config.xml");
+		const terminalPlugin = read("src/plugins/terminal/plugin.xml");
+
+		expect(networkConfig).toMatch(
+			/<base-config cleartextTrafficPermitted="false">/,
+		);
+		expect(networkConfig).toMatch(
+			/<domain includeSubdomains="false">localhost<\/domain>/,
+		);
+		expect(networkConfig).toMatch(
+			/<domain includeSubdomains="false">127\.0\.0\.1<\/domain>/,
+		);
+		expect(appConfig).toMatch(
+			/android:usesCleartextTraffic="false"/,
+		);
+		expect(terminalPlugin).toMatch(
+			/PROPERTY_SPECIAL_USE_FGS_SUBTYPE/,
+		);
+		expect(terminalPlugin).toMatch(
+			/foregroundServiceType="specialUse"/,
+		);
+	});
 });
