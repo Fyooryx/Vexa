@@ -47,5 +47,6 @@ export async function copyVexaDiagnostics(runtime) {
 		return true;
 	}
 
+	// Intentionally keep diagnostics side-effect free until copy is requested.
 	return false;
 }
