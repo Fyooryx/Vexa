@@ -113,7 +113,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
-          node-version: "lts/*" # or '18.x' for latest stable
+          node-version: "22"
           cache: ${{ (!(inputs.is_PR && inputs.PR_NUMBER) && github.ref == 'refs/heads/main' && 'npm') || '' }}
 
       - name: Compute metadata
@@ -151,10 +151,10 @@ jobs:
           echo "NORMAL_APK_PATH=/tmp/vexa-debug-normal-$UPDATED.apk" >> "$GITHUB_ENV"
           echo "FDROID_APK_PATH=/tmp/vexa-debug-fdroid-$UPDATED.apk" >> "$GITHUB_ENV"
 
-      - name: Install deps
+      - name: Install dependencies
         run: |
-          npm install
-          npm install -g cordova
+          npm ci --no-audit --no-fund
+          npm install --global cordova@13.0.0
           npm run setup
 
       - name: Build normal APK
@@ -178,7 +178,7 @@ jobs:
 
       - name: Upload fdroid artifact
         if: ${{ !inputs.is_PR }}
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: ${{ steps.meta.outputs.fdroid_artifact_name }}
           path: ${{ env.FDROID_APK_PATH }}
