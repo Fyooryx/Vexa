@@ -107,8 +107,8 @@ import keyBindings, {
 	CODEMIRROR_COMMAND_NAMES,
 } from "lib/keyBindings";
 import settings from "lib/settings";
-import Url from "utils/Url";
 import { copyVexaDiagnostics } from "lib/vexaDiagnostics";
+import Url from "utils/Url";
 
 const commandKeymapCompartment = new Compartment();
 
