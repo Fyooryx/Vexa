@@ -1,4 +1,4 @@
-// automatically include credentials for acode.app API requests
+// automatically include credentials for the hosted upstream API requests
 (function () {
 	const _fetch = window.fetch;
 	window.fetch = function (url, options) {
