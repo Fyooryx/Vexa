@@ -4,7 +4,7 @@ on:
   # This workflow executes PR Code by checkout later
   # MUST approve the PR Code BEFORE using this workflow on PRs.
   # Uses this trigger to keep up-to-date execution of the workflow (triggers from Default Branch)
-  pull_request_target:
+  pull_request:
     paths-ignore:
       - '**.md'
 #      - '.github/**'
@@ -75,10 +75,6 @@ jobs:
 
   trigger_builder:
       needs: job_trigger
-      permissions:
-        contents: read
-        pull-requests: read
-        issues: read
       secrets:
         KEYSTORE_CONTENT: ${{ secrets.KEYSTORE_CONTENT }}
         BUILD_JSON_CONTENT: ${{ secrets.BUILD_JSON_CONTENT }}
@@ -94,7 +90,7 @@ jobs:
         contents: read
         pull-requests: write
       runs-on: ubuntu-latest
-      if: ${{ github.repository_owner == 'Acode-Foundation' && always() && contains(fromJSON('["failure","cancelled", "success"]'), needs.trigger_builder.result) }}
+      if: ${{ github.repository == 'Fyooryx/Vexa' && always() && contains(fromJSON('["failure","cancelled", "success"]'), needs.trigger_builder.result) }}
       steps:
 
         - name: Update Last Comment by bot (If Workflow Triggering succeeded)
