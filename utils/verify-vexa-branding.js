@@ -36,7 +36,10 @@ expect(
 	widget?.[1] === "com.vexa.app",
 	"config.xml widget id must be com.vexa.app",
 );
-expect(config.includes("<name>Vexa</name>"), "config.xml app name must be Vexa");
+expect(
+	config.includes("<name>Vexa</name>"),
+	"config.xml app name must be Vexa",
+);
 expect(
 	version?.[1] === pkg.version,
 	"config.xml and package.json versions must match",
@@ -148,10 +151,7 @@ expect(
 	buildScript.startsWith("#!/usr/bin/env bash"),
 	"build.sh must use bash explicitly",
 );
-expect(
-	buildScript.includes("set -Eeuo pipefail"),
-	"build.sh must fail fast",
-);
+expect(buildScript.includes("set -Eeuo pipefail"), "build.sh must fail fast");
 expect(!buildScript.includes("eval "), "build.sh must not use eval");
 
 for (const file of [
