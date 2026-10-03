@@ -61,7 +61,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    if: github.repository_owner == 'Acode-Foundation'
+    if: github.repository == 'Fyooryx/Vexa'
     permissions:
       contents: read
       pull-requests: read
@@ -151,8 +151,8 @@ jobs:
           UPDATED="${{ steps.base.outputs.version }}-${{ env.VERSION_LABEL }}.$SUFFIX"
           sed -i "s/version=\"${{ steps.base.outputs.version }}\"/version=\"$UPDATED\"/g" config.xml
           echo "updated_version=$UPDATED" >> "$GITHUB_OUTPUT"
-          echo "NORMAL_APK_PATH=/tmp/acode-debug-normal-$UPDATED.apk" >> "$GITHUB_ENV"
-          echo "FDROID_APK_PATH=/tmp/acode-debug-fdroid-$UPDATED.apk" >> "$GITHUB_ENV"
+          echo "NORMAL_APK_PATH=/tmp/vexa-debug-normal-$UPDATED.apk" >> "$GITHUB_ENV"
+          echo "FDROID_APK_PATH=/tmp/vexa-debug-fdroid-$UPDATED.apk" >> "$GITHUB_ENV"
 
       - name: Install deps
         run: |
