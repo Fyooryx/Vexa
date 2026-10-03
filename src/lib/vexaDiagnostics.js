@@ -16,7 +16,7 @@ export function getVexaDiagnostics(runtime = {}) {
 		"App: " + VEXA_IDENTITY.NAME,
 		"Version: " + valueOrUnknown(buildInfo.versionName),
 		"Version code: " + valueOrUnknown(buildInfo.versionCode),
-		"Package: " + getRuntimePackageName(),
+		"Package: " + getRuntimePackageName(buildInfo),
 		"Android: " + valueOrUnknown(deviceInfo.version),
 		"Platform: " + valueOrUnknown(deviceInfo.platform),
 		"Model: " + valueOrUnknown(deviceInfo.model),
