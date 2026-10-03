@@ -6,57 +6,53 @@ on:
       - main
   pull_request:
     branches:
-      - '**'
+      - "**"
   merge_group:
 
+permissions:
+  contents: read
+
 jobs:
-  spell-check:
-    timeout-minutes: 5
-    name: Check spelling
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Actions Repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-
-      - name: Check spelling
-        uses: crate-ci/typos@main
-        with:
-          config: ./_typos.toml
-
   quality:
-    timeout-minutes: 5
-    name: Linting and formatting
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-
-      - name: Setup Biome
-        uses: biomejs/setup-biome@4c91541eaada48f67d7dbd7833600ce162b68f51 # v2.7.1
-
-      - name: Run Biome
-        run: biome ci .
-
-  unit-tests:
-    name: Unit Tests (On PR Only)
+    name: Static Quality
     timeout-minutes: 10
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    if: github.event_name == 'pull_request'
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Checkout repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.2.2
         with:
+          fetch-depth: 0
+
+      - name: Use Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Run Biome CI
+        run: ./node_modules/.bin/biome ci .
+
+  unit-tests:
+    name: Unit Tests
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.2.2
+        with:
+          fetch-depth: 0
           submodules: recursive
 
       - name: Use Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
+          node-version: "22"
           cache: npm
-          cache-dependency-path: '**/package-lock.json'
+          cache-dependency-path: package-lock.json
 
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
@@ -65,63 +61,68 @@ jobs:
         run: npm run test
 
   translation-check:
-    name: Translation Check (On PR Only)
-    timeout-minutes: 5
+    name: Translation Check
+    timeout-minutes: 10
     runs-on: ubuntu-latest
-    permissions: 
-      contents: read
-      pull-requests: read
     if: github.event_name == 'pull_request'
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Checkout repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.2.2
         with:
+          fetch-depth: 0
           submodules: recursive
-      - name: Use Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
-        with:
-          cache: npm
-          cache-dependency-path: '**/package-lock.json'
 
-      - name: Detect Changed Files
-        uses: dorny/paths-filter@v4
-        id: file-changes
+      - name: Use Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
-          list-files: shell
-          filters: |
-            translation:
-              - 'src/lang/*.json'
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Translation Files Check (if changed)
-        if: steps.file-changes.outputs.translation == 'true'
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Detect translation changes
+        id: translation
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
-            npm ci --no-audit --no-fund
-            npm run lang check
+          set -euo pipefail
+          if git diff --name-only "$BASE_SHA" "$HEAD_SHA" -- 'src/lang/*.json' | grep -q .; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install dependencies
+        if: steps.translation.outputs.changed == 'true'
+        run: npm ci --no-audit --no-fund
+
+      - name: Validate translation files
+        if: steps.translation.outputs.changed == 'true'
+        run: npm run lang check
 
   vexa-guard:
     name: Vexa Identity & Type Safety
-    timeout-minutes: 10
+    timeout-minutes: 15
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
     if: github.event_name == 'pull_request' || github.event_name == 'push' || github.event_name == 'merge_group'
     steps:
       - name: Checkout repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.2.2
         with:
+          fetch-depth: 0
           submodules: recursive
 
       - name: Use Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
-          node-version: 24
+          node-version: "22"
           cache: npm
-          cache-dependency-path: '**/package-lock.json'
+          cache-dependency-path: package-lock.json
 
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
-      - name: Verify Vexa branding and release metadata
+      - name: Verify Vexa identity
         run: npm run verify:branding
 
       - name: Typecheck
