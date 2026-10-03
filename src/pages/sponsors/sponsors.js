@@ -214,10 +214,19 @@ function SponsorCard({ name, image, website, tier, tagline }) {
 function handleLinkClick(e) {
 	const target = e.target.closest(".sponsor-card");
 	if (!target) return;
-	const { website } = target.dataset;
-	if (!website) return;
-	if (!website.startsWith("http")) {
-		website = "http://" + website;
+
+	const rawWebsite = target.dataset.website?.trim();
+	if (!rawWebsite) return;
+
+	const normalizedWebsite = /^https?:\/\//i.test(rawWebsite)
+		? rawWebsite
+		: `https://${rawWebsite}`;
+
+	try {
+		const websiteUrl = new URL(normalizedWebsite);
+		if (!["http:", "https:"].includes(websiteUrl.protocol)) return;
+		system.openInBrowser(websiteUrl.toString());
+	} catch (error) {
+		console.warn("Ignoring invalid sponsor URL:", rawWebsite, error);
 	}
-	system.openInBrowser(website);
 }
