@@ -22,7 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Authenticator extends CordovaPlugin {
-    private static final String TAG = "AcodeAuth";
+    private static final String TAG = "VexaAuth";
     private static final String PREFS_FILENAME = "acode_auth_secure";
     private static final String KEY_TOKEN = "auth_token";
     private static final String PRO_PURCHASED = "pro_purchased";
@@ -146,7 +146,12 @@ public class Authenticator extends CordovaPlugin {
 
     private boolean handleAuthCallback(Intent intent) {
         Uri data = intent != null ? intent.getData() : null;
-        if (data == null || !"acode".equals(data.getScheme()) || !"auth".equals(data.getHost()) || !"/callback".equals(data.getPath())) {
+        if (
+            data == null ||
+            !("vexa".equalsIgnoreCase(data.getScheme()) || "acode".equalsIgnoreCase(data.getScheme())) ||
+            !"auth".equalsIgnoreCase(data.getHost()) ||
+            !"/callback".equals(data.getPath())
+        ) {
             return false;
         }
 
