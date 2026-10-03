@@ -108,6 +108,7 @@ import keyBindings, {
 } from "lib/keyBindings";
 import settings from "lib/settings";
 import { copyVexaDiagnostics } from "lib/vexaDiagnostics";
+import { VEXA_IDENTITY } from "lib/vexaIdentity";
 import Url from "utils/Url";
 
 const commandKeymapCompartment = new Compartment();
@@ -636,6 +637,26 @@ function registerCoreCommands() {
 					);
 				})
 				.catch(() => toast("Failed to copy Vexa diagnostics"));
+			return true;
+		},
+	});
+	addCommand({
+		name: "vexa:openRepository",
+		description: "Open Vexa repository",
+		readOnly: true,
+		requiresView: false,
+		run() {
+			system.openInBrowser(VEXA_IDENTITY.REPOSITORY_URL);
+			return true;
+		},
+	});
+	addCommand({
+		name: "vexa:openReleases",
+		description: "Open Vexa releases",
+		readOnly: true,
+		requiresView: false,
+		run() {
+			system.openInBrowser(`${VEXA_IDENTITY.REPOSITORY_URL}/releases`);
 			return true;
 		},
 	});
