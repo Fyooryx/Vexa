@@ -14,13 +14,10 @@ import helpers from "utils/helpers";
 
 const VEXA_REPO_URL = VEXA_IDENTITY.REPOSITORY_URL;
 const UPSTREAM_REPO_URL = VEXA_IDENTITY.UPSTREAM_REPOSITORY_URL;
-const VEXA_RELEASES_URL = "https://api.github.com/repos/Fyooryx/Vexa/releases";
-const UPSTREAM_RELEASES_URL =
-	"https://api.github.com/repos/Acode-Foundation/Acode/releases";
-const VEXA_CHANGELOG_URL =
-	"https://raw.githubusercontent.com/Fyooryx/Vexa/main/CHANGELOG.md";
-const UPSTREAM_CHANGELOG_URL =
-	"https://raw.githubusercontent.com/Acode-Foundation/Acode/main/CHANGELOG.md";
+const VEXA_RELEASES_URL = VEXA_IDENTITY.RELEASES_API_URL;
+const UPSTREAM_RELEASES_URL = VEXA_IDENTITY.UPSTREAM_RELEASES_API_URL;
+const VEXA_CHANGELOG_URL = VEXA_IDENTITY.CHANGELOG_URL;
+const UPSTREAM_CHANGELOG_URL = VEXA_IDENTITY.UPSTREAM_CHANGELOG_URL;
 const RELEASE_SOURCES = [
 	{ releases: VEXA_RELEASES_URL, repository: VEXA_REPO_URL },
 	{ releases: UPSTREAM_RELEASES_URL, repository: UPSTREAM_REPO_URL },
