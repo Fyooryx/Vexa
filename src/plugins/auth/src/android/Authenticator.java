@@ -32,8 +32,9 @@ public class Authenticator extends CordovaPlugin {
     private static final String KEY_PENDING_BASE_URL = "pending_login_base_url";
     private static final int AUTH_CONNECT_TIMEOUT_MS = 15_000;
     private static final int AUTH_READ_TIMEOUT_MS = 30_000;
+    private static final String DEFAULT_BASE_URL = "https://acode.app";
     private static final String[] API_ORIGINS = {
-        "https://acode.app"
+        DEFAULT_BASE_URL
     };
     private static final String[] LEGACY_ORIGINS = {
         "https://acode.app",
@@ -100,7 +101,14 @@ public class Authenticator extends CordovaPlugin {
     }
 
     private void startLogin(JSONObject options, CallbackContext callbackContext) {
-        String baseUrl = options.optString("baseUrl", "https://acode.app");
+        final String baseUrl;
+        try {
+            baseUrl = validateBaseUrl(options.optString("baseUrl", DEFAULT_BASE_URL));
+        } catch (IllegalArgumentException error) {
+            callbackContext.error(error.getMessage());
+            return;
+        }
+
         int appVersionCode = options.optInt("appVersionCode", 0);
         String state = randomHex(24);
         String verifier = randomHex(32);
@@ -159,7 +167,15 @@ public class Authenticator extends CordovaPlugin {
         String state = data.getQueryParameter("state");
         String expectedState = prefManager.getString(KEY_PENDING_STATE, "");
         String verifier = prefManager.getString(KEY_PENDING_VERIFIER, "");
-        String baseUrl = prefManager.getString(KEY_PENDING_BASE_URL, "https://acode.app");
+        final String baseUrl;
+        try {
+            baseUrl = validateBaseUrl(
+                prefManager.getString(KEY_PENDING_BASE_URL, DEFAULT_BASE_URL)
+            );
+        } catch (IllegalArgumentException error) {
+            failLogin("Invalid authentication endpoint");
+            return true;
+        }
 
         if (code == null || state == null || expectedState.isEmpty() || verifier.isEmpty() || !expectedState.equals(state)) {
             failLogin("Invalid login callback");
@@ -188,7 +204,8 @@ public class Authenticator extends CordovaPlugin {
     }
 
     private String exchangeCode(String baseUrl, String code, String state, String verifier) throws Exception {
-        URL url = new URL(baseUrl + "/api/user/app-token/exchange");
+        String validatedBaseUrl = validateBaseUrl(baseUrl);
+        URL url = new URL(validatedBaseUrl + "/api/user/app-token/exchange");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         try {
             connection.setConnectTimeout(AUTH_CONNECT_TIMEOUT_MS);
@@ -224,6 +241,32 @@ public class Authenticator extends CordovaPlugin {
         } finally {
             connection.disconnect();
         }
+    }
+
+    private String validateBaseUrl(String candidate) {
+        String normalized = candidate == null ? "" : candidate.trim();
+        Uri uri = Uri.parse(normalized);
+        String scheme = uri.getScheme();
+        String host = uri.getHost();
+        String path = uri.getPath();
+
+        if (
+            !"https".equalsIgnoreCase(scheme) ||
+            host == null ||
+            uri.getPort() != -1 ||
+            uri.getUserInfo() != null ||
+            uri.getQuery() != null ||
+            uri.getFragment() != null ||
+            (path != null && !path.isEmpty() && !"/".equals(path))
+        ) {
+            throw new IllegalArgumentException("Unsupported authentication endpoint");
+        }
+
+        if (!("acode.app".equalsIgnoreCase(host) || "dev.acode.app".equalsIgnoreCase(host))) {
+            throw new IllegalArgumentException("Untrusted authentication endpoint");
+        }
+
+        return "https://" + host.toLowerCase(java.util.Locale.ROOT);
     }
 
     private String readStream(InputStream stream) throws Exception {
