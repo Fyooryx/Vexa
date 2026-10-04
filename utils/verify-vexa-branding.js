@@ -484,10 +484,15 @@ for (const file of iconPreviewFiles) {
 		`icon preview ${file} is not backed by the canonical Vexa PNG`,
 	);
 }
+const appIconImages =
+	read("src/lib/appIcons.js").match(/image: "icons\/vexa[^"]*\.svg"/g) || [];
 expect(
-	read("src/lib/appIcons.js").split('image: "icons/vexa.svg"').length - 1 ===
-		16,
-	"all app icon previews must resolve to the canonical Vexa icon",
+	appIconImages.length === 16,
+	"all Vexa app icon preview entries must be present",
+);
+expect(
+	new Set(appIconImages).size === 16,
+	"Vexa app icon preview entries must use distinct Vexa assets",
 );
 
 console.log(

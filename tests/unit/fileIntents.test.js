@@ -23,6 +23,21 @@ function setup() {
 			"lib/loadPlugins": { isInitialPluginLoadComplete: () => pluginsReady },
 			"dialogs/select": select,
 			"utils/helpers": { error: reportError },
+			"utils/appDeepLink": {
+				parseAppDeepLink: (url) => {
+					if (typeof url !== "string") return null;
+					const separator = url.indexOf("://");
+					if (separator <= 0) return null;
+					const scheme = url.slice(0, separator).toLowerCase();
+					if (scheme !== "vexa" && scheme !== "acode") return null;
+					const segments = url.slice(separator + 3).split("/");
+					const module = segments.shift() || "";
+					const action = segments.shift() || "";
+					if (!module || !action) return null;
+					const value = segments.join("/") || undefined;
+					return { scheme, module, action, value };
+				},
+			},
 		},
 		{
 			document,

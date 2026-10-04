@@ -37,8 +37,12 @@ describe("Vexa branding", () => {
 		expect(config).not.toMatch(/@mipmap\/ic_acode_/);
 		expect(config).toMatch(/android:icon="@drawable\/vexa_icon"/);
 		expect(config).toMatch(/android:roundIcon="@drawable\/vexa_icon"/);
-		expect(appIcons).toMatch(/icons\/vexa\.svg/);
-		expect((appIcons.match(/image: "icons\/vexa\.svg"/g) || []).length).toBe(16);
+		const iconImages =
+			[...appIcons.matchAll(/image: "(icons\/vexa[^"]*\.svg)"/g)].map(
+				(match) => match[1],
+			);
+		expect(iconImages).toHaveLength(16);
+		expect(new Set(iconImages)).toHaveLength(16);
 		expect(appIcons).not.toMatch(/icons\/ic_acode_/);
 		expect(appIcons).toMatch(/icons\/vexa_default\.svg|icons\/vexa\.svg/);
 		expect(read("www/logo.svg")).toContain("Vexa logo");
