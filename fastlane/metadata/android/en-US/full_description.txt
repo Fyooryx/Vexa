@@ -1,8 +1,8 @@
 Vexa is an Android code editor and web IDE based on the open-source Acode project. Edit projects, manage files, use a Linux terminal, work with Git and SSH, and extend your setup with community plugins.
 
-LINUX TERMINAL
+TERMUX TERMINAL
 
-Vexa includes an Alpine Linux terminal powered by proot, with no root required. Use apk to install supported command-line packages, keep multiple terminal tabs, customize your shell, and back up or restore your terminal setup.
+Vexa delegates its user-facing local terminal to the official Termux application. Keep your packages, shell configuration, permissions, and upgrades in Termux while using Vexa as the coding workspace.
 
 AI CODING SUPPORT
 
