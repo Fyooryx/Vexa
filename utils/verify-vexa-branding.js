@@ -33,6 +33,8 @@ const intentHandler = read("src/handlers/intent.js");
 const main = read("src/main.js");
 const polyfill = read("src/lib/polyfill.js");
 const bootstrap = read("www/index.html");
+const vexaCore = path.join(root, "..", "src/lib/vexa.js");
+const legacyCore = path.join(root, "..", "src/lib/acode.js");
 
 const widget = /<widget[^>]*\bid="([^"]+)"/.exec(config);
 const version = /<widget[^>]*\bversion="([^"]+)"/.exec(config);
@@ -107,6 +109,8 @@ expect(
 		!main.includes('url.includes("acode.app/api")'),
 	"credential routing must use the configured API base instead of a hard-coded substring match",
 );
+expect(fs.existsSync(vexaCore), "Vexa core module must exist at src/lib/vexa.js");
+expect(!fs.existsSync(legacyCore), "legacy src/lib/acode.js must not remain");
 expect(
 	bootstrap.includes("<title>Vexa</title>"),
 	"web bootstrap title must use Vexa branding",
@@ -325,6 +329,13 @@ function walk(dir) {
 	}
 	return files;
 }
+
+const repoRoot = path.join(root, "..");
+const legacyNamedFiles = walk(repoRoot).filter((file) => /(?:^|[/\\\\])[^/\\\\]*acode[^/\\\\]*$/i.test(file));
+expect(
+	legacyNamedFiles.length === 0,
+	`legacy Acode-named files must not remain: ${legacyNamedFiles.map((file) => path.relative(repoRoot, file)).join(", ")}`,
+);
 
 const androidRoot = path.join(root, "..", "res/android");
 const legacyNamedResources = walk(androidRoot).filter((file) =>
