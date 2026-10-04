@@ -16,8 +16,8 @@ export const DEFAULT_TERMINAL_SETTINGS = {
 	imageSupport: false,
 	fontLigatures: false,
 	confirmTabClose: true,
-	failsafeMode: false,
-	prootDebug: false,
+	termuxAutoOpen: true,
+	termuxWorkdir: "~",
 	// Touch selection settings
 	touchSelectionTapHoldDuration: 400,
 	touchSelectionMoveThreshold: 8,
