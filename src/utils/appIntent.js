@@ -1,13 +1,9 @@
 import { VEXA_IDENTITY } from "lib/vexaIdentity";
 
-const SCHEME_PATTERN = new RegExp(
-	"^(?:" +
-		VEXA_IDENTITY.URL_SCHEME +
-		"|" +
-		VEXA_IDENTITY.LEGACY_URL_SCHEME +
-		"):\\/\\/",
-	"i",
-);
+const SUPPORTED_SCHEMES = new Set([
+  VEXA_IDENTITY.URL_SCHEME,
+  VEXA_IDENTITY.LEGACY_URL_SCHEME,
+]);
 
 /**
  * Parse Vexa application deep links.
@@ -19,19 +15,22 @@ const SCHEME_PATTERN = new RegExp(
  * @returns {{scheme: string, module: string, action: string, value?: string} | null}
  */
 export function parseAppIntentUrl(value) {
-	if (typeof value !== "string") return null;
+  if (typeof value !== "string") return null;
 
-	const match = value.match(SCHEME_PATTERN);
-	if (!match) return null;
+  const separatorIndex = value.indexOf("://");
+  if (separatorIndex <= 0) return null;
 
-	const path = value.slice(match[0].length).replace(/^\\/+/, "");
-	const [module, action, ...valueParts] = path.split("/");
-	if (!module || !action) return null;
+  const scheme = value.slice(0, separatorIndex).toLowerCase();
+  if (!SUPPORTED_SCHEMES.has(scheme)) return null;
 
-	return {
-		scheme: match[0].slice(0, -3).toLowerCase(),
-		module,
-		action,
-		value: valueParts.length ? valueParts.join("/") : undefined,
-	};
+  const path = value.slice(separatorIndex + 3).replace(/^\/+/, "");
+  const [module, action, ...valueParts] = path.split("/");
+  if (!module || !action) return null;
+
+  return {
+    scheme,
+    module,
+    action,
+    value: valueParts.length ? valueParts.join("/") : undefined,
+  };
 }
