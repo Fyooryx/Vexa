@@ -30,11 +30,11 @@ expect(
 	packageJson.displayName === "Vexa",
 	"application display name must remain Vexa",
 );
-expect(config.includes('id="com.vexa.app"'), "config.xml must use com.vexa.app");
 expect(
-	config.includes("<name>Vexa</name>"),
-	"config.xml must use Vexa",
+	config.includes('id="com.vexa.app"'),
+	"config.xml must use com.vexa.app",
 );
+expect(config.includes("<name>Vexa</name>"), "config.xml must use Vexa");
 
 expect(
 	plugin.includes("TermuxBridge"),
@@ -149,7 +149,10 @@ for (const file of [
 	"src/plugins/terminal/www/Terminal.js",
 	"docs/TERMUX_TERMINAL.md",
 ]) {
-		expect(fs.existsSync(path.join(root, file)), `missing Termux asset: ${file}`);
+		expect(
+		fs.existsSync(path.join(root, file)),
+		`missing Termux asset: ${file}`,
+	);
 }
 
 console.log(
