@@ -28,6 +28,8 @@ const lock = readJson("package-lock.json");
 const bun = read("bun.lock");
 const config = read("config.xml");
 const identity = read("src/lib/vexaIdentity.js");
+const diagnostics = read("src/lib/vexaDiagnostics.js");
+const readme = read("readme.md");
 
 const widget = /<widget[^>]*\bid="([^"]+)"/.exec(config);
 const version = /<widget[^>]*\bversion="([^"]+)"/.exec(config);
