@@ -2,7 +2,7 @@ package com.foxdebug.system;
 
 import android.content.Context;
 import android.util.Log;
-import com.foxdebug.acode.rk.auth.EncryptedPreferenceManager;
+import com.vexa.app.rk.auth.EncryptedPreferenceManager;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
