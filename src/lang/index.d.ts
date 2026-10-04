@@ -842,7 +842,7 @@ declare type LangStrings = {
   "total memory": string;
   "uptime": string;
   "note": string;
-  "acode main process": string;
+  "vexa main process": string;
   "ppid parent": string;
   "unknown": string;
   "just started": string;
@@ -852,7 +852,7 @@ declare type LangStrings = {
   "diff sec": string;
   "command": string;
   "managed": string;
-  "acode service": string;
+  "vexa service": string;
   "horizontal scroll margin": string;
   "settings-info-horizontal-scroll-margin": string;
   "confirm app icon reward": string;
