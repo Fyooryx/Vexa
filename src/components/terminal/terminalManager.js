@@ -359,24 +359,24 @@ class TerminalManager {
 	 * Check if terminal is installed and install if needed
 	 * @returns {Promise<{success: boolean, error?: string}>}
 	 */
-\tasync checkAndInstallTerminal() {
-\t\ttry {
-\t\t\tconst installed =
-\t\t\t\ttypeof Terminal !== "undefined" && (await Terminal.isInstalled());
-\t\t\treturn installed
-\t\t\t\t? { success: true }
-\t\t\t\t: {
-\t\t\t\t\t\tsuccess: false,
-\t\t\t\t\t\terror:
-\t\t\t\t\t\t\t"Termux is not installed. Install Termux and grant Vexa RUN_COMMAND access.",
-\t\t\t\t\t};
-\t\t} catch (error) {
-\t\t\treturn {
-\t\t\t\tsuccess: false,
-\t\t\t\terror: error?.message || "Unable to verify Termux installation.",
-\t\t\t};
-\t\t}
-\t}
+	async checkAndInstallTerminal() {
+		try {
+			const installed =
+				typeof Terminal !== "undefined" && (await Terminal.isInstalled());
+			return installed
+				? { success: true }
+				: {
+						success: false,
+						error:
+							"Termux is not installed. Install Termux and grant Vexa RUN_COMMAND access.",
+					};
+		} catch (error) {
+			return {
+				success: false,
+				error: error?.message || "Unable to verify Termux installation.",
+			};
+		}
+	}
 
 	formatInstallLog(value) {
 		const values = Array.isArray(value) ? value : [value];
