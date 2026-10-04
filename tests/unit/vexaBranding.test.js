@@ -9,6 +9,8 @@ describe("Vexa branding", () => {
 		const config = read("config.xml");
 		const packageJson = JSON.parse(read("package.json"));
 		const packageLock = JSON.parse(read("package-lock.json"));
+		expect(fs.existsSync(new URL("../../src/lib/vexa.js", import.meta.url))).toBe(true);
+		expect(fs.existsSync(new URL("../../src/lib/acode.js", import.meta.url))).toBe(false);
 
 		expect(config).toMatch(/<widget[^>]*\bid="com\.vexa\.app"/);
 		expect(config).toMatch(/<name>Vexa<\/name>/);
@@ -27,6 +29,7 @@ describe("Vexa branding", () => {
 		expect(config).toMatch(/android:roundIcon="@drawable\/vexa_icon"/);
 		expect(appIcons).toMatch(/icons\/vexa\.svg/);
 		expect(appIcons).not.toMatch(/icons\/ic_acode_/);
+		expect(read("www/logo.svg")).toContain("Vexa logo");
 	});
 
 	it("uses Vexa command identities while preserving legacy aliases", () => {
