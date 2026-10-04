@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.14.2 — Vexa authentication and runtime hardening
+
+### Fixed
+- reject non-HTTPS, non-origin, and malformed native authentication endpoints before login state is persisted
+- accept the Vexa authentication callback scheme while retaining the legacy Acode callback for compatibility
+- prevent the native AdMob base class from reaching an unimplemented \`TODO()\` path when \`isLoaded\` is queried
+
+### Improved
+- validate the persisted authentication endpoint again before token exchange
+- run regression coverage for authentication endpoint allowlisting and Vexa diagnostics
+
 ## Unreleased — Vexa hardening
 
 ### Improved

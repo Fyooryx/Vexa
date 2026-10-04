@@ -57,21 +57,21 @@ abstract class AdBase(ctx: ExecuteContext) {
     }
 
     open val isLoaded: Boolean
-        get() = TODO("Not yet implemented")
+        get() = false
 
     open val canShowWhileLoading: Boolean
         get() = false
 
     open fun load(ctx: ExecuteContext) {
-        TODO("Not yet implemented")
+        ctx.reject("Ad type does not support load")
     }
 
     open fun show(ctx: ExecuteContext) {
-        TODO("Not yet implemented")
+        ctx.reject("Ad type does not support show")
     }
 
     open fun hide(ctx: ExecuteContext) {
-        TODO("Not yet implemented")
+        ctx.reject("Ad type does not support hide")
     }
 
     fun emit(eventName: String, data: Map<String, Any?> = mapOf()) {
