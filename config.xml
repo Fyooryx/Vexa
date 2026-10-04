@@ -7,8 +7,8 @@
     <description>
         Light weight code editor and web IDE for Android.
     </description>
-    <author email="ajit@foxdebug.com" href="https://foxdebug.com">
-        Foxdebug
+    <author email="zavriel.studio@gmail.com" href="https://github.com/Fyooryx/Vexa">
+        Vyrael (zavriel.id)
     </author>
     <content src="index.html" />
     <access launch-external="yes" origin="*" />
