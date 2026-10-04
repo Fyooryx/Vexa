@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Acode Dev Orchestrator
+ * Vexa Dev Orchestrator
  *
  * Starts:
  *   1. HTTP static file server (serves www/) + WebSocket reload relay (same port)
@@ -169,7 +169,7 @@ function getDevCert() {
 	// Generate via openssl (available on macOS, Linux, and Git Bash on Windows)
 	try {
 		execSync(
-			`openssl req -x509 -newkey rsa:2048 -keyout "${keyPath}" -out "${certPath}" -days 365 -nodes -subj "/CN=acode-dev"`,
+			`openssl req -x509 -newkey rsa:2048 -keyout "${keyPath}" -out "${certPath}" -days 365 -nodes -subj "/CN=vexa-dev"`,
 			{ stdio: "pipe" },
 		);
 		_cachedCert = {
@@ -509,7 +509,7 @@ async function main() {
 		args.find((a) => a.startsWith("--target="))?.split("=")[1] || null;
 	const emulator = args.includes("--emulator") || args.includes("-e");
 
-	console.log("\n  ⚡ Acode Dev Mode\n");
+	console.log("\n  ⚡ Vexa Dev Mode\n");
 
 	if (appVariant) {
 		log("info", `Configuring ${appVariant} app variant...`);
