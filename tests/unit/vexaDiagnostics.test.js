@@ -8,8 +8,8 @@ describe("Vexa diagnostics", () => {
 	it("produces a stable support report from injected runtime data", () => {
 		const report = getVexaDiagnostics({
 			buildInfo: {
-				versionName: "1.14.2",
-				versionCode: 1015,
+				versionName: "1.14.3",
+				versionCode: 1016,
 				packageName: "com.vexa.app",
 			},
 			device: {
@@ -47,8 +47,8 @@ describe("Vexa diagnostics", () => {
 				},
 			},
 			buildInfo: {
-				versionName: "1.14.2",
-				versionCode: 1015,
+				versionName: "1.14.3",
+				versionCode: 1016,
 				packageName: "com.vexa.app",
 			},
 		});
