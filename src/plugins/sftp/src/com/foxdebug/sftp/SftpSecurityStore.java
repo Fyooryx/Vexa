@@ -1,7 +1,7 @@
 package com.foxdebug.sftp;
 
 import android.content.Context;
-import com.foxdebug.acode.rk.auth.EncryptedPreferenceManager;
+import com.vexa.app.rk.auth.EncryptedPreferenceManager;
 import java.security.GeneralSecurityException;
 import java.util.UUID;
 import org.json.JSONException;
