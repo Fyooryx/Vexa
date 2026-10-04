@@ -30,7 +30,11 @@ export default async function HandleIntent(intent = {}) {
 			intent.data ||
 			intent.extras?.["android.intent.extra.STREAM"];
 		if (typeof url === "string" && isVexaDeepLink(url)) {
-			const path = url.replace(new RegExp(`^(${VEXA_IDENTITY.URL_SCHEME}|${VEXA_IDENTITY.LEGACY_URL_SCHEME}):\\/\\/`, "i"), "");
+			const deepLinkPrefix = new RegExp(
+				`^(${VEXA_IDENTITY.URL_SCHEME}|${VEXA_IDENTITY.LEGACY_URL_SCHEME}):\\\\/\\\\/`,
+				"i",
+			);
+			const path = url.replace(deepLinkPrefix, "");
 			const [module, action, value] = path.split("/");
 
 			if (module === "auth" && action === "callback") {
