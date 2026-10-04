@@ -140,16 +140,15 @@ class TerminalManager {
 		}
 	}
 
-	async getPersistedSessions() {
-		// Termux owns interactive local shell lifecycles. Vexa does not persist
-		// Termux PIDs because those sessions are external to the app process.
-		try {
-			localStorage.removeItem("acodeTerminalSessions");
-			localStorage.removeItem(TERMINAL_SESSION_STORAGE_KEY);
-		} catch {}
-		return [];
-	}
-
+\tasync getPersistedSessions() {
+\t\t// Termux owns interactive local shell lifecycle. Vexa intentionally does
+\t\t// not persist external Termux PIDs or attempt to reconnect them.
+\t\ttry {
+\t\t\tlocalStorage.removeItem("acodeTerminalSessions");
+\t\t\tlocalStorage.removeItem(TERMINAL_SESSION_STORAGE_KEY);
+\t\t} catch {}
+\t\treturn [];
+\t}
 
 	async persistTerminalSession(pid, name, pinned = false) {
 		if (!pid) return;
@@ -189,15 +188,13 @@ class TerminalManager {
 		}
 	}
 
-	async restorePersistedSessions() {
-		// Old Alpine/AXS local sessions cannot be safely reattached after the
-		// backend migration. Termux owns the real interactive session lifecycle.
-		try {
-			localStorage.removeItem("acodeTerminalSessions");
-			localStorage.removeItem(TERMINAL_SESSION_STORAGE_KEY);
-		} catch {}
-	}
-
+\tasync restorePersistedSessions() {
+\t\t// Old Alpine/AXS sessions are not reattached after migration.
+\t\ttry {
+\t\t\tlocalStorage.removeItem("acodeTerminalSessions");
+\t\t\tlocalStorage.removeItem(TERMINAL_SESSION_STORAGE_KEY);
+\t\t} catch {}
+\t}
 
 	/**
 	 * Create a new terminal session
@@ -362,25 +359,24 @@ class TerminalManager {
 	 * Check if terminal is installed and install if needed
 	 * @returns {Promise<{success: boolean, error?: string}>}
 	 */
-	async checkAndInstallTerminal() {
-		try {
-			const installed =
-				typeof Termux !== "undefined" && (await Termux.isInstalled());
-			return installed
-				? { success: true }
-				: {
-						success: false,
-						error:
-							"Termux is not installed. Install Termux and grant Vexa RUN_COMMAND access.",
-					};
-		} catch (error) {
-			return {
-				success: false,
-				error: error?.message || "Unable to verify Termux installation.",
-			};
-		}
-	}
-
+\tasync checkAndInstallTerminal() {
+\t\ttry {
+\t\t\tconst installed =
+\t\t\t\ttypeof Termux !== "undefined" && (await Termux.isInstalled());
+\t\t\treturn installed
+\t\t\t\t? { success: true }
+\t\t\t\t: {
+\t\t\t\t\t\tsuccess: false,
+\t\t\t\t\t\terror:
+\t\t\t\t\t\t\t"Termux is not installed. Install Termux and grant Vexa RUN_COMMAND access.",
+\t\t\t\t\t};
+\t\t} catch (error) {
+\t\t\treturn {
+\t\t\t\tsuccess: false,
+\t\t\t\terror: error?.message || "Unable to verify Termux installation.",
+\t\t\t};
+\t\t}
+\t}
 
 	formatInstallLog(value) {
 		const values = Array.isArray(value) ? value : [value];
