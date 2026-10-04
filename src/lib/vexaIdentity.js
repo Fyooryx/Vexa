@@ -11,6 +11,9 @@ export const VEXA_IDENTITY = Object.freeze({
 	URL_SCHEME: "vexa",
 	LEGACY_URL_SCHEME: "acode",
 	REPOSITORY_URL: "https://github.com/Fyooryx/Vexa",
+	OWNER_NAME: "Vyrael (zavriel.id)",
+	OWNER_EMAIL: "zavriel.studio@gmail.com",
+	OWNER_PHONE: "+62 851-8972-3640",
 	UPSTREAM_REPOSITORY_URL: "https://github.com/Acode-Foundation/Acode",
 	UPSTREAM_SERVICE_URL: "https://acode.app",
 	VEXA_RELEASE_API_URL:
