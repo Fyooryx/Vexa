@@ -7,6 +7,7 @@ import auth from "./auth";
 import config from "./config";
 import customTab from "./customTab";
 import { BANNER_SUPPRESSION_REASON, setBannerSuppressed } from "./startAd";
+import { setCachedPro } from "./proCache";
 
 let activePurchase = null;
 let activeRequest = null;
@@ -41,11 +42,7 @@ export default function removeAds({ signal } = {}) {
 			signal?.removeEventListener("abort", cancel);
 			enablePro();
 			// The cache is reverified by the existing startup purchase checks.
-			try {
-				localStorage.setItem("acode_pro", "true");
-			} catch (error) {
-				console.warn("Unable to cache Pro purchase", error);
-			}
+			setCachedPro();
 			toast(strings["thank you :)"]);
 			resolve();
 		}
