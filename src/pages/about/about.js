@@ -73,7 +73,8 @@ export default function AboutInclude() {
 					</div>
 					Email
 				</a>
-				<a href={`tel:${VEXA_IDENTITY.OWNER_PHONE.replace(/[^+\d]/g, "")}`} className="social-link">
+				<a href={`tel:${VEXA_IDENTITY.OWNER_PHONE.replace(/[^+\d]/g, "")}`}
+					className="social-link">
 					<div className="social-icon">
 						<span className="icon phone"></span>
 					</div>
