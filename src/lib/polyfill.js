@@ -1,8 +1,10 @@
-// automatically include credentials for the hosted upstream API requests
+import { isUpstreamApiUrl } from "lib/vexaIdentity";
+
+// Automatically include credentials for hosted upstream API requests.
 (function () {
 	const _fetch = window.fetch;
 	window.fetch = function (url, options) {
-		if (typeof url === "string" && url.includes("acode.app/api")) {
+		if (isUpstreamApiUrl(url)) {
 			options = { ...options, credentials: "include" };
 		}
 		return _fetch.call(this, url, options);
