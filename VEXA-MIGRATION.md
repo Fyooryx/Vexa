@@ -4,6 +4,8 @@
 
 The repository default branch is **main** and is the authoritative Vexa branch.
 
+Current application version: `1.14.4`
+
 The previous pre-rebrand `main` snapshot is preserved at:
 
 `legacy-main-2026-10-04`
