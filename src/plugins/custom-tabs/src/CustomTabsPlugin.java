@@ -1,4 +1,4 @@
-package com.foxdebug.acode.rk.customtabs;
+package com.vexa.app.rk.customtabs;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
