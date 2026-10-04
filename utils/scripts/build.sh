@@ -65,14 +65,14 @@ run() {
 }
 
 if [[ "$fdroidFlag" == "fdroid" ]]; then
-    if [[ -d "plugins/com.foxdebug.acode.rk.exec.proot" ]]; then
-        run cordova plugin remove com.foxdebug.acode.rk.exec.proot
+    if [[ -d "plugins/com.vexa.app.rk.exec.proot" ]]; then
+        run cordova plugin remove com.vexa.app.rk.exec.proot
     fi
     if [[ -d "plugins/cordova-plugin-iap" ]]; then
         run cordova plugin remove cordova-plugin-iap
     fi
 else
-    if [[ -d "src/plugins/proot" && ! -d "plugins/com.foxdebug.acode.rk.exec.proot" ]]; then
+    if [[ -d "src/plugins/proot" && ! -d "plugins/com.vexa.app.rk.exec.proot" ]]; then
         run cordova plugin add src/plugins/proot/
     fi
     if [[ -d "src/plugins/iap" && ! -d "plugins/cordova-plugin-iap" ]]; then
