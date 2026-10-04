@@ -151,6 +151,25 @@ expect(
 	"GitHub URL must use canonical Vexa identity",
 );
 
+expectFile("src/utils/appIntent.js");
+expect(
+	read("src/utils/appIntent.js").includes("parseAppIntentUrl"),
+	"Vexa deep-link parser is missing",
+);
+expect(
+	read("src/handlers/intent.js").includes("parseAppIntentUrl"),
+	"intent handler must use the Vexa deep-link parser",
+);
+expectFile("src/lib/proCache.js");
+expect(
+	read("src/lib/proCache.js").includes('VEXA_PRO_CACHE_KEY = "vexa_pro"'),
+	"Vexa Pro cache namespace is missing",
+);
+expect(
+	read("src/lib/removeAds.js").includes("setCachedPro"),
+	"Pro purchase flow must use the Vexa cache helper",
+);
+
 const helpers = read("src/utils/helpers.js");
 expect(
 	helpers.includes("isVexaTerminalPublicSafUri") &&
