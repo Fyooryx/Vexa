@@ -29,9 +29,10 @@ export default async function HandleIntent(intent = {}) {
 			intent.fileUri ||
 			intent.data ||
 			intent.extras?.["android.intent.extra.STREAM"];
-		if (typeof url === "string" && url.startsWith("acode://")) {
-			const path = url.replace("acode://", "");
-			const [module, action, value] = path.split("/");
+		const appIntent = typeof url === "string" ? parseAppIntentUrl(url) : null;
+
+		if (appIntent) {
+			const { module, action, value } = appIntent;
 
 			if (module === "auth" && action === "callback") {
 				return;
