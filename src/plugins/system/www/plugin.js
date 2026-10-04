@@ -240,6 +240,9 @@ module.exports = {
   setAppIcon: function (iconName, onSuccess, onFail) {
     cordova.exec(onSuccess, onFail, 'System', 'set-app-icon', [iconName]);
   },
+  getAppIcon: function (onSuccess, onFail) {
+    cordova.exec(onSuccess, onFail, 'System', 'get-app-icon', []);
+  },
   getGlobalSetting: function (key, onSuccess, onFail) {
     cordova.exec(onSuccess, onFail, 'System', 'get-global-setting', [key]);
   },

@@ -232,6 +232,9 @@ public class System extends CordovaPlugin {
       case "set-app-icon":
         setAppIcon(arg1, callbackContext);
         return true;
+      case "get-app-icon":
+        getAppIcon(callbackContext);
+        return true;
       case "get-cordova-intent":
         getCordovaIntent(callbackContext);
         return true;
@@ -2362,36 +2365,57 @@ public class System extends CordovaPlugin {
    */
   private void setAppIcon(String iconName, CallbackContext callback) {
     try {
-      String packageName = context.getPackageName();
-      PackageManager pm = context.getPackageManager();
       String key = iconName == null ? "default" : iconName.toLowerCase();
-
-      String targetAlias = APP_ICON_ALIASES.get(key);
-      if (targetAlias == null) {
-        callback.error("Unknown app icon: " + iconName);
-        return;
-      }
-
-      pm.setComponentEnabledSetting(
-        new ComponentName(packageName, packageName + "." + targetAlias),
-        PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-        PackageManager.DONT_KILL_APP
-      );
-
-      for (Map.Entry<String, String> entry : APP_ICON_ALIASES.entrySet()) {
-        if (entry.getKey().equals(key)) {
-          continue;
-        }
-        pm.setComponentEnabledSetting(
-          new ComponentName(packageName, packageName + "." + entry.getValue()),
-          PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-          PackageManager.DONT_KILL_APP
-        );
-      }
+      applyAppIcon(key);
+      context
+        .getSharedPreferences("vexa_preferences", Context.MODE_PRIVATE)
+        .edit()
+        .putString("app_icon", key)
+        .apply();
       callback.success();
     } catch (Exception e) {
       callback.error(e.toString());
     }
+  }
+
+  private void getAppIcon(CallbackContext callback) {
+    try {
+      String key = context
+        .getSharedPreferences("vexa_preferences", Context.MODE_PRIVATE)
+        .getString("app_icon", "default");
+      if (!APP_ICON_ALIASES.containsKey(key)) {
+        key = "default";
+      }
+      callback.success(key);
+    } catch (Exception e) {
+      callback.error(e.toString());
+    }
+  }
+
+  private void applyAppIcon(String key) throws Exception {
+    String packageName = context.getPackageName();
+    PackageManager pm = context.getPackageManager();
+    String targetAlias = APP_ICON_ALIASES.get(key);
+    if (targetAlias == null) {
+      throw new IllegalArgumentException("Unknown app icon: " + key);
+    }
+
+    for (Map.Entry<String, String> entry : APP_ICON_ALIASES.entrySet()) {
+      if (entry.getKey().equals(key)) {
+        continue;
+      }
+      pm.setComponentEnabledSetting(
+        new ComponentName(packageName, packageName + "." + entry.getValue()),
+        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+        PackageManager.DONT_KILL_APP
+      );
+    }
+
+    pm.setComponentEnabledSetting(
+      new ComponentName(packageName, packageName + "." + targetAlias),
+      PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+      PackageManager.DONT_KILL_APP
+    );
   }
 
   private void extractAsset(

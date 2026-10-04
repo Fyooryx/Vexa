@@ -330,6 +330,7 @@ interface System {
    * @param onFail
    */
   setAppIcon(iconName: string, onSuccess: OnSuccessBool, onFail: OnFail): void;
+  getAppIcon(onSuccess: (iconName: string) => void, onFail: OnFail): void;
 }
 
 interface Window{

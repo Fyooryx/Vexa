@@ -327,6 +327,23 @@ async function onDeviceReady() {
 
 	vexa.setLoadingMessage("Loading settings...");
 	await settings.init();
+
+	try {
+		const nativeAppIcon = await helpers.promisify(system.getAppIcon);
+		if (
+			typeof nativeAppIcon === "string" &&
+			nativeAppIcon &&
+			nativeAppIcon !== (settings.value.appIcon || "default")
+		) {
+			await settings.update({ appIcon: nativeAppIcon }, false);
+		}
+	} catch (error) {
+		logger.log(
+			"warn",
+			`Failed to synchronize native Vexa app icon state: ${error.message || error}`,
+		);
+	}
+
 	fileIcons.bindSettings(settings);
 	fileIcons.syncFromSettings();
 	themes.init();

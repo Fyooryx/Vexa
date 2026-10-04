@@ -21,4 +21,19 @@ describe("Vexa runtime hardening", () => {
 		expect(source).toContain('editor.requestMeasure?.()');
 		expect(source).not.toContain("// TODO : Codemirror");
 	});
+
+	it("keeps native Vexa app-icon state synchronized with settings", () => {
+		const systemJava = read(
+			"src/plugins/system/android/com/foxdebug/system/System.java",
+		);
+		const systemApi = read("src/plugins/system/www/plugin.js");
+		const main = read("src/main.js");
+
+		expect(systemJava).toContain('case "get-app-icon":');
+		expect(systemJava).toContain('"vexa_preferences"');
+		expect(systemJava).toContain('.putString("app_icon", key)');
+		expect(systemApi).toContain('get-app-icon');
+		expect(main).toContain("system.getAppIcon");
+		expect(main).toContain("native Vexa app icon state");
+	});
 });
