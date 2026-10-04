@@ -229,9 +229,7 @@ for (const localeFile of fs
 			!value.includes("://") &&
 			!/\bcom\./i.test(value)
 		) {
-			fail(
-				`${localeFile} exposes the old product name at key: ${key}`,
-			);
+			fail(`${localeFile} exposes the old product name at key: ${key}`);
 		}
 	}
 }
