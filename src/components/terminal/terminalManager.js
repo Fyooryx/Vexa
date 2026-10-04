@@ -453,9 +453,7 @@ class TerminalManager {
 					);
 
 					// Set up custom title for installation terminal
-					terminalFile.setCustomTitle(
-						() => "Termux Setup",
-					);
+					terminalFile.setCustomTitle(() => "Termux Setup");
 
 					const instance = {
 						id: terminalId,
