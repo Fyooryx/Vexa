@@ -487,8 +487,14 @@ export default {
 		this.find();
 	},
 	"resize-editor"() {
-		// TODO : Codemirror
-		//editorManager.editor.resize(true);
+		const editor = editorManager.editor;
+		if (!editor) return false;
+
+		// CodeMirror 6 measures its own layout. Trigger an explicit measurement
+		// after fullscreen/sidebar/layout changes instead of using the removed
+		// Ace resize API.
+		editor.requestMeasure?.();
+		return true;
 	},
 	async "open-inapp-browser"(url) {
 		const { default: browser } = await import(
