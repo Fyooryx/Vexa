@@ -715,7 +715,7 @@ const APP_BINDING_CONFIG = [
 		editorOnly: true,
 	},
 	{
-		name: "acode:showWelcome",
+		name: "vexa:showWelcome",
 		description: "Show Welcome",
 		key: "Ctrl-Shift-W",
 		action: "welcome",

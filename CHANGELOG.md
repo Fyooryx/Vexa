@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.14.3 — Vexa + Nightfall usability hardening
+
+### Fixed
+- restored CodeMirror layout measurement for fullscreen and responsive editor changes
+- made the AdMob base `isLoaded` fallback explicitly report `false` instead of reaching an abstract runtime path
+
+### Added
+- introduced the `vexa:showWelcome` command identity while retaining `acode:showWelcome` as a compatibility alias
+- expanded regression coverage for Vexa command and branding identity
+
+
 ## 1.14.2 — Vexa authentication and runtime hardening
 
 ### Fixed

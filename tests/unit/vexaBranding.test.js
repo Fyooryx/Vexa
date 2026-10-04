@@ -29,6 +29,15 @@ describe("Vexa branding", () => {
 		expect(appIcons).not.toMatch(/icons\/ic_acode_/);
 	});
 
+	it("uses Vexa command identities while preserving legacy aliases", () => {
+		const commands = read("src/cm/commandRegistry.js");
+		const bindings = read("src/lib/keyBindings.js");
+
+		expect(commands).toContain('name: "vexa:showWelcome"');
+		expect(commands).toContain('name: "acode:showWelcome"');
+		expect(bindings).toContain('name: "vexa:showWelcome"');
+	});
+
 	it("uses the Vexa log filename", () => {
 		expect(read("src/lib/config.js")).toMatch(/LOG_FILE_NAME:\s*"Vexa\.log"/);
 	});
