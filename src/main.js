@@ -35,7 +35,7 @@ import intentHandler, { processPendingIntents } from "handlers/intent";
 import keyboardHandler, { keydownState } from "handlers/keyboard";
 import quickToolsInit from "handlers/quickToolsInit";
 import windowResize from "handlers/windowResize";
-import acode from "lib/acode";
+import vexa from "lib/vexa";
 import actionStack from "lib/actionStack";
 import adRewards from "lib/adRewards";
 import ajax from "lib/ajax";
@@ -252,7 +252,8 @@ async function onDeviceReady() {
 		if (client.height === 0) return false;
 		return true;
 	})();
-	window.acode = acode;
+	window.vexa = vexa;
+	window.acode = vexa;
 	await adRewards.init();
 	ensureAceCompatApi();
 
@@ -299,7 +300,7 @@ async function onDeviceReady() {
 		console.error(e);
 	}
 
-	acode.setLoadingMessage("Loading settings...");
+	vexa.setLoadingMessage("Loading settings...");
 
 	window.resolveLocalFileSystemURL = function (url, ...args) {
 		oldResolveURL.call(this, Url.safe(url), ...args);
@@ -315,7 +316,7 @@ async function onDeviceReady() {
 		}
 	}, 1000 * 10);
 
-	acode.setLoadingMessage("Loading settings...");
+	vexa.setLoadingMessage("Loading settings...");
 	await settings.init();
 	fileIcons.bindSettings(settings);
 	fileIcons.syncFromSettings();
@@ -327,10 +328,10 @@ async function onDeviceReady() {
 
 	registerPrettierFormatter();
 
-	acode.setLoadingMessage("Loading language...");
+	vexa.setLoadingMessage("Loading language...");
 	await lang.set(settings.value.lang);
 
-	acode.setLoadingMessage("Securing SFTP profiles...");
+	vexa.setLoadingMessage("Securing SFTP profiles...");
 	const sftpMigration = await migrateLegacySftpProfiles();
 	if (sftpMigration.failures.length) {
 		for (const failure of sftpMigration.failures) {
@@ -471,7 +472,7 @@ async function onDeviceReady() {
 					}
 
 					if (isNewerVersion(latestVersion, currentVersion)) {
-						acode.pushNotification(
+						vexa.pushNotification(
 							strings["update available"],
 							strings["update available info"].replace(
 								/\{version\}/,
@@ -506,7 +507,7 @@ async function onDeviceReady() {
 	checkPluginsUpdate()
 		.then((updates) => {
 			if (!updates.length) return;
-			acode.pushNotification(
+			vexa.pushNotification(
 				strings["plugin updates"],
 				getUpdateMessage(updates.length),
 				{
@@ -678,15 +679,15 @@ async function loadApp() {
 			style={{ fontSize: "1.2em" }}
 			className="icon play_arrow"
 			attr-action="run"
-			onclick={() => acode.exec("run")}
-			oncontextmenu={() => acode.exec("run-file")}
+			onclick={() => vexa.exec("run")}
+			oncontextmenu={() => vexa.exec("run-file")}
 		/>
 	);
 	const $floatingNavToggler = (
 		<span
 			id="sidebar-toggler"
 			className="floating icon menu"
-			onclick={() => acode.exec("toggle-sidebar")}
+			onclick={() => vexa.exec("toggle-sidebar")}
 		/>
 	);
 	const $headerToggler = (
@@ -714,12 +715,12 @@ async function loadApp() {
 		$fileMenu.addEventListener("click", handleMenu);
 	};
 
-	acode.$headerToggler = $headerToggler;
+	vexa.$headerToggler = $headerToggler;
 	window.actionStack = actionStack.windowCopy();
 	window.editorManager = editorManager;
 	setMainMenu(settings.value.openFileListPos);
 	setFileMenu(settings.value.openFileListPos);
-	actionStack.onCloseApp = () => acode.exec("save-state");
+	actionStack.onCloseApp = () => vexa.exec("save-state");
 	$headerToggler.onclick = function () {
 		root.classList.toggle("show-header");
 		this.classList.toggle("keyboard_arrow_left");
@@ -792,7 +793,7 @@ async function loadApp() {
 		toast("Failed to load theme plugins!");
 	}
 
-	acode.setLoadingMessage("Loading folders...");
+	vexa.setLoadingMessage("Loading folders...");
 	if (Array.isArray(folders)) {
 		for (const folder of folders) {
 			folder.opts.listFiles = !!folder.opts.listFiles;
@@ -821,7 +822,7 @@ async function loadApp() {
 		onEditorUpdate(undefined, false);
 	}
 
-	acode.exec("save-state");
+	vexa.exec("save-state");
 	initFileList();
 
 	import(/* webpackChunkName: "terminal" */ "components/terminal").then(
@@ -847,7 +848,7 @@ async function loadApp() {
 
 		if ($mainMenu.contains($target)) $mainMenu.hide();
 		if ($fileMenu.contains($target)) $fileMenu.hide();
-		acode.exec(action, value);
+		vexa.exec(action, value);
 	}
 
 	function onEditorUpdate(mode, saveState = true) {
@@ -873,13 +874,13 @@ async function loadApp() {
 				localStorage.setItem("lastfile", activeFile.id);
 			}
 			if (saveState && sessionStorage.getItem("isfilesRestored") === "true") {
-				acode.exec("save-state");
+				vexa.exec("save-state");
 			}
 			return;
 		}
 
 		if (saveState && sessionStorage.getItem("isfilesRestored") === "true") {
-			acode.exec("save-state");
+			vexa.exec("save-state");
 		}
 	}
 
