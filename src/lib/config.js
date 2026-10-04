@@ -21,7 +21,7 @@ const config = {
 	SCROLL_SPEED_SLOW: "SLOW",
 	SIDEBAR_SLIDE_START_THRESHOLD_PX: 20,
 	CUSTOM_THEME: 'body[theme="custom"]',
-	FEEDBACK_EMAIL: "acode@foxdebug.com",
+	FEEDBACK_EMAIL: VEXA_IDENTITY.OWNER_EMAIL,
 	ERUDA_CDN: "https://cdn.jsdelivr.net/npm/eruda",
 
 	get PLAY_STORE_URL() {
