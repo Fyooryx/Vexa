@@ -38,6 +38,18 @@ describe("Vexa branding", () => {
 		expect(bindings).toContain('name: "vexa:showWelcome"');
 	});
 
+	it("aligns Vexa deep links and API credential routing", () => {
+		const deepLink = read("src/utils/appDeepLink.js");
+		const intentHandler = read("src/handlers/intent.js");
+		const main = read("src/main.js");
+
+		expect(deepLink).toContain("VEXA_IDENTITY.URL_SCHEME");
+		expect(deepLink).toContain("VEXA_IDENTITY.LEGACY_URL_SCHEME");
+		expect(intentHandler).toContain("parseAppDeepLink(url)");
+		expect(main).toContain("config.API_BASE");
+		expect(main).not.toContain('url.includes("acode.app/api")');
+	});
+
 	it("uses the Vexa log filename", () => {
 		expect(read("src/lib/config.js")).toMatch(/LOG_FILE_NAME:\s*"Vexa\.log"/);
 	});
