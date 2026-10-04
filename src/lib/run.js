@@ -23,7 +23,7 @@ import appSettings from "./settings";
 let webServer;
 
 // An open console may outlive the server instance that created it.
-const CONSOLE_THEME_STATE = "__acode_console_theme.json";
+const CONSOLE_THEME_STATE = "__vexa_console_theme.json";
 
 /**
  * Starts the server and run the active file in browser
