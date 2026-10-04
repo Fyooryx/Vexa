@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.14.4 — Vexa + Nightfall integration hardening
+
+### Fixed
+- aligned `vexa://` deep-link handling with the manifest while retaining `acode://` compatibility
+- restricted credential forwarding to the configured API base instead of a hard-coded substring match
+- replaced remaining user-visible bootstrap Acode branding with Vexa
+
+### Added
+- centralized application deep-link parsing with regression coverage for Vexa and legacy schemes
+- regression guards for deep-link routing, API credential boundaries, and bootstrap branding
+
+### Improved
+- aligned package, Android version code, and documentation metadata at 1.14.4
+
 ## 1.14.3 — Vexa + Nightfall usability hardening
 
 ### Fixed
