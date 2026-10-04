@@ -1,4 +1,4 @@
-package com.foxdebug.acode.rk.exec.terminal;
+package com.vexa.app.rk.exec.terminal;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -24,7 +24,7 @@ import java.io.OutputStream;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
-import com.foxdebug.acode.rk.exec.terminal.*;
+import com.vexa.app.rk.exec.terminal.*;
 
 
 public class TerminalService extends Service {
