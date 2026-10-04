@@ -10,7 +10,16 @@
 
 Vexa is a customized/rebranded build based on the upstream Acode open-source codebase. Original upstream attribution remains part of the repository.
 
-## • Vexa 1.14.1 additions
+## • Vexa 1.14.4 additions
+
+- centralized Vexa identity metadata without conflating it with upstream service endpoints
+- `Vexa: Copy Diagnostics` command for support reports
+- Vexa and legacy `acode://` deep-link compatibility through one parser
+- API credential routing derived from the configured service endpoint
+- Vexa-branded startup/splash error messaging
+- density-specific Vexa launcher assets across Android mipmap resources
+- automated branding, type-safety, test, and workflow supply-chain checks in CI
+- reproducible nightly builds with pinned GitHub Actions and Node.js 22
 
 - centralized Vexa identity metadata without conflating it with upstream service endpoints
 - `Vexa: Copy Diagnostics` command for support reports
