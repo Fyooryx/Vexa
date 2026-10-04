@@ -29,7 +29,6 @@ export default function terminalSettings() {
 
 	const terminalValues = values.terminalSettings;
 
-
 	const items = [
 		{
 			key: "all_file_access",
@@ -289,7 +288,10 @@ export default function terminalSettings() {
 
 			case "openTermux":
 				try {
-					if (typeof Terminal === "undefined" || !(await Terminal.isInstalled())) {
+					if (
+						typeof Terminal === "undefined" ||
+						!(await Terminal.isInstalled())
+					) {
 						alert(
 							"Termux",
 							"Termux is not installed. Install Termux before using the Vexa terminal.",
