@@ -6,6 +6,12 @@
 
 [![GitHub Stars](https://img.shields.io/github/stars/Fyooryx/Vexa?style=flat)](https://github.com/Fyooryx/Vexa) [![](https://dcbadge.vercel.app/api/server/vVxVWYUAWD?style=flat)](https://discord.gg/vVxVWYUAWD)
 
+## • Owner & Contact
+
+**Owner:** Vyrael (zavriel.id)  
+**Email:** zavriel.studio@gmail.com  
+**Phone:** +62 851-8972-3640
+
 ## • Lineage
 
 Vexa is a customized/rebranded build based on the upstream Acode open-source codebase. Original upstream attribution remains part of the repository.
