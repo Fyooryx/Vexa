@@ -435,7 +435,7 @@ for (const file of iconPreviewFiles) {
 	expect(source.includes('href="vexa.png"'), `icon preview ${file} is not backed by the canonical Vexa PNG`);
 }
 expect(
-	(read("src/lib/appIcons.js").match(/image: "icons\\/vexa\\.svg"/g) || []).length === 16,
+	read("src/lib/appIcons.js").split('image: "icons/vexa.svg"').length - 1 === 16,
 	"all app icon previews must resolve to the canonical Vexa icon",
 );
 
