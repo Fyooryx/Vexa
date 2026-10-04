@@ -22,3 +22,31 @@ export const VEXA_IDENTITY = Object.freeze({
 export function getRuntimePackageName(buildInfo = globalThis.BuildInfo) {
 	return buildInfo?.packageName || VEXA_IDENTITY.PACKAGE_NAME;
 }
+
+
+export function isVexaDeepLink(value) {
+	if (typeof value !== "string" || !value.trim()) return false;
+	try {
+		const { protocol } = new URL(value);
+		return (
+			protocol === `${VEXA_IDENTITY.URL_SCHEME}:` ||
+			protocol === `${VEXA_IDENTITY.LEGACY_URL_SCHEME}:`
+		);
+	} catch {
+		return false;
+	}
+}
+
+export function isUpstreamApiUrl(value) {
+	if (typeof value !== "string" || !value.trim()) return false;
+	try {
+		const target = new URL(value);
+		const upstream = new URL(VEXA_IDENTITY.UPSTREAM_SERVICE_URL);
+		return (
+			target.origin === upstream.origin &&
+			(target.pathname === "/api" || target.pathname.startsWith("/api/"))
+		);
+	} catch {
+		return false;
+	}
+}
