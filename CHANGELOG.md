@@ -4,8 +4,11 @@
 
 ### Fixed
 - aligned Vexa diagnostics regression fixtures with the current 1.14.3 / Android version code 1016 baseline
+- added explicit coverage for unavailable clipboard providers
 
 ### Improved
+- separated structured Vexa diagnostics data from its human-readable report renderer
+- expanded diagnostics support metadata with editor and deep-link identity
 - refreshed README guidance and feature notes to the current Vexa baseline
 - kept the Vexa/Nightfall evidence-first validation gate explicit for local builds
 
