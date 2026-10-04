@@ -1,5 +1,6 @@
 // @vitest-environment happy-dom
 import { afterEach, expect, it, vi } from "vitest";
+import { parseAppIntentUrl } from "../../src/utils/appIntent";
 import strings from "../../src/lang/en-us.json";
 import { loadSourceModule } from "../helpers/loadSourceModule";
 
@@ -22,6 +23,7 @@ function setup() {
 			"lib/openFile": open,
 			"lib/loadPlugins": { isInitialPluginLoadComplete: () => pluginsReady },
 			"dialogs/select": select,
+			"utils/appIntent": { parseAppIntentUrl },
 			"utils/helpers": { error: reportError },
 		},
 		{
