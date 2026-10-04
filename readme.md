@@ -10,17 +10,20 @@
 
 Vexa is a customized/rebranded build based on the upstream Acode open-source codebase. Original upstream attribution remains part of the repository.
 
-## • Vexa 1.14.1 additions
+## • Vexa 1.14.3 additions
 
 - centralized Vexa identity metadata without conflating it with upstream service endpoints
 - `Vexa: Copy Diagnostics` command for support reports
+- `vexa://` authentication/deep-link support with legacy `acode://` compatibility
 - density-specific Vexa launcher assets across Android mipmap resources
+- responsive CodeMirror measurement fixes for fullscreen/editor resizing
+- hardened AdMob base fallback behavior
 - automated branding, type-safety, test, and workflow supply-chain checks in CI
 - reproducible nightly builds with pinned GitHub Actions and Node.js 22
 
 ## • Overview
 
-Selamat datang di Vexa Editor - alat pengeditan kode yang kuat dan serbaguna yang dirancang khusus untuk perangkat Android. Apakah Anda sedang mengerjakan HTML, CSS, JavaScript, atau bahasa pemrograman lainnya, Vexa memberdayakan Anda untuk mengkode di mana saja dengan percaya diri. 
+Selamat datang di Vexa Editor — alat pengeditan kode yang kuat dan serbaguna yang dirancang khusus untuk perangkat Android. Apakah Anda sedang mengerjakan HTML, CSS, JavaScript, atau bahasa pemrograman lainnya, Vexa memberdayakan Anda untuk mengkode di mana saja dengan percaya diri. 
 
 ## • Features
 
@@ -34,9 +37,15 @@ Selamat datang di Vexa Editor - alat pengeditan kode yang kuat dan serbaguna yan
 
 ## • Installation
 
-Anda dapat mendapatkan Vexa Editor dari platform populer: 
+Vexa saat ini masih dalam tahap pengembangan. Distribusi publik Play Store dan F-Droid belum tersedia.
 
-Rilis publik Play Store dan F-Droid belum tersedia; distribusi saat ini masih tahap pengembangan.
+Untuk build lokal, ikuti panduan di `CONTRIBUTING.md` dan jalankan gate berikut sebelum membangun APK:
+
+```bash
+npm ci
+npm run check:vexa
+npm run build paid dev apk
+```
 
 ## • Project Structure
 
@@ -79,7 +88,7 @@ This checks Vexa identity/branding, immutable GitHub Actions, TypeScript, and un
 See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed instructions.
 
 ## • Contributors
-Isi kalo sudah ada Contributor
+Lihat daftar kontributor di tab Contributors repository GitHub Vexa.
 
 
 ## • Developing a Plugin for Vexa
