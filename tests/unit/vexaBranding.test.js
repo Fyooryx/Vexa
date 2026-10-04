@@ -76,7 +76,7 @@ describe("Vexa branding", () => {
 		expect(backupRestore).toContain("Vexa_backup_");
 		expect(devcontainer).toContain('"name": "Vexa Development"');
 		expect(css).toContain(".icon.vexa");
-		expect(css).toContain('url("/icons/vexa.svg")');
+		expect(css).toContain('url("icons/vexa.svg")');
 	});
 it("uses the Vexa log filename", () => {
 		expect(read("src/lib/config.js")).toMatch(/LOG_FILE_NAME:\s*"Vexa\.log"/);
