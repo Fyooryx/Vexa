@@ -72,7 +72,7 @@ export default async function installPlugin(
 			pluginUrl.startsWith("file:") ||
 			pluginUrl.startsWith("content:")
 		) {
-			// Use fsOperation for Acode registry URL
+			// Use fsOperation for the Vexa plugin registry URL
 			plugin = await fsOperation(pluginUrl).readFile(
 				undefined,
 				(loaded, total) => {
@@ -138,9 +138,9 @@ export default async function installPlugin(
 
 				let titleText;
 				if (manifests.length > 1) {
-					titleText = "Acode wants to install the following dependencies:";
+					titleText = "Vexa wants to install the following dependencies:";
 				} else {
-					titleText = "Acode wants to install the following dependency:";
+					titleText = "Vexa wants to install the following dependency:";
 				}
 
 				const shouldInstall = await confirm(
