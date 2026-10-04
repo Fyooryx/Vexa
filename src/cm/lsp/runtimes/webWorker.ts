@@ -23,7 +23,7 @@ const bundledStatus: InstallCheckResult = {
 	version: "bundled",
 	canInstall: false,
 	canUpdate: false,
-	message: "Built into Acode and runs offline in a Web Worker.",
+	message: "Built into Vexa and runs offline in a Web Worker.",
 };
 
 async function readFileFromHost(uri: string): Promise<string> {
@@ -44,7 +44,7 @@ function createBuiltinWorkerTransport(
 
 	return createWorkerTransport({
 		url: workerUrl,
-		name: `acode-${server.id}-lsp`,
+		name: `vexa-${server.id}-lsp`,
 		serverId: server.id,
 		startupTimeout: server.startupTimeout ?? STARTUP_TIMEOUT,
 		configure: {
