@@ -13,6 +13,7 @@
 ### Improved
 - bumped the Android/package version to 1.14.6 / versionCode 1019
 - every in-app icon preview now resolves to the same supplied Vexa artwork
+- migrated user-facing localization identity keys from Acode names to Vexa names across every locale
 
 
 ## 1.14.5 — Vexa visual and branding hardening
