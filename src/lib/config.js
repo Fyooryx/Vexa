@@ -40,7 +40,7 @@ const config = {
 	LOG_FILE_NAME: "Vexa.log",
 
 	// Social Links
-	// The hosted documentation/service URLs remain upstream until Vexa infrastructure is deployed.
+	// Product-facing documentation and repository links use the canonical Vexa identity.
 	DOCS_URL: VEXA_IDENTITY.REPOSITORY_URL,
 	GITHUB_URL: VEXA_IDENTITY.REPOSITORY_URL,
 	DISCORD_URL: "https://discord.gg/nDqZsh7Rqz",

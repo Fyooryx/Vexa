@@ -229,7 +229,7 @@ declare type LangStrings = {
   "toggle console": string;
   "new line mode": string;
   "add a storage": string;
-  "rate acode": string;
+  "rate vexa": string;
   "support": string;
   "downloading file": string;
   "downloading...": string;
@@ -250,7 +250,7 @@ declare type LangStrings = {
   "recently used": string;
   "update": string;
   "uninstall": string;
-  "download acode pro": string;
+  "download vexa pro": string;
   "loading plugins": string;
   "faqs": string;
   "feedback": string;
@@ -649,7 +649,7 @@ declare type LangStrings = {
   "lsp-error-websocket-url-invalid": string;
   "lsp-error-websocket-url-required": string;
   "lsp-view-initialization-options": string;
-  "settings-category-about-acode": string;
+  "settings-category-about-vexa": string;
   "settings-category-discover-apps": string;
   "settings-category-advanced": string;
   "settings-category-assistance": string;
@@ -674,7 +674,7 @@ declare type LangStrings = {
   "settings-category-server": string;
   "settings-category-servers": string;
   "settings-category-session": string;
-  "settings-category-support-acode": string;
+  "settings-category-support-vexa": string;
   "settings-category-text-layout": string;
   "settings-category-tools": string;
   "settings-info-app-animation": string;

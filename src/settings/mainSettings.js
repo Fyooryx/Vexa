@@ -38,8 +38,8 @@ export default function mainSettings() {
 			strings["settings-category-customization"] || "Customization",
 		tools: strings["settings-category-tools"] || "Tools",
 		maintenance: strings["settings-category-maintenance"],
-		aboutVexa: strings["settings-category-about-acode"],
-		supportVexa: strings["settings-category-support-acode"],
+		aboutVexa: strings["settings-category-about-vexa"],
+		supportVexa: strings["settings-category-support-vexa"],
 	};
 	const items = [
 		{
@@ -169,7 +169,7 @@ export default function mainSettings() {
 		},
 		{
 			key: "rateapp",
-			text: strings["rate acode"],
+			text: strings["rate vexa"],
 			icon: "star_outline",
 			info: strings["settings-info-main-rateapp"],
 			category: categories.aboutVexa,

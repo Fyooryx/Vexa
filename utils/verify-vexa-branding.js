@@ -56,6 +56,7 @@ expect(
 expect(pkg.name === "com.vexa.app", "package.json name must be com.vexa.app");
 expect(pkg.displayName === "Vexa", "package.json displayName must be Vexa");
 expect(pkg.version === "1.14.6", "package.json version must be 1.14.6");
+expect(config.includes('android-versionCode="1019"'), "config.xml Android versionCode must be 1019");
 expect(
 	pkg.engines?.node && /(?:^|\D)22(?:\D|$)/.test(pkg.engines.node),
 	"package.json must declare Node.js 22+ support",
@@ -147,6 +148,20 @@ expect(
 	!config.includes("@mipmap/ic_acode_"),
 	"config.xml still references a legacy Acode launcher resource",
 );
+
+const localeBrandingKeyFiles = walk(path.join(root, "..", "src/lang")).filter((file) => file.endsWith(".json"));
+for (const file of localeBrandingKeyFiles) {
+	const source = fs.readFileSync(file, "utf8");
+	expect(!source.includes('"rate acode"'), `legacy localization key remains in ${path.relative(repoRoot, file)}: rate acode`);
+	expect(!source.includes('"download acode pro"'), `legacy localization key remains in ${path.relative(repoRoot, file)}: download acode pro`);
+	expect(!source.includes('"settings-category-about-acode"'), `legacy localization key remains in ${path.relative(repoRoot, file)}: about-acode`);
+	expect(!source.includes('"settings-category-support-acode"'), `legacy localization key remains in ${path.relative(repoRoot, file)}: support-acode`);
+	try {
+		JSON.parse(source);
+	} catch {
+		fail(`invalid JSON localization file: ${path.relative(repoRoot, file)}`);
+	}
+}
 
 const englishStrings = readJson("src/lang/en-us.json");
 const indonesianStrings = readJson("src/lang/id-id.json");

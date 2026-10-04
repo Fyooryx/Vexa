@@ -20,6 +20,9 @@ describe("Vexa branding", () => {
 		expect(packageJson.displayName).toBe("Vexa");
 		expect(packageLock.name).toBe("com.vexa.app");
 		expect(packageJson.version).toBe("1.14.6");
+		expect(main).toContain("strings[\"rate vexa\"]");
+		expect(main).toContain("settings-category-about-vexa");
+		expect(main).toContain("settings-category-support-vexa");
 		expect(packageLock.version).toBe(packageJson.version);
 		expect(main).toContain('import vexa from "lib/vexa";');
 		expect(main).toContain("window.vexa = vexa");
