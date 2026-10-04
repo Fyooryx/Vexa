@@ -1,1 +1,37 @@
-import { VEXA_IDENTITY } from "lib/vexaIdentity";\n\nconst SCHEME_PATTERN = new RegExp(\n\t"^(?:" + VEXA_IDENTITY.URL_SCHEME + "|" +\n\t\tVEXA_IDENTITY.LEGACY_URL_SCHEME + "):\\/\\/",\n\t"i",\n);\n\n/**\n * Parse Vexa application deep links.\n *\n * Both the current Vexa scheme and the legacy Acode scheme are accepted so\n * existing integrations keep working after the package rebrand.\n *\n * @param {unknown} value\n * @returns {{scheme: string, module: string, action: string, value?: string} | null}\n */\nexport function parseAppIntentUrl(value) {\n\tif (typeof value !== "string") return null;\n\n\tconst match = value.match(SCHEME_PATTERN);\n\tif (!match) return null;\n\n\tconst path = value.slice(match[0].length).replace(/^\\/+/, "");\n\tconst [module, action, ...valueParts] = path.split("/");\n\tif (!module || !action) return null;\n\n\treturn {\n\t\tscheme: match[0].slice(0, -3).toLowerCase(),\n\t\tmodule,\n\t\taction,\n\t\tvalue: valueParts.length ? valueParts.join("/") : undefined,\n\t};\n}\n
+import { VEXA_IDENTITY } from "lib/vexaIdentity";
+
+const SCHEME_PATTERN = new RegExp(
+	"^(?:" +
+		VEXA_IDENTITY.URL_SCHEME +
+		"|" +
+		VEXA_IDENTITY.LEGACY_URL_SCHEME +
+		"):\\/\\/",
+	"i",
+);
+
+/**
+ * Parse Vexa application deep links.
+ *
+ * Both the current Vexa scheme and the legacy Acode scheme are accepted so
+ * existing integrations keep working after the package rebrand.
+ *
+ * @param {unknown} value
+ * @returns {{scheme: string, module: string, action: string, value?: string} | null}
+ */
+export function parseAppIntentUrl(value) {
+	if (typeof value !== "string") return null;
+
+	const match = value.match(SCHEME_PATTERN);
+	if (!match) return null;
+
+	const path = value.slice(match[0].length).replace(/^\\/+/, "");
+	const [module, action, ...valueParts] = path.split("/");
+	if (!module || !action) return null;
+
+	return {
+		scheme: match[0].slice(0, -3).toLowerCase(),
+		module,
+		action,
+		value: valueParts.length ? valueParts.join("/") : undefined,
+	};
+}
