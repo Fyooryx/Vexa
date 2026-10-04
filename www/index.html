@@ -78,7 +78,8 @@
   <!-- Set theme color BEFORE UI renders -->
   <script>
     (function () {
-      var MIN_WEBVIEW_MAJOR = 67;
+      // Keep bootstrap gating aligned with the runtime-supported baseline.
+      var MIN_WEBVIEW_MAJOR = 84;
       var color = localStorage.getItem("__primary_color");
       var bg = color || "#20202c";
 
