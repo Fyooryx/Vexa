@@ -381,6 +381,20 @@ expect(
 );
 
 for (const file of launcherFiles) {
+	const data = fs.readFileSync(file);
+	expect(
+		data.length > 64,
+		`launcher asset is unexpectedly small: ${path.relative(root, file)}`,
+	);
+	expect(
+		data.subarray(0, 4).toString("ascii") === "RIFF",
+		`launcher asset is not RIFF/WebP: ${path.relative(root, file)}`,
+	);
+	expect(
+		data.subarray(8, 12).toString("ascii") === "WEBP",
+		`launcher asset is not WebP: ${path.relative(root, file)}`,
+	);
+}
 
 const iconPreviewFiles = [
 	"vexa.svg",
