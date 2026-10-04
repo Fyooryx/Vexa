@@ -38,8 +38,8 @@ export default function mainSettings() {
 			strings["settings-category-customization"] || "Customization",
 		tools: strings["settings-category-tools"] || "Tools",
 		maintenance: strings["settings-category-maintenance"],
-		aboutAcode: strings["settings-category-about-acode"],
-		supportAcode: strings["settings-category-support-acode"],
+		aboutVexa: strings["settings-category-about-acode"],
+		supportVexa: strings["settings-category-support-acode"],
 	};
 	const items = [
 		{
@@ -148,7 +148,7 @@ export default function mainSettings() {
 			text: strings.about,
 			icon: "info",
 			info: `Version ${BuildInfo.version}`,
-			category: categories.aboutAcode,
+			category: categories.aboutVexa,
 			chevron: true,
 		},
 		{
@@ -156,7 +156,7 @@ export default function mainSettings() {
 			text: strings.sponsor,
 			icon: "favorite",
 			info: strings["settings-info-main-sponsors"],
-			category: categories.aboutAcode,
+			category: categories.aboutVexa,
 			chevron: true,
 		},
 		{
@@ -164,7 +164,7 @@ export default function mainSettings() {
 			text: `${strings["changelog"]}`,
 			icon: "update",
 			info: strings["settings-info-main-changelog"],
-			category: categories.aboutAcode,
+			category: categories.aboutVexa,
 			chevron: true,
 		},
 		{
@@ -172,7 +172,7 @@ export default function mainSettings() {
 			text: strings["rate acode"],
 			icon: "star_outline",
 			info: strings["settings-info-main-rateapp"],
-			category: categories.aboutAcode,
+			category: categories.aboutVexa,
 			chevron: true,
 		},
 	];
@@ -186,7 +186,7 @@ export default function mainSettings() {
 			info:
 				strings["settings-info-main-privacy-choices"] ||
 				"Manage your advertising privacy choices.",
-			category: categories.aboutAcode,
+			category: categories.aboutVexa,
 			chevron: true,
 			hidden: true,
 		});
@@ -198,7 +198,7 @@ export default function mainSettings() {
 			text: strings["earn ad-free time"],
 			icon: "play_arrow",
 			info: strings["settings-info-main-ad-rewards"],
-			category: categories.supportAcode,
+			category: categories.supportVexa,
 			chevron: true,
 		});
 		items.push({
@@ -206,7 +206,7 @@ export default function mainSettings() {
 			text: strings["remove ads"],
 			icon: "block",
 			info: `${strings["settings-info-main-remove-ads"]}${!helpers.shouldAllowExternalPurchase() ? ` ${strings["iap-pro-purchase-warning"]}` : ""}`,
-			category: categories.supportAcode,
+			category: categories.supportVexa,
 			chevron: true,
 		});
 	}
