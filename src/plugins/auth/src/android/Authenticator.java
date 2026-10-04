@@ -66,6 +66,7 @@ public class Authenticator extends CordovaPlugin {
             token = legacyPrefManager.getString(KEY_TOKEN, "");
             if (!token.isEmpty()) {
                 prefManager.setString(KEY_TOKEN, token);
+                legacyPrefManager.remove(KEY_TOKEN);
             }
         }
         if (!token.isEmpty()) {
@@ -82,6 +83,7 @@ public class Authenticator extends CordovaPlugin {
         switch (action) {
             case "logout":
                 prefManager.remove(KEY_TOKEN);
+                legacyPrefManager.remove(KEY_TOKEN);
                 cordova.getActivity().runOnUiThread(() -> clearTokenCookie());
                 if (callbackContext != null) callbackContext.success();
                 return true;
