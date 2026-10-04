@@ -309,14 +309,14 @@ expect(png.length >= 24, "vexa_icon.png is truncated");
 expect(png.readUInt32BE(16) === 128, "vexa_icon.png width must be 128px");
 expect(png.readUInt32BE(20) === 128, "vexa_icon.png height must be 128px");
 
-const logoPath = path.join(root, "..", "res/logo_1.png");
+const logoPath = path.join(root, "..", "res/vexa_logo.png");
 const logo = fs.readFileSync(logoPath);
 expect(
 	logo.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])),
-	"res/logo_1.png is not a valid PNG",
+	"res/vexa_logo.png is not a valid PNG",
 );
-expect(logo.readUInt32BE(16) === 128, "res/logo_1.png width must be 128px");
-expect(logo.readUInt32BE(20) === 128, "res/logo_1.png height must be 128px");
+expect(logo.readUInt32BE(16) === 128, "res/vexa_logo.png width must be 128px");
+expect(logo.readUInt32BE(20) === 128, "res/vexa_logo.png height must be 128px");
 
 function walk(dir) {
 	const entries = fs.readdirSync(dir, { withFileTypes: true });

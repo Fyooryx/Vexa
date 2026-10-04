@@ -1,7 +1,7 @@
 # Vexa - Code Editor for Android
 
 <p align="center">
-  <img src='res/logo_1.png' width='250'>
+  <img src='res/vexa_logo.png' width='250'>
 </p>
 
 [![GitHub Stars](https://img.shields.io/github/stars/Fyooryx/Vexa?style=flat)](https://github.com/Fyooryx/Vexa) [![](https://dcbadge.vercel.app/api/server/vVxVWYUAWD?style=flat)](https://discord.gg/vVxVWYUAWD)
