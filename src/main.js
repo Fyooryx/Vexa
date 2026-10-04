@@ -208,14 +208,23 @@ async function onDeviceReady() {
 			window.log("error", e);
 		});
 
-		if (localStorage.acode_pro === "true") {
+		const storedPro = [
+			localStorage.getItem(VEXA_IDENTITY.PRO_STORAGE_KEY),
+			...VEXA_IDENTITY.LEGACY_PRO_STORAGE_KEYS.map((key) =>
+				localStorage.getItem(key),
+			),
+		].some((value) => value === "true");
+		if (storedPro) {
 			config.HAS_PRO = true;
+			localStorage.setItem(VEXA_IDENTITY.PRO_STORAGE_KEY, "true");
 		}
 
 		if (navigator.onLine) {
 			const purchases = await helpers.promisify(iap.getPurchases);
-			const isPro = purchases.find((p) =>
-				p.productIds.includes("acode_pro_new"),
+			const isPro = purchases.find((purchase) =>
+				VEXA_IDENTITY.PRO_PRODUCT_IDS.some((productId) =>
+					purchase.productIds.includes(productId),
+				),
 			);
 			if (isPro) {
 				config.HAS_PRO = true;

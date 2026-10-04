@@ -46,7 +46,11 @@ beforeEach(() => {
 		"thank you :)": "Thanks",
 		"confirm-login": "Login?",
 	});
-	vi.stubGlobal("localStorage", { setItem: vi.fn() });
+	const storage = new Map();
+	vi.stubGlobal("localStorage", {
+		getItem: vi.fn((key) => storage.get(key)),
+		setItem: vi.fn((key, value) => storage.set(key, value)),
+	});
 	vi.stubGlobal("iap", {
 		USER_CANCELED: 1,
 		ITEM_ALREADY_OWNED: 7,

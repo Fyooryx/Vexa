@@ -5,6 +5,7 @@ import purchaseListener from "handlers/purchase";
 import helpers from "utils/helpers";
 import auth from "./auth";
 import config from "./config";
+import { VEXA_IDENTITY } from "./vexaIdentity";
 import customTab from "./customTab";
 import { BANNER_SUPPRESSION_REASON, setBannerSuppressed } from "./startAd";
 
@@ -42,7 +43,7 @@ export default function removeAds({ signal } = {}) {
 			enablePro();
 			// The cache is reverified by the existing startup purchase checks.
 			try {
-				localStorage.setItem("acode_pro", "true");
+				localStorage.setItem(VEXA_IDENTITY.PRO_STORAGE_KEY, "true");
 			} catch (error) {
 				console.warn("Unable to cache Pro purchase", error);
 			}
@@ -52,12 +53,13 @@ export default function removeAds({ signal } = {}) {
 		signal?.addEventListener("abort", cancel, { once: true });
 		try {
 			iap.getProducts(
-				["acode_pro_new"],
+				VEXA_IDENTITY.PRO_PRODUCT_IDS,
 				(products) => {
 					if (settled) return;
 					try {
 						const product = products?.find(
-							({ productId }) => productId === "acode_pro_new",
+							({ productId }) =>
+								VEXA_IDENTITY.PRO_PRODUCT_IDS.includes(productId),
 						);
 						if (!product) return fail(strings["no-product-info"]);
 						iap.setPurchaseUpdatedListener(
