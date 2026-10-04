@@ -35,7 +35,6 @@ import intentHandler, { processPendingIntents } from "handlers/intent";
 import keyboardHandler, { keydownState } from "handlers/keyboard";
 import quickToolsInit from "handlers/quickToolsInit";
 import windowResize from "handlers/windowResize";
-import vexa from "lib/vexa";
 import actionStack from "lib/actionStack";
 import adRewards from "lib/adRewards";
 import ajax from "lib/ajax";
@@ -61,6 +60,7 @@ import startAd, {
 	BANNER_SUPPRESSION_REASON,
 	setBannerSuppressed,
 } from "lib/startAd";
+import vexa from "lib/vexa";
 import { VEXA_IDENTITY } from "lib/vexaIdentity";
 import mustache from "mustache";
 import themes from "theme/list";

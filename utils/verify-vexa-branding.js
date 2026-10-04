@@ -1,7 +1,7 @@
 #!/usr/bin/env node
+import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
-import { createHash } from "node:crypto";
 
 const root = import.meta.dirname;
 
@@ -56,7 +56,10 @@ expect(
 expect(pkg.name === "com.vexa.app", "package.json name must be com.vexa.app");
 expect(pkg.displayName === "Vexa", "package.json displayName must be Vexa");
 expect(pkg.version === "1.14.6", "package.json version must be 1.14.6");
-expect(config.includes('android-versionCode="1019"'), "config.xml Android versionCode must be 1019");
+expect(
+	config.includes('android-versionCode="1019"'),
+	"config.xml Android versionCode must be 1019",
+);
 expect(
 	pkg.engines?.node && /(?:^|\D)22(?:\D|$)/.test(pkg.engines.node),
 	"package.json must declare Node.js 22+ support",
@@ -77,7 +80,10 @@ expect(
 	!fs.existsSync(path.join(root, "..", "src/lib/acode.js")),
 	"legacy Acode core module filename still exists",
 );
-expect(vexaCoreSource.includes("class Vexa"), "Vexa core class must be named Vexa");
+expect(
+	vexaCoreSource.includes("class Vexa"),
+	"Vexa core class must be named Vexa",
+);
 expect(
 	identity.includes('PACKAGE_NAME: "com.vexa.app"'),
 	"Vexa identity package is missing",
@@ -137,7 +143,10 @@ for (const text of [
 	"Vexa failed to start: storage is unavailable.",
 	"Vexa failed to start. Update Android System WebView or Chrome.",
 ]) {
-	expect(bootstrap.includes(text), `bootstrap must use Vexa startup text: ${text}`);
+	expect(
+		bootstrap.includes(text),
+		`bootstrap must use Vexa startup text: ${text}`,
+	);
 }
 
 expect(config.includes('android:scheme="vexa"'), "vexa:// scheme is missing");
@@ -203,7 +212,9 @@ for (const [locale, strings] of [
 }
 
 const langDir = path.join(root, "..", "src/lang");
-for (const localeFile of fs.readdirSync(langDir).filter((name) => name.endsWith(".json"))) {
+for (const localeFile of fs
+	.readdirSync(langDir)
+	.filter((name) => name.endsWith(".json"))) {
 	const locale = readJson(`src/lang/${localeFile}`);
 	for (const [key, value] of Object.entries(locale)) {
 		if (
@@ -253,7 +264,8 @@ const mainSource = read("src/main.js");
 const iconCss = read("src/res/icons/style.css");
 
 expect(
-	mainSource.includes('import vexa from "lib/vexa";') && mainSource.includes("window.vexa = vexa"),
+	mainSource.includes('import vexa from "lib/vexa";') &&
+		mainSource.includes("window.vexa = vexa"),
 	"runtime entrypoint must use the Vexa core module",
 );
 expect(
@@ -268,8 +280,7 @@ expect(
 	"Welcome page must use Vexa icon branding",
 );
 expect(
-	iconCss.includes(".icon.vexa") &&
-	iconCss.includes('url("icons/vexa.svg")'),
+	iconCss.includes(".icon.vexa") && iconCss.includes('url("icons/vexa.svg")'),
 	"Vexa icon CSS must use the Vexa logo asset",
 );
 function hasUserVisibleAcodeBrand(source) {
