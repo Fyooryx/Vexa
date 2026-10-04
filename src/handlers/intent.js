@@ -5,6 +5,7 @@ import config from "lib/config";
 import { isInitialPluginLoadComplete } from "lib/loadPlugins";
 import openFile from "lib/openFile";
 import { BANNER_SUPPRESSION_REASON, setBannerSuppressed } from "lib/startAd";
+import { parseAppIntentUrl } from "utils/appIntent";
 import helpers from "utils/helpers";
 
 const handlers = [];
