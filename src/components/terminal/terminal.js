@@ -701,7 +701,6 @@ export default class TerminalComponent {
 		return this.connectToTermuxSession();
 	}
 
-
 	/**
 	 * Route the Vexa terminal to its active backend.
 	 * Local sessions use Termux; remote sessions use the existing SFTP/SSH bridge.
