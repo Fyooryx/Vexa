@@ -61,7 +61,7 @@ import startAd, {
 	BANNER_SUPPRESSION_REASON,
 	setBannerSuppressed,
 } from "lib/startAd";
-import { VEXA_IDENTITY } from "lib/vexaIdentity";
+import { isUpstreamApiUrl, VEXA_IDENTITY } from "lib/vexaIdentity";
 import mustache from "mustache";
 import themes from "theme/list";
 import { initHighlighting } from "utils/codeHighlight";
@@ -83,7 +83,7 @@ ajax.response = (xhr) => {
 };
 
 ajax.configure = (xhr, url) => {
-	if (url.includes("acode.app/api")) {
+	if (isUpstreamApiUrl(url)) {
 		xhr.withCredentials = true;
 	}
 };
