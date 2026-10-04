@@ -62,6 +62,7 @@ import startAd, {
 	setBannerSuppressed,
 } from "lib/startAd";
 import { VEXA_IDENTITY } from "lib/vexaIdentity";
+import { getCachedPro } from "lib/proCache";
 import mustache from "mustache";
 import themes from "theme/list";
 import { initHighlighting } from "utils/codeHighlight";
@@ -82,9 +83,20 @@ ajax.response = (xhr) => {
 	return xhr.response;
 };
 
+const apiBaseUrl = new URL(config.API_BASE);
+
 ajax.configure = (xhr, url) => {
-	if (url.includes("acode.app/api")) {
-		xhr.withCredentials = true;
+	try {
+		const requestUrl = new URL(url, window.location.href);
+		const basePath = apiBaseUrl.pathname.replace(/\/$/, "");
+		const isApiRequest =
+			requestUrl.origin === apiBaseUrl.origin &&
+			(requestUrl.pathname === basePath ||
+				requestUrl.pathname.startsWith(`${basePath}/`));
+
+		if (isApiRequest) xhr.withCredentials = true;
+	} catch (error) {
+		logger.log("warn", `Unable to classify AJAX URL: ${error.message || error}`);
 	}
 };
 
@@ -205,7 +217,7 @@ async function onDeviceReady() {
 			window.log("error", e);
 		});
 
-		if (localStorage.acode_pro === "true") {
+		if (getCachedPro()) {
 			config.HAS_PRO = true;
 		}
 
