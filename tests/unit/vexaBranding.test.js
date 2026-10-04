@@ -29,6 +29,16 @@ describe("Vexa branding", () => {
 		expect(appIcons).not.toMatch(/icons\/ic_acode_/);
 	});
 
+	it("keeps Vexa deep-link handling aligned", () => {
+		const intent = read("src/handlers/intent.js");
+		const identity = read("src/lib/vexaIdentity.js");
+
+		expect(intent).toContain("isVexaDeepLink(url)");
+		expect(intent).toContain("VEXA_IDENTITY.URL_SCHEME");
+		expect(intent).toContain("VEXA_IDENTITY.LEGACY_URL_SCHEME");
+		expect(identity).toContain("export function isUpstreamApiUrl");
+	});
+
 	it("uses the Vexa log filename", () => {
 		expect(read("src/lib/config.js")).toMatch(/LOG_FILE_NAME:\s*"Vexa\.log"/);
 	});
