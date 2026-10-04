@@ -140,15 +140,15 @@ class TerminalManager {
 		}
 	}
 
-\tasync getPersistedSessions() {
-\t\t// Termux owns interactive local shell lifecycle. Vexa intentionally does
-\t\t// not persist external Termux PIDs or attempt to reconnect them.
-\t\ttry {
-\t\t\tlocalStorage.removeItem("acodeTerminalSessions");
-\t\t\tlocalStorage.removeItem(TERMINAL_SESSION_STORAGE_KEY);
-\t\t} catch {}
-\t\treturn [];
-\t}
+	async getPersistedSessions() {
+		// Termux owns interactive local shell lifecycle. Vexa intentionally does
+		// not persist external Termux PIDs or attempt to reconnect them.
+		try {
+			localStorage.removeItem("acodeTerminalSessions");
+			localStorage.removeItem(TERMINAL_SESSION_STORAGE_KEY);
+		} catch {}
+		return [];
+	}
 
 	async persistTerminalSession(pid, name, pinned = false) {
 		if (!pid) return;
@@ -188,13 +188,13 @@ class TerminalManager {
 		}
 	}
 
-\tasync restorePersistedSessions() {
-\t\t// Old Alpine/AXS sessions are not reattached after migration.
-\t\ttry {
-\t\t\tlocalStorage.removeItem("acodeTerminalSessions");
-\t\t\tlocalStorage.removeItem(TERMINAL_SESSION_STORAGE_KEY);
-\t\t} catch {}
-\t}
+	async restorePersistedSessions() {
+		// Old Alpine/AXS sessions are not reattached after migration.
+		try {
+			localStorage.removeItem("acodeTerminalSessions");
+			localStorage.removeItem(TERMINAL_SESSION_STORAGE_KEY);
+		} catch {}
+	}
 
 	/**
 	 * Create a new terminal session
