@@ -870,10 +870,6 @@ class TerminalManager {
 				}
 			}
 
-			if (this.getAllTerminals().size <= 0) {
-				Executor.stopService();
-			}
-
 			console.log(`Terminal ${terminalId} closed`);
 		} catch (error) {
 			console.error(`Error closing terminal ${terminalId}:`, error);
