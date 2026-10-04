@@ -279,7 +279,7 @@ startWorkerServer(async ({
 				: 0;
 
 			switch (method) {
-				case "vexa/validate": {
+				case "vexa/validate":
 				case "acode/validate": {
 					const diagnostics: ts.Diagnostic[] = [
 						...service.getSyntacticDiagnostics(document.uri),
