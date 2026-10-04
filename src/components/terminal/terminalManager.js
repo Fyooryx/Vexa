@@ -1233,7 +1233,7 @@ class TerminalManager {
 		let convertedPath;
 
 		if (prootPath.startsWith("/public")) {
-			// /public -> /data/user/0/com.foxdebug.acode/files/public
+			// /public -> /data/user/0/<package>/files/public
 			convertedPath = `file://${dataDir}/files${prootPath}`;
 		} else if (
 			prootPath.startsWith("/sdcard") ||

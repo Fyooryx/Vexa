@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Locale;
-import com.foxdebug.acode.R;
+import com.vexa.app.R;
 import com.vexa.app.rk.exec.terminal.*;
 
 public class AlpineDocumentProvider extends DocumentsProvider {

@@ -322,6 +322,12 @@ expect(
 
 const helpers = read("src/utils/helpers.js");
 expect(
+		!sourceBrowser.includes("com.foxdebug.acode.R") &&
+			!sourceTerminal.includes("com.foxdebug.acode.R"),
+		"native Vexa plugins must import the generated com.vexa.app.R class",
+	);
+
+expect(
 	helpers.includes("isVexaTerminalPublicSafUri") &&
 		helpers.includes("com.vexa.app") &&
 		helpers.includes("isLegacyAcodeTerminalPublicSafUri") &&
