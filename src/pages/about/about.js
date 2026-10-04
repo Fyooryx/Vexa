@@ -124,12 +124,6 @@ export default function AboutInclude() {
 					</div>
 					GitHub
 				</a>
-				<a href={config.TELEGRAM_URL} className="social-link">
-					<div className="social-icon">
-						<span className="icon telegram"></span>
-					</div>
-					Telegram
-				</a>
 				<a href={config.DISCORD_URL} className="social-link">
 					<div className="social-icon">
 						<span className="icon discord"></span>

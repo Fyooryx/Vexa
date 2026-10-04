@@ -138,11 +138,6 @@ function createWelcomeContent() {
 				<div className="link-row">
 					<LinkItem icon="vexa" label="Website" url={config.BASE_URL} />
 					<LinkItem icon="github" label="GitHub" url={config.GITHUB_URL} />
-					<LinkItem
-						icon="telegram"
-						label="Telegram"
-						url={config.TELEGRAM_URL}
-					/>
 					<LinkItem icon="discord" label="Discord" url={config.DISCORD_URL} />
 				</div>
 			</section>

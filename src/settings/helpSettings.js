@@ -11,12 +11,6 @@ export default function help() {
 			chevron: true,
 		},
 		{
-			key: "help",
-			text: strings.help,
-			link: config.TELEGRAM_URL,
-			chevron: true,
-		},
-		{
 			key: "faqs",
 			text: strings.faqs,
 			link: `${config.BASE_URL}/faqs`,

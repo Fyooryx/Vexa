@@ -21,7 +21,7 @@ const config = {
 	SCROLL_SPEED_SLOW: "SLOW",
 	SIDEBAR_SLIDE_START_THRESHOLD_PX: 20,
 	CUSTOM_THEME: 'body[theme="custom"]',
-	FEEDBACK_EMAIL: "acode@foxdebug.com",
+	FEEDBACK_EMAIL: "apps@foxdebug.com",
 	ERUDA_CDN: "https://cdn.jsdelivr.net/npm/eruda",
 
 	get PLAY_STORE_URL() {
@@ -41,9 +41,8 @@ const config = {
 
 	// Social Links
 	// The hosted documentation/service URLs remain upstream until Vexa infrastructure is deployed.
-	DOCS_URL: "https://docs.acode.app",
+	DOCS_URL: VEXA_IDENTITY.REPOSITORY_URL,
 	GITHUB_URL: VEXA_IDENTITY.REPOSITORY_URL,
-	TELEGRAM_URL: "https://t.me/foxdebug_acode",
 	DISCORD_URL: "https://discord.gg/nDqZsh7Rqz",
 	TWITTER_URL: "https://x.com/foxbiz_io",
 	INSTAGRAM_URL: "https://www.instagram.com/foxbiz.io/",

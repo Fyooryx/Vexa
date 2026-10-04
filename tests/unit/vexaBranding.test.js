@@ -19,6 +19,7 @@ describe("Vexa branding", () => {
 		expect(packageJson.name).toBe("com.vexa.app");
 		expect(packageJson.displayName).toBe("Vexa");
 		expect(packageLock.name).toBe("com.vexa.app");
+		expect(packageJson.version).toBe("1.14.6");
 		expect(packageLock.version).toBe(packageJson.version);
 		expect(main).toContain('import vexa from "lib/vexa";');
 		expect(main).toContain("window.vexa = vexa");
@@ -33,6 +34,7 @@ describe("Vexa branding", () => {
 		expect(config).toMatch(/android:icon="@drawable\/vexa_icon"/);
 		expect(config).toMatch(/android:roundIcon="@drawable\/vexa_icon"/);
 		expect(appIcons).toMatch(/icons\/vexa\.svg/);
+		expect((appIcons.match(/image: "icons\/vexa\.svg"/g) || []).length).toBe(16);
 		expect(appIcons).not.toMatch(/icons\/ic_acode_/);
 		expect(appIcons).toMatch(/icons\/vexa_default\.svg|icons\/vexa\.svg/);
 		expect(read("www/logo.svg")).toContain("Vexa logo");

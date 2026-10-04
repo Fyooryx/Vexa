@@ -13,6 +13,7 @@ Vexa is a customized/rebranded build based on the upstream Acode open-source cod
 ## • Vexa 1.14.5 additions
 
 - centralized Vexa identity metadata without conflating it with upstream service endpoints
+- `Vexa 1.14.6` consolidates all icon-picker previews and Android launcher artwork on the supplied Vexa logo
 - `Vexa: Copy Diagnostics` command for support reports
 - Vexa and legacy `acode://` deep-link compatibility through one parser
 - API credential routing derived from the configured service endpoint

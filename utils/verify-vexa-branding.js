@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import fs from "node:fs";
 import path from "node:path";
+import { createHash } from "node:crypto";
 
 const root = import.meta.dirname;
 
@@ -33,8 +34,7 @@ const intentHandler = read("src/handlers/intent.js");
 const main = read("src/main.js");
 const polyfill = read("src/lib/polyfill.js");
 const bootstrap = read("www/index.html");
-const vexaCore = read("src/lib/vexa.js");
-const vexaCore = path.join(root, "..", "src/lib/vexa.js");
+const vexaCoreSource = read("src/lib/vexa.js");
 const legacyCore = path.join(root, "..", "src/lib/acode.js");
 
 const widget = /<widget[^>]*\bid="([^"]+)"/.exec(config);
@@ -54,6 +54,7 @@ expect(
 );
 expect(pkg.name === "com.vexa.app", "package.json name must be com.vexa.app");
 expect(pkg.displayName === "Vexa", "package.json displayName must be Vexa");
+expect(pkg.version === "1.14.6", "package.json version must be 1.14.6");
 expect(
 	pkg.engines?.node && /(?:^|\D)22(?:\D|$)/.test(pkg.engines.node),
 	"package.json must declare Node.js 22+ support",
@@ -68,7 +69,7 @@ expect(
 expect(identity.includes('NAME: "Vexa"'), "Vexa identity name is missing");
 expect(fs.existsSync(path.join(root, "..", "src/lib/vexa.js")), "Vexa core module is missing");
 expect(!fs.existsSync(path.join(root, "..", "src/lib/acode.js")), "legacy Acode core module filename still exists");
-expect(vexaCore.includes("class Vexa"), "Vexa core class must be named Vexa");
+expect(vexaCoreSource.includes("class Vexa"), "Vexa core class must be named Vexa");
 expect(
 	identity.includes('PACKAGE_NAME: "com.vexa.app"'),
 	"Vexa identity package is missing",
@@ -300,13 +301,26 @@ expect(buildScript.includes("set -Eeuo pipefail"), "build.sh must fail fast");
 expect(!buildScript.includes("eval "), "build.sh must not use eval");
 
 for (const file of [
-	"res/android/drawable/vexa_icon.png",
 	"res/android/drawable/vexa_icon_foreground.xml",
-	"www/icons/vexa.png",
 	"www/icons/vexa.svg",
 ]) {
 	expectFile(file);
 }
+
+const canonicalPngFiles = [
+	"res/android/drawable/vexa_icon.png",
+	"res/vexa_logo.png",
+	"www/icons/vexa.png",
+];
+for (const file of canonicalPngFiles) expectFile(file);
+const pngHashes = new Set(
+	canonicalPngFiles.map((file) =>
+		createHash("sha256")
+			.update(fs.readFileSync(path.join(root, "..", file)))
+			.digest("hex"),
+	),
+);
+expect(pngHashes.size === 1, "canonical Vexa PNG assets have diverged");
 
 const pngPath = path.join(root, "..", "res/android/drawable/vexa_icon.png");
 const png = fs.readFileSync(pngPath);
@@ -355,15 +369,23 @@ expect(
 	"legacy ic_acode_* resource files must not remain in the Vexa source tree",
 );
 
-const legacyLauncherFiles = walk(androidRoot).filter((file) =>
+const launcherFiles = walk(androidRoot).filter((file) =>
+	/(?:^|[/\\\\])ic_launcher(?:_round)?\\.webp$/i.test(file),
+);
+expect(
+	launcherFiles.length === 10,
+	`expected 10 density-specific Vexa launcher WebP assets, found ${launcherFiles.length}`,
+);
+
+const legacyLauncherFiles = launcherFiles.filter((file) =>
 	/[/\\](?:mipmap-(mdpi|hdpi|xhdpi|xxhdpi|xxxhdpi)|drawable-[^/\\]+)[/\\](?:ic_acode_[^/\\]+|ic_launcher(?:_round)?)\.webp$/i.test(
 		file,
 	),
 );
 
 expect(
-	legacyLauncherFiles.length > 0,
-	"no Android launcher WebP assets were found under res/android",
+	legacyLauncherFiles.length === launcherFiles.length,
+	"unexpected legacy launcher asset naming remains under res/android",
 );
 
 for (const file of legacyLauncherFiles) {
@@ -382,6 +404,34 @@ for (const file of legacyLauncherFiles) {
 	);
 }
 
+const iconPreviewFiles = [
+	"vexa.svg",
+	"vexa_default.svg",
+	"vexa_pro.svg",
+	"vexa_volt.svg",
+	"vexa_prism.svg",
+	"vexa_tidal.svg",
+	"vexa_lilac.svg",
+	"vexa_cobalt.svg",
+	"vexa_glacier.svg",
+	"vexa_blueprint.svg",
+	"vexa_porcelain.svg",
+	"vexa_tangerine.svg",
+	"vexa_pixel_party.svg",
+	"vexa_solar_flare.svg",
+	"vexa_aurora_pulse.svg",
+	"vexa_terminal_glow.svg",
+	"vexa_midnight_circuit.svg",
+];
+for (const file of iconPreviewFiles) {
+	const source = read(`www/icons/${file}`);
+	expect(source.includes('href="vexa.png"'), `icon preview ${file} is not backed by the canonical Vexa PNG`);
+}
+expect(
+	(read("src/lib/appIcons.js").match(/image: "icons\\/vexa\\.svg"/g) || []).length === 16,
+	"all app icon previews must resolve to the canonical Vexa icon",
+);
+
 console.log(
-	`[Vexa branding] PASS | Version: ${pkg.version} | Package: ${pkg.name} | Launcher WebP assets checked: ${legacyLauncherFiles.length}`,
+	`[Vexa branding] PASS | Version: ${pkg.version} | Package: ${pkg.name} | Launcher WebP assets checked: ${launcherFiles.length}`,
 );

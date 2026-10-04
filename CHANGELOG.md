@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.14.6 — Vexa identity and launcher convergence
+
+### Fixed
+- corrected the Vexa branding verification script syntax so the prebuild gate executes
+- removed outdated Acode-branded Telegram configuration and UI entry points
+
+### Added
+- canonical Vexa logo convergence checks across PNG assets and icon-picker previews
+- density-specific Android launcher artwork generated from the supplied Vexa logo
+
+### Improved
+- bumped the Android/package version to 1.14.6 / versionCode 1019
+- every in-app icon preview now resolves to the same supplied Vexa artwork
+
+
 ## 1.14.5 — Vexa visual and branding hardening
 
 ### Fixed
