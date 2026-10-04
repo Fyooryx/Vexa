@@ -1,4 +1,4 @@
-package com.foxdebug.acode.rk.exec.terminal;
+package com.vexa.app.rk.exec.terminal;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -20,7 +20,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Locale;
 import com.foxdebug.acode.R;
-import com.foxdebug.acode.rk.exec.terminal.*;
+import com.vexa.app.rk.exec.terminal.*;
 
 public class AlpineDocumentProvider extends DocumentsProvider {
     
