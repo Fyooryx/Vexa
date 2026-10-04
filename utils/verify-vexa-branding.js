@@ -284,10 +284,10 @@ expect(
 	"Vexa icon CSS must use the Vexa logo asset",
 );
 function hasUserVisibleAcodeBrand(source) {
-  const literals =
-    source.match(/"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|`(?:\\.|[^`\\])*`/g) ||
-    [];
-  return literals.some((literal) => /\bAcode\b/i.test(literal));
+	const literals =
+		source.match(/"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|`(?:\\.|[^`\\])*`/g) ||
+		[];
+	return literals.some((literal) => /\bAcode\b/i.test(literal));
 }
 
 for (const [file, source] of [

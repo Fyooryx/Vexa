@@ -5,8 +5,8 @@ import config from "lib/config";
 import { isInitialPluginLoadComplete } from "lib/loadPlugins";
 import openFile from "lib/openFile";
 import { BANNER_SUPPRESSION_REASON, setBannerSuppressed } from "lib/startAd";
-import helpers from "utils/helpers";
 import { parseAppDeepLink } from "utils/appDeepLink";
+import helpers from "utils/helpers";
 
 const handlers = [];
 /**
