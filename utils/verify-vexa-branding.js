@@ -31,6 +31,7 @@ const identity = read("src/lib/vexaIdentity.js");
 const deepLink = read("src/utils/appDeepLink.js");
 const intentHandler = read("src/handlers/intent.js");
 const main = read("src/main.js");
+const polyfill = read("src/lib/polyfill.js");
 const bootstrap = read("www/index.html");
 
 const widget = /<widget[^>]*\bid="([^"]+)"/.exec(config);
@@ -86,7 +87,40 @@ expect(
 	"upstream repository identity is missing",
 );
 
-expect(\n	deepLink.includes("VEXA_IDENTITY.URL_SCHEME") &&\n		deepLink.includes("VEXA_IDENTITY.LEGACY_URL_SCHEME"),\n	"deep-link parser must derive both Vexa and legacy schemes from canonical identity",\n);\nexpect(\n	intentHandler.includes("parseAppDeepLink(url)"),\n	"intent handler must use the canonical deep-link parser",\n);\nexpect(\n	main.includes("config.API_BASE") &&\n		!main.includes('url.includes("acode.app/api")'),\n	"credential routing must use the configured API base instead of a hard-coded substring match",\n);\nexpect(\n	bootstrap.includes("<title>Vexa</title>"),\n	"web bootstrap title must use Vexa branding",\n);\nfor (const text of [\n	"Vexa requires a modern browser.",\n	"if Vexa stays on this screen.",\n	"Vexa failed to start: storage is unavailable.",\n	"Vexa failed to start. Update Android System WebView or Chrome.",\n]) {\n	expect(bootstrap.includes(text), `bootstrap must use Vexa startup text: ${text}`);\n}\nexpect(config.includes('android:scheme="vexa"'), "vexa:// scheme is missing");
+expect(
+	deepLink.includes("VEXA_IDENTITY.URL_SCHEME") &&
+		deepLink.includes("VEXA_IDENTITY.LEGACY_URL_SCHEME"),
+	"deep-link parser must derive both Vexa and legacy schemes from canonical identity",
+);
+expect(
+	intentHandler.includes("parseAppDeepLink(url)"),
+	"intent handler must use the canonical deep-link parser",
+);
+expect(
+	polyfill.includes('import config from "./config";') &&
+		polyfill.includes("config.API_BASE") &&
+		!polyfill.includes('url.includes("acode.app/api")'),
+	"fetch credential routing must use the configured API base in the global polyfill",
+);
+expect(
+	main.includes("config.API_BASE") &&
+		!main.includes('url.includes("acode.app/api")'),
+	"credential routing must use the configured API base instead of a hard-coded substring match",
+);
+expect(
+	bootstrap.includes("<title>Vexa</title>"),
+	"web bootstrap title must use Vexa branding",
+);
+for (const text of [
+	"Vexa requires a modern browser.",
+	"if Vexa stays on this screen.",
+	"Vexa failed to start: storage is unavailable.",
+	"Vexa failed to start. Update Android System WebView or Chrome.",
+]) {
+	expect(bootstrap.includes(text), `bootstrap must use Vexa startup text: ${text}`);
+}
+
+expect(config.includes('android:scheme="vexa"'), "vexa:// scheme is missing");
 expect(
 	config.includes('android:scheme="acode"'),
 	"legacy acode:// compatibility scheme is missing",
