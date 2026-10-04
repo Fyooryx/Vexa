@@ -146,7 +146,7 @@ for (const [locale, strings] of [
 ]) {
 	for (const [key, value] of Object.entries(strings)) {
 		expect(
-			typeof value !== "string" || !/\\bAcode\\b/.test(value),
+			typeof value !== "string" || !/\bAcode\b/i.test(value),
 			`${locale} translation still exposes the old product name at key: ${key}`,
 		);
 	}
@@ -169,6 +169,43 @@ expect(
 	"Vexa terminal CLI must be installed with an Acode compatibility alias",
 );
 
+const aboutPage = read("src/pages/about/about.js");
+const welcomePage = read("src/pages/welcome/welcome.js");
+const appSettings = read("src/settings/appSettings.js");
+const runningProcesses = read("src/pages/runningProcesses/runningProcesses.js");
+const themeSetting = read("src/pages/themeSetting/themeSetting.js");
+const backupRestore = read("src/settings/backupRestore.js");
+const devcontainer = read(".devcontainer/devcontainer.json");
+const iconCss = read("src/res/icons/style.css");
+
+expect(
+	aboutPage.includes('className="icon vexa"') &&
+		!aboutPage.includes('className="icon acode"'),
+	"About page must use the Vexa icon class",
+);
+expect(
+	welcomePage.includes('tabIcon: "icon vexa"') &&
+		welcomePage.includes('<LinkItem icon="vexa"') &&
+		!welcomePage.includes('tabIcon: "icon acode"'),
+	"Welcome page must use Vexa icon branding",
+);
+expect(
+	iconCss.includes(".icon.vexa") &&
+	iconCss.includes('url("/icons/vexa.svg")'),
+	"Vexa icon CSS must use the Vexa logo asset",
+);
+for (const [file, source] of [
+	["appSettings.js", appSettings],
+	["runningProcesses.js", runningProcesses],
+	["themeSetting.js", themeSetting],
+	["backupRestore.js", backupRestore],
+	["devcontainer.json", devcontainer],
+]) {
+	expect(
+		!/\bAcode\b/i.test(source),
+		`${file} still exposes a user-visible Acode brand string`,
+	);
+}
 const appIcons = read("src/lib/appIcons.js");
 expect(
 	appIcons.includes('image: "icons/vexa.svg"'),
@@ -245,6 +282,15 @@ expect(png.length >= 24, "vexa_icon.png is truncated");
 expect(png.readUInt32BE(16) === 128, "vexa_icon.png width must be 128px");
 expect(png.readUInt32BE(20) === 128, "vexa_icon.png height must be 128px");
 
+const logoPath = path.join(root, "..", "res/logo_1.png");
+const logo = fs.readFileSync(logoPath);
+expect(
+	logo.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])),
+	"res/logo_1.png is not a valid PNG",
+);
+expect(logo.readUInt32BE(16) === 128, "res/logo_1.png width must be 128px");
+expect(logo.readUInt32BE(20) === 128, "res/logo_1.png height must be 128px");
+
 function walk(dir) {
 	const entries = fs.readdirSync(dir, { withFileTypes: true });
 	const files = [];
@@ -258,6 +304,14 @@ function walk(dir) {
 }
 
 const androidRoot = path.join(root, "..", "res/android");
+const legacyNamedResources = walk(androidRoot).filter((file) =>
+	/ic_acode_/i.test(file),
+);
+expect(
+	legacyNamedResources.length === 0,
+	"legacy ic_acode_* resource files must not remain in the Vexa source tree",
+);
+
 const legacyLauncherFiles = walk(androidRoot).filter((file) =>
 	/[/\\](?:mipmap-(mdpi|hdpi|xhdpi|xxhdpi|xxxhdpi)|drawable-[^/\\]+)[/\\](?:ic_acode_[^/\\]+|ic_launcher(?:_round)?)\.webp$/i.test(
 		file,
