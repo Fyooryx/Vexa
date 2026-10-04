@@ -1,7 +1,7 @@
 {
   "name": "com.foxdebug.acode.rk.exec.terminal",
-  "version": "1.0.0",
-  "description": "Terminal stuff",
+  "version": "1.1.0",
+  "description": "Vexa user-facing terminal bridge for the official Termux app",
   "cordova": {
     "id": "com.foxdebug.acode.rk.exec.terminal",
     "platforms": [
@@ -10,7 +10,8 @@
   },
   "keywords": [
     "ecosystem:cordova",
-    "cordova-android"
+    "cordova-android",
+    "termux"
   ],
   "author": "@RohitKushvaha01",
   "license": "MIT"
