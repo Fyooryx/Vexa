@@ -1,11 +1,11 @@
-package com.foxdebug.acode.rk.exec.terminal;
+package com.vexa.app.rk.exec.terminal;
 
 import org.apache.cordova.*;
 import org.json.*;
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.*;
-import com.foxdebug.acode.rk.exec.terminal.*;
+import com.vexa.app.rk.exec.terminal.*;
 
 public class BackgroundExecutor extends CordovaPlugin {
 
