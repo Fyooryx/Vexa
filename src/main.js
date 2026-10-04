@@ -67,6 +67,7 @@ import mustache from "mustache";
 import themes from "theme/list";
 import { initHighlighting } from "utils/codeHighlight";
 import { getEncoding, initEncodings } from "utils/encodings";
+import { isTrustedApiRequest } from "utils/apiSecurity";
 import helpers from "utils/helpers";
 import { INSTALL_SOURCE_PLAY, isPlayStoreInstall } from "utils/installSource";
 import loadPolyFill from "utils/polyfill";
@@ -83,20 +84,9 @@ ajax.response = (xhr) => {
 	return xhr.response;
 };
 
-const apiBaseUrl = new URL(config.API_BASE);
-
 ajax.configure = (xhr, url) => {
-	try {
-		const requestUrl = new URL(url, window.location.href);
-		const basePath = apiBaseUrl.pathname.replace(/\/$/, "");
-		const isApiRequest =
-			requestUrl.origin === apiBaseUrl.origin &&
-			(requestUrl.pathname === basePath ||
-				requestUrl.pathname.startsWith(`${basePath}/`));
-
-		if (isApiRequest) xhr.withCredentials = true;
-	} catch (error) {
-		logger.log("warn", `Unable to classify AJAX URL: ${error.message || error}`);
+	if (isTrustedApiRequest(url, config.API_BASE, window.location.href)) {
+		xhr.withCredentials = true;
 	}
 };
 
