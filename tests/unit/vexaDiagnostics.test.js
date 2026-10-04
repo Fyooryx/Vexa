@@ -27,5 +27,7 @@ describe("Vexa diagnostics", () => {
 		expect(report).toContain("Android: 14");
 		expect(report).toContain("Model: Test Device");
 		expect(report).toContain("Online: true");
+		expect(report).toContain("Deep link: vexa://");
+		expect(report).toContain("Legacy deep link: acode://");
 	});
 });
