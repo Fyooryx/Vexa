@@ -1,9 +1,9 @@
 {
-  "name": "com.foxdebug.acode.rk.plugin.plugincontext",
+  "name": "com.vexa.app.rk.plugin.plugincontext",
   "version": "1.0.0",
   "description": "PluginContext",
   "cordova": {
-    "id": "com.foxdebug.acode.rk.plugin.plugincontext",
+    "id": "com.vexa.app.rk.plugin.plugincontext",
     "platforms": [
       "android"
     ]
