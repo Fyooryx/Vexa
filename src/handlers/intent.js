@@ -6,6 +6,7 @@ import { isInitialPluginLoadComplete } from "lib/loadPlugins";
 import openFile from "lib/openFile";
 import { BANNER_SUPPRESSION_REASON, setBannerSuppressed } from "lib/startAd";
 import helpers from "utils/helpers";
+import { parseAppDeepLink } from "utils/appDeepLink";
 
 const handlers = [];
 /**
@@ -28,9 +29,9 @@ export default async function HandleIntent(intent = {}) {
 			intent.fileUri ||
 			intent.data ||
 			intent.extras?.["android.intent.extra.STREAM"];
-		if (typeof url === "string" && url.startsWith("acode://")) {
-			const path = url.replace("acode://", "");
-			const [module, action, value] = path.split("/");
+		const appLink = parseAppDeepLink(url);
+		if (appLink) {
+			const { module, action, value } = appLink;
 
 			if (module === "auth" && action === "callback") {
 				return;
