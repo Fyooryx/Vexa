@@ -444,7 +444,7 @@ function createMarkdownPreview(file) {
 		await Promise.all(
 			mermaidBlocks.map(async (block) => {
 				const source = block.textContent || "";
-				const id = `acode-markdown-mermaid-${Date.now()}-${version}-${index++}`;
+				const id = `vexa-markdown-mermaid-${Date.now()}-${version}-${index++}`;
 
 				try {
 					const { svg, bindFunctions } = await mermaid.render(id, source);
