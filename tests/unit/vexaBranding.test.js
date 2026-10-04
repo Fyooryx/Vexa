@@ -55,7 +55,30 @@ describe("Vexa branding", () => {
 		expect(polyfill).not.toContain('url.includes("acode.app/api")');
 	});
 
-	it("uses the Vexa log filename", () => {
+		it("keeps visible branding on Vexa assets and UI", () => {
+		const about = read("src/pages/about/about.js");
+		const welcome = read("src/pages/welcome/welcome.js");
+		const appSettings = read("src/settings/appSettings.js");
+		const runningProcesses = read("src/pages/runningProcesses/runningProcesses.js");
+		const themeSetting = read("src/pages/themeSetting/themeSetting.js");
+		const backupRestore = read("src/settings/backupRestore.js");
+		const devcontainer = read(".devcontainer/devcontainer.json");
+		const css = read("src/res/icons/style.css");
+
+		expect(about).toContain('className="icon vexa"');
+		expect(about).not.toContain('className="icon acode"');
+		expect(welcome).toContain('tabIcon: "icon vexa"');
+		expect(welcome).toContain('<LinkItem icon="vexa"');
+		expect(appSettings).toContain("Scale text across the Vexa interface.");
+		expect(runningProcesses).toContain('"Vexa Service"');
+		expect(runningProcesses).toContain('"Vexa main process"');
+		expect(themeSetting).toContain(">vexa</span>");
+		expect(backupRestore).toContain("Vexa_backup_");
+		expect(devcontainer).toContain('"name": "Vexa Development"');
+		expect(css).toContain(".icon.vexa");
+		expect(css).toContain('url("/icons/vexa.svg")');
+	});
+it("uses the Vexa log filename", () => {
 		expect(read("src/lib/config.js")).toMatch(/LOG_FILE_NAME:\s*"Vexa\.log"/);
 	});
 	it("exposes safe Vexa repository commands", () => {
