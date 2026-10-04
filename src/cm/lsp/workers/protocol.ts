@@ -276,7 +276,7 @@ async function handleRequest(message: JsonRpcMessage): Promise<void> {
 						...(adapter?.capabilities ?? {}),
 					},
 					serverInfo: {
-						name: `Acode built-in ${serverId} worker`,
+						name: `Vexa built-in ${serverId} worker`,
 					},
 				});
 				return;
