@@ -248,11 +248,19 @@ startWorkerServer(({ documents, requestFile, rootUri }) => {
 
 		async request(method, params) {
 			if (method === "completionItem/resolve") {
-				if (
+				const providerData =
 					params &&
-					typeof params === "object" &&
-					(params as { data?: { acodeLspProvider?: unknown } }).data
-						(?.vexaLspProvider === "typescript" || ?.acodeLspProvider === "typescript")
+					typeof params === "object"
+						? (params as {
+								data?: {
+									vexaLspProvider?: unknown;
+									acodeLspProvider?: unknown;
+								};
+							}).data
+						: undefined;
+				if (
+					providerData?.vexaLspProvider === "typescript" ||
+					providerData?.acodeLspProvider === "typescript"
 				) {
 					return requestTypeScript(method, params, null);
 				}
