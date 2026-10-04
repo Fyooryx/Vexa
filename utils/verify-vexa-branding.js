@@ -33,6 +33,7 @@ const intentHandler = read("src/handlers/intent.js");
 const main = read("src/main.js");
 const polyfill = read("src/lib/polyfill.js");
 const bootstrap = read("www/index.html");
+const vexaCore = read("src/lib/vexa.js");
 const vexaCore = path.join(root, "..", "src/lib/vexa.js");
 const legacyCore = path.join(root, "..", "src/lib/acode.js");
 
@@ -65,6 +66,9 @@ expect(
 );
 
 expect(identity.includes('NAME: "Vexa"'), "Vexa identity name is missing");
+expect(fs.existsSync(path.join(root, "..", "src/lib/vexa.js")), "Vexa core module is missing");
+expect(!fs.existsSync(path.join(root, "..", "src/lib/acode.js")), "legacy Acode core module filename still exists");
+expect(vexaCore.includes("class Vexa"), "Vexa core class must be named Vexa");
 expect(
 	identity.includes('PACKAGE_NAME: "com.vexa.app"'),
 	"Vexa identity package is missing",
@@ -203,8 +207,13 @@ const runningProcesses = read("src/pages/runningProcesses/runningProcesses.js");
 const themeSetting = read("src/pages/themeSetting/themeSetting.js");
 const backupRestore = read("src/settings/backupRestore.js");
 const devcontainer = read(".devcontainer/devcontainer.json");
+const mainSource = read("src/main.js");
 const iconCss = read("src/res/icons/style.css");
 
+expect(
+	mainSource.includes('import vexa from "lib/vexa";') && mainSource.includes("window.vexa = vexa"),
+	"runtime entrypoint must use the Vexa core module",
+);
 expect(
 	aboutPage.includes('className="icon vexa"') &&
 		!aboutPage.includes('className="icon acode"'),
