@@ -12,6 +12,8 @@ export const VEXA_IDENTITY = Object.freeze({
 	LEGACY_URL_SCHEME: "acode",
 	PRO_STORAGE_KEY: "vexa_pro",
 	LEGACY_PRO_STORAGE_KEYS: Object.freeze(["acode_pro"]),
+	// Google Play product IDs are external billing identifiers; keep the legacy
+	// SKU stable so existing purchases remain recoverable after rebranding.
 	PRO_PRODUCT_IDS: Object.freeze(["acode_pro_new"]),
 	REPOSITORY_URL: "https://github.com/Fyooryx/Vexa",
 	UPSTREAM_REPOSITORY_URL: "https://github.com/Acode-Foundation/Acode",

@@ -23,7 +23,8 @@ import org.json.JSONObject;
 
 public class Authenticator extends CordovaPlugin {
     private static final String TAG = "VexaAuth";
-    private static final String PREFS_FILENAME = "acode_auth_secure";
+    private static final String PREFS_FILENAME = "vexa_auth_secure";
+    private static final String LEGACY_PREFS_FILENAME = "acode_auth_secure";
     private static final String KEY_TOKEN = "auth_token";
     private static final String PRO_PURCHASED = "pro_purchased";
     private static final String KEY_MIGRATED_V2 = "migrated_host_to_domain_cookies";
@@ -41,6 +42,7 @@ public class Authenticator extends CordovaPlugin {
         "https://dev.acode.app"
     };
     private EncryptedPreferenceManager prefManager;
+    private EncryptedPreferenceManager legacyPrefManager;
     private final Object loginCallbackLock = new Object();
     private volatile CallbackContext loginCallback;
 
@@ -48,6 +50,7 @@ public class Authenticator extends CordovaPlugin {
     protected void pluginInitialize() {
         Log.d(TAG, "Initializing Authenticator Plugin...");
         this.prefManager = new EncryptedPreferenceManager(this.cordova.getContext(), PREFS_FILENAME);
+        this.legacyPrefManager = new EncryptedPreferenceManager(this.cordova.getContext(), LEGACY_PREFS_FILENAME);
 
         WebView androidWebView = (WebView) webView.getView();
         CookieManager.getInstance().setAcceptThirdPartyCookies(androidWebView, true);
@@ -59,6 +62,12 @@ public class Authenticator extends CordovaPlugin {
         }
 
         String token = prefManager.getString(KEY_TOKEN, "");
+        if (token.isEmpty()) {
+            token = legacyPrefManager.getString(KEY_TOKEN, "");
+            if (!token.isEmpty()) {
+                prefManager.setString(KEY_TOKEN, token);
+            }
+        }
         if (!token.isEmpty()) {
             setTokenCookie(token);
         }

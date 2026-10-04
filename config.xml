@@ -5,10 +5,10 @@
     xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Vexa</name>
     <description>
-        Light weight code editor and web IDE for Android.
+        Vexa is a lightweight code editor and web IDE for Android.
     </description>
-    <author email="ajit@foxdebug.com" href="https://foxdebug.com">
-        Foxdebug
+    <author email="ajit@foxdebug.com" href="https://github.com/Fyooryx/Vexa">
+        Vexa Project
     </author>
     <content src="index.html" />
     <access launch-external="yes" origin="*" />
