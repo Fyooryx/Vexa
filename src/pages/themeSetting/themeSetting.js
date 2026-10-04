@@ -274,7 +274,7 @@ export default function () {
 				<div className="terminal-line terminal-prompt">
 					<span style={`color:${theme.green};`}>user</span>
 					<span style={`color:${theme.foreground};`}>@</span>
-					<span style={`color:${theme.blue};`}>acode</span>
+					<span style={`color:${theme.blue};`}>vexa</span>
 					<span style={`color:${theme.foreground};`}>:~$ </span>
 					<span
 						className="terminal-cursor"
