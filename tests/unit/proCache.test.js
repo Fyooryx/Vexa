@@ -1,1 +1,26 @@
-import { afterEach, describe, expect, it } from "vitest";\nimport { getCachedPro, setCachedPro } from "../../src/lib/proCache";\n\ndescribe("Vexa Pro cache migration", () => {\n\tafterEach(() => localStorage.clear());\n\n\tit("reads the new Vexa cache key", () => {\n\t\tlocalStorage.setItem("vexa_pro", "true");\n\t\texpect(getCachedPro()).toBe(true);\n\t});\n\n\tit("migrates the legacy Acode cache key on read", () => {\n\t\tlocalStorage.setItem("acode_pro", "true");\n\t\texpect(getCachedPro()).toBe(true);\n\t\texpect(localStorage.getItem("vexa_pro")).toBe("true");\n\t});\n\n\tit("does not report Pro without a cached entitlement", () => {\n\t\texpect(getCachedPro()).toBe(false);\n\t});\n\n\tit("writes the Vexa cache key", () => {\n\t\tsetCachedPro();\n\t\texpect(localStorage.getItem("vexa_pro")).toBe("true");\n\t});\n});\n
+import { afterEach, describe, expect, it } from "vitest";
+import { getCachedPro, setCachedPro } from "../../src/lib/proCache";
+
+describe("Vexa Pro cache migration", () => {
+	afterEach(() => localStorage.clear());
+
+	it("reads the new Vexa cache key", () => {
+		localStorage.setItem("vexa_pro", "true");
+		expect(getCachedPro()).toBe(true);
+	});
+
+	it("migrates the legacy Acode cache key on read", () => {
+		localStorage.setItem("acode_pro", "true");
+		expect(getCachedPro()).toBe(true);
+		expect(localStorage.getItem("vexa_pro")).toBe("true");
+	});
+
+	it("does not report Pro without a cached entitlement", () => {
+		expect(getCachedPro()).toBe(false);
+	});
+
+	it("writes the Vexa cache key", () => {
+		setCachedPro();
+		expect(localStorage.getItem("vexa_pro")).toBe("true");
+	});
+});
