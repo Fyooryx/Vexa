@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased — Vexa + Nightfall hardening wave
+
+### Fixed
+- aligned Vexa diagnostics regression fixtures with the current 1.14.3 / Android version code 1016 baseline
+
+### Improved
+- refreshed README guidance and feature notes to the current Vexa baseline
+- kept the Vexa/Nightfall evidence-first validation gate explicit for local builds
+
 ## 1.14.3 — Vexa + Nightfall usability hardening
 
 ### Fixed
