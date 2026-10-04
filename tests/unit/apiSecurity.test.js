@@ -2,22 +2,22 @@ import { describe, expect, it } from "vitest";
 import { isTrustedApiRequest } from "../../src/utils/apiSecurity";
 
 const API = "https://service.example/api";
-const DOC = "https://vexa.example/editor";
+const DOC = "https://service.example/editor";
 
 describe("trusted API request classification", () => {
-\tit.each([
-\t\t["https://service.example/api", true],
-\t\t["https://service.example/api/login", true],
-\t\t["/api/users", true],
-\t\t["https://service.example/apiary", false],
-\t\t["https://service.example.evil/api/login", false],
-\t\t["https://evil.example/?next=https://service.example/api", false],
-\t\t["https://service.example/other", false],
-\t])("classifies %s as %s", (url, expected) => {
-\t\texpect(isTrustedApiRequest(url, API, DOC)).toBe(expected);
-\t});
+  it.each([
+    ["https://service.example/api", true],
+    ["https://service.example/api/login", true],
+    ["/api/users", true],
+    ["https://service.example/apiary", false],
+    ["https://service.example.evil/api/login", false],
+    ["https://evil.example/?next=https://service.example/api", false],
+    ["https://service.example/other", false],
+  ])("classifies %s as %s", (url, expected) => {
+    expect(isTrustedApiRequest(url, API, DOC)).toBe(expected);
+  });
 
-\tit("rejects malformed URLs", () => {
-\t\texpect(isTrustedApiRequest("not a url", API, DOC)).toBe(false);
-\t});
+  it("rejects malformed URLs", () => {
+    expect(isTrustedApiRequest("not a url", API, DOC)).toBe(false);
+  });
 });
