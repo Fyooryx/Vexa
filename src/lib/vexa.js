@@ -90,7 +90,7 @@ import config from "./config";
 import quickToolsAdapters from "./quickToolsAdapter";
 import webview from "./webview";
 
-class Acode {
+class Vexa {
 	#modules = {};
 	#pluginsInit = {};
 	#pluginUnmount = {};
@@ -1099,5 +1099,5 @@ class Acode {
 	}
 }
 
-const acode = new Acode();
-export default acode;
+const vexa = new Vexa();
+export default vexa;
