@@ -1,9 +1,9 @@
 {
-  "name": "com.foxdebug.acode.rk.exec.proot",
+  "name": "com.vexa.app.rk.exec.proot",
   "version": "1.0.0",
   "description": "Proot stuff",
   "cordova": {
-    "id": "com.foxdebug.acode.rk.exec.proot",
+    "id": "com.vexa.app.rk.exec.proot",
     "platforms": [
       "android"
     ]
