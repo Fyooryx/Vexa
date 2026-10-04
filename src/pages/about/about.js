@@ -49,7 +49,7 @@ export default function AboutInclude() {
 					target="_blank"
 				>
 					<div className="info-item-icon">
-						<span className="icon acode"></span>
+						<span className="icon vexa"></span>
 					</div>
 					<div className="info-item-text">
 						Service endpoint
