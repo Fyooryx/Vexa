@@ -46,7 +46,7 @@ expect(
 );
 expect(pkg.name === "com.vexa.app", "package.json name must be com.vexa.app");
 expect(pkg.displayName === "Vexa", "package.json displayName must be Vexa");
-expect(pkg.author === "Vyrael (zavriel.id) <zavriel.studio@gmail.com>", "package.json owner metadata drifted");
+expect(\n\tpkg.author === "Vyrael (zavriel.id) <zavriel.studio@gmail.com>",\n\t"package.json owner metadata drifted",\n);
 expect(
 	pkg.engines?.node && /(?:^|\D)22(?:\D|$)/.test(pkg.engines.node),
 	"package.json must declare Node.js 22+ support",
