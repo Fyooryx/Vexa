@@ -6,10 +6,6 @@ const menuJava = path.resolve(
   __dirname,
   "../../../platforms/android/app/src/main/java/com/foxdebug/browser/Menu.java",
 );
-const docProvider = path.resolve(
-  __dirname,
-  "../../../platforms/android/app/src/main/java/com/foxdebug/acode/rk/exec/terminal/AlpineDocumentProvider.java",
-);
 
 const repeatChar = (char, times) => char.repeat(times);
 
@@ -37,7 +33,6 @@ try {
   if (!match) throw new Error("Could not extract widget id from config.xml");
 
   const packageName = match[1];
-  replaceImport(docProvider, packageName);
   replaceImport(menuJava, packageName);
 
   const msg = `==== Updated Android R imports for ${packageName} ====`;
