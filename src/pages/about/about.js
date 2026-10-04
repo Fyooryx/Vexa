@@ -4,6 +4,7 @@ import Page from "components/page";
 import Reactive from "html-tag-js/reactive";
 import actionStack from "lib/actionStack";
 import config from "lib/config";
+import { VEXA_IDENTITY } from "lib/vexaIdentity";
 import helpers from "utils/helpers";
 export default function AboutInclude() {
 	const $page = Page(strings.about.capitalize());
@@ -19,6 +20,10 @@ export default function AboutInclude() {
 				<h1 className="version-title">Vexa editor</h1>
 				<div className="version-number">
 					Version {BuildInfo.version} ({BuildInfo.versionCode})
+				</div>
+				<div className="owner-info">
+					<div className="owner-label">Owner</div>
+					<div className="owner-name">{VEXA_IDENTITY.OWNER_NAME}</div>
 				</div>
 			</div>
 
@@ -62,11 +67,17 @@ export default function AboutInclude() {
 			</div>
 
 			<div className="social-links">
-				<a href="mailto:apps@foxdebug.com" className="social-link">
+				<a href={`mailto:${VEXA_IDENTITY.OWNER_EMAIL}`} className="social-link">
 					<div className="social-icon">
 						<span className="icon gmail"></span>
 					</div>
-					Mail
+					Email
+				</a>
+				<a href={`tel:${VEXA_IDENTITY.OWNER_PHONE.replace(/[^+\d]/g, "")}`} className="social-link">
+					<div className="social-icon">
+						<span className="icon phone"></span>
+					</div>
+					Phone
 				</a>
 				<a href={config.TWITTER_URL} className="social-link">
 					<div className="social-icon">
