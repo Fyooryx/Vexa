@@ -20,6 +20,26 @@
       color: color-mix(in srgb, var(--primary-text-color) 60%, transparent);
       font-size: 14px;
     }
+
+    .owner-info {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .owner-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: color-mix(in srgb, var(--primary-text-color) 50%, transparent);
+    }
+
+    .owner-name {
+      margin-top: 4px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--primary-text-color);
+    }
   }
 
   .info-section {
