@@ -18,7 +18,7 @@ module.exports = {
       const ID = reset ? "com.vexa.app" : /widget id="([0-9a-zA-Z\.\-_]*)"/.exec(fileData)[1];
       const newFileData = manifest.replace(
         /(android:authorities=")([0-9a-zA-Z\.\-_]*)(")/,
-        `$1${reset ? "com.foxdebug" : ID}.provider$3`
+        `$1${reset ? "com.vexa.app" : ID}.provider$3`
       );
       fs.writeFileSync(androidManifest, newFileData);
 
