@@ -321,7 +321,9 @@ expect(
 );
 
 const helpers = read("src/utils/helpers.js");
-const browserMenu = read("src/plugins/browser/android/com/foxdebug/browser/Menu.java");
+const browserMenu = read(
+	"src/plugins/browser/android/com/foxdebug/browser/Menu.java",
+);
 const terminalProvider = read(
 	"src/plugins/terminal/src/android/AlpineDocumentProvider.java",
 );
