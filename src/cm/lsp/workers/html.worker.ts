@@ -233,7 +233,7 @@ startWorkerServer(({ documents, requestFile, rootUri }) => {
 			}
 			if (embedded.javascript) {
 				const javascriptDiagnostics = await requestTypeScript(
-					"acode/validate",
+					"vexa/validate",
 					{
 						textDocument: { uri: embedded.javascript.uri },
 					},
@@ -252,7 +252,7 @@ startWorkerServer(({ documents, requestFile, rootUri }) => {
 					params &&
 					typeof params === "object" &&
 					(params as { data?: { acodeLspProvider?: unknown } }).data
-						?.acodeLspProvider === "typescript"
+						(?.vexaLspProvider === "typescript" || ?.acodeLspProvider === "typescript")
 				) {
 					return requestTypeScript(method, params, null);
 				}
