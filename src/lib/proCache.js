@@ -1,1 +1,33 @@
-const VEXA_PRO_CACHE_KEY = "vexa_pro";\nconst LEGACY_PRO_CACHE_KEY = "acode_pro";\n\n/**\n * Return the locally cached Pro state.\n *\n * The legacy cache key is still read during migration so existing installs\n * do not lose their locally cached entitlement after the rebrand.\n *\n * @returns {boolean}\n */\nexport function getCachedPro() {\n\ttry {\n\t\tif (localStorage.getItem(VEXA_PRO_CACHE_KEY) === "true") return true;\n\n\t\tif (localStorage.getItem(LEGACY_PRO_CACHE_KEY) === "true") {\n\t\t\tlocalStorage.setItem(VEXA_PRO_CACHE_KEY, "true");\n\t\t\treturn true;\n\t\t}\n\t} catch (error) {\n\t\tconsole.warn("Unable to read cached Pro state", error);\n\t}\n\treturn false;\n}\n\n/** Persist local Pro entitlement under the Vexa namespace. */\nexport function setCachedPro() {\n\ttry {\n\t\tlocalStorage.setItem(VEXA_PRO_CACHE_KEY, "true");\n\t} catch (error) {\n\t\tconsole.warn("Unable to cache Vexa Pro state", error);\n\t}\n}\n
+const VEXA_PRO_CACHE_KEY = "vexa_pro";
+const LEGACY_PRO_CACHE_KEY = "acode_pro";
+
+/**
+ * Return the locally cached Pro state.
+ *
+ * The legacy cache key is still read during migration so existing installs
+ * do not lose their locally cached entitlement after the rebrand.
+ *
+ * @returns {boolean}
+ */
+export function getCachedPro() {
+	try {
+		if (localStorage.getItem(VEXA_PRO_CACHE_KEY) === "true") return true;
+
+		if (localStorage.getItem(LEGACY_PRO_CACHE_KEY) === "true") {
+			localStorage.setItem(VEXA_PRO_CACHE_KEY, "true");
+			return true;
+		}
+	} catch (error) {
+		console.warn("Unable to read cached Pro state", error);
+	}
+	return false;
+}
+
+/** Persist local Pro entitlement under the Vexa namespace. */
+export function setCachedPro() {
+	try {
+		localStorage.setItem(VEXA_PRO_CACHE_KEY, "true");
+	} catch (error) {
+		console.warn("Unable to cache Vexa Pro state", error);
+	}
+}
