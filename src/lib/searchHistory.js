@@ -3,12 +3,13 @@
  * Manages search/replace history using localStorage
  */
 
-const HISTORY_KEY = "acode.searchreplace.history";
+const HISTORY_KEY = "vexa.searchreplace.history";
+const LEGACY_HISTORY_KEY = "acode.searchreplace.history";
 const MAX_HISTORY_ITEMS = 20;
 
 class SearchHistory {
 	constructor() {
-		this.history = this.loadHistory(HISTORY_KEY);
+		this.history = this.loadHistory(HISTORY_KEY, LEGACY_HISTORY_KEY);
 		this.searchIndex = -1; // Current position in history for search input
 		this.replaceIndex = -1; // Current position in history for replace input
 		this.tempSearchValue = ""; // Temporary storage for current search input
@@ -20,10 +21,18 @@ class SearchHistory {
 	 * @param {string} key Storage key
 	 * @returns {Array<string>} History items
 	 */
-	loadHistory(key) {
+	loadHistory(key, legacyKey) {
 		try {
 			const stored = localStorage.getItem(key);
-			return stored ? JSON.parse(stored) : [];
+			if (stored) return JSON.parse(stored);
+			if (legacyKey) {
+				const legacyStored = localStorage.getItem(legacyKey);
+				if (legacyStored) {
+					localStorage.setItem(key, legacyStored);
+					return JSON.parse(legacyStored);
+				}
+			}
+			return [];
 		} catch (error) {
 			console.warn("Failed to load search history:", error);
 			return [];
