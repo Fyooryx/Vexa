@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-  xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-acode-webview" version="1.0.0">
-  <name>cordova-plugin-acode-webview</name>
-  <description>Acode WebView Plugin API - Create and manage isolated WebView instances</description>
+  xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-vexa-webview" version="1.0.0">
+  <name>cordova-plugin-vexa-webview</name>
+  <description>Vexa WebView Plugin API - Create and manage isolated WebView instances</description>
   <license>Apache 2.0</license>
 
   <platform name="android">
