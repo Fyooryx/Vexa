@@ -49,7 +49,7 @@ export const javascriptServers: LspServerManifest[] = [
 		enabled: false,
 		initializationOptions: {
 			provideFormatter: true,
-			hostInfo: "acode",
+			hostInfo: "vexa",
 		},
 		workspaceConfiguration: {
 			completions: {
