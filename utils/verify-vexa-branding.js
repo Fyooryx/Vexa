@@ -214,7 +214,7 @@ expect(
 );
 expect(
 	iconCss.includes(".icon.vexa") &&
-	iconCss.includes('url("/icons/vexa.svg")'),
+	iconCss.includes('url("icons/vexa.svg")'),
 	"Vexa icon CSS must use the Vexa logo asset",
 );
 for (const [file, source] of [
