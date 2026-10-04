@@ -11,8 +11,9 @@ describe("Vexa Termux integration", () => {
 		expect(plugin).toContain("com.termux.permission.RUN_COMMAND");
 		expect(plugin).toContain('com.termux');
 		expect(plugin).not.toContain("AlpineDocumentProvider.java");
-		expect(plugin).not.toContain("init-alpine.sh");
-		expect(plugin).not.toContain("init-sandbox.sh");
+		expect(plugin).toContain("TerminalService.java");
+		expect(plugin).toContain("init-alpine.sh");
+		expect(plugin).toContain("init-sandbox.sh");
 	});
 
 	it("uses Termux as the local terminal facade", () => {
