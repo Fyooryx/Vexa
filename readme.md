@@ -28,7 +28,7 @@ Selamat datang di Vexa Editor - alat pengeditan kode yang kuat dan serbaguna yan
 - Modifikasi file sumber untuk berbagai bahasa seperti Python, Java, JavaScript, dan lainnya secara mulus. 
 - Konsol javascript bawaan
 - Integrasi terminal S/FTP dan SSH
-- Terminal bawaan (Alpine)
+- Terminal Termux sebagai backend shell utama
 - Nikmati dukungan pengeditan multibahasa dengan alat manajemen yang mudah. 
 - Nikmati koleksi besar plugin komunitas untuk meningkatkan pengalaman coding Anda. 
 
@@ -88,3 +88,10 @@ Untuk dokumentasi komprehensif tentang membuat plugin untuk Vexa Editor, kunjung
 (https://github.com/Acode-Foundation/acode-plugin).
 
 Untuk kompatibilitas API/plugin, gunakan dokumentasi upstream sebagai referensi(https://github.com/Acode-Foundation/acode-plugin)
+
+
+## Termux Terminal
+
+Vexa delegates the user-facing local terminal to the installed Termux application instead of embedding an Alpine/AXS shell. Install Termux, grant Vexa the `com.termux.permission.RUN_COMMAND` permission, and enable `allow-external-apps=true` in Termux before opening Vexa Terminal.
+
+The interactive shell itself remains hosted by Termux. This keeps packages, shell configuration, permissions, and upgrades under Termux while Vexa provides the editor and project workflow.
