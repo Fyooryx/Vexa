@@ -176,8 +176,10 @@ expect(
 	"verify:branding script is missing",
 );
 expect(
-	packageJsonText.includes('"prebuild": "npm run verify:branding"'),
-	"prebuild branding gate is missing",
+	packageJsonText.includes(
+		'"prebuild": "npm run verify:branding && npm run verify:termux"',
+	),
+	"prebuild Vexa branding and Termux gate is missing",
 );
 
 const buildScript = read("utils/scripts/build.sh");
