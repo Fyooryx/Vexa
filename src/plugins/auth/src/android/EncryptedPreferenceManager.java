@@ -1,4 +1,4 @@
-package com.foxdebug.acode.rk.auth;
+package com.vexa.app.rk.auth;
 
 import android.content.Context;
 import android.content.SharedPreferences;
