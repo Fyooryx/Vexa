@@ -3,7 +3,6 @@
  * Provides a pluggable and customizable terminal interface
  */
 
-import { AttachAddon } from "@xterm/addon-attach";
 import { FitAddon } from "@xterm/addon-fit";
 import { ImageAddon } from "@xterm/addon-image";
 import { SearchAddon } from "@xterm/addon-search";
@@ -64,7 +63,6 @@ export default class TerminalComponent {
 		this.imageAddon = null;
 		this.ligaturesAddon = null;
 		this.container = null;
-		this.websocket = null;
 		this.pid = null;
 		this.isConnected = false;
 		this.serverMode = options.serverMode !== false; // Default true
@@ -700,6 +698,21 @@ export default class TerminalComponent {
 
 
 	/**
+	 * Route the Vexa terminal to its active backend.
+	 * Local sessions use Termux; remote sessions use the existing SFTP/SSH bridge.
+	 */
+	async connectToSession(pid) {
+		if (this.termuxMode) return this.connectToTermuxSession();
+		if (this.remoteSsh) return this.connectToRemoteShell();
+		if (pid) {
+			throw new Error(
+				"Legacy embedded terminal sessions are no longer supported. Use Termux.",
+			);
+		}
+		throw new Error("A terminal backend is not configured.");
+	}
+
+	/**
 	 * Connect xterm to an interactive Maverick SSH shell.
 	 */
 	connectToRemoteShell() {
@@ -802,12 +815,12 @@ export default class TerminalComponent {
 	 * @param {boolean} force - Send even if these dimensions were requested before
 	 */
 	async resizeTerminal(cols, rows, force = false) {
-		if (!this.pid || !this.serverMode) return;
+		if (!this.pid || !this.serverMode || !this.remoteSsh) return;
 		const resizeKey = `${cols}x${rows}`;
 		if (!force && this.lastRequestedServerSize === resizeKey) return;
 		this.lastRequestedServerSize = resizeKey;
-		if (this.remoteSsh) {
-			if (!this.remoteShellId) return;
+
+		try {
 			sftp.resizeShell(
 				this.remoteShellId,
 				cols,
@@ -818,27 +831,9 @@ export default class TerminalComponent {
 					this.onError?.(error);
 				},
 			);
-			return;
-		}
-
-		try {
-			await new Promise((resolve, reject) => {
-				cordova.plugin.http.sendRequest(
-					`http://127.0.0.1:${this.options.port}/terminals/${this.pid}/resize`,
-					{
-						method: "POST",
-						serializer: "json",
-						data: { cols, rows },
-					},
-					(res) => resolve(res),
-					(err) => reject(err),
-				);
-			});
 		} catch (error) {
-			if (this.lastRequestedServerSize === resizeKey) {
-				this.lastRequestedServerSize = null;
-			}
-			console.error("Failed to resize terminal:", error);
+			this.lastRequestedServerSize = null;
+			this.onError?.(error);
 		}
 	}
 
@@ -890,18 +885,7 @@ export default class TerminalComponent {
 			);
 			return;
 		}
-		if (
-			this.serverMode &&
-			this.isConnected &&
-			this.websocket &&
-			this.websocket.readyState === WebSocket.OPEN
-		) {
-			// Send data through WebSocket instead of direct write
-			this.websocket.send(data);
-		} else {
-			// For local mode or disconnected terminals, write directly
-			this.terminal.write(data);
-		}
+		this.terminal.write(data);
 	}
 
 	/**
@@ -1198,35 +1182,8 @@ export default class TerminalComponent {
 			await new Promise((resolve) => {
 				sftp.closeShell(shellID, resolve, resolve);
 			});
-			return;
 		}
-
-		if (this.websocket) {
-			try {
-				this.websocket.close();
-			} catch {
-				// Already closed
-			}
-			this.websocket = null;
-		}
-
-		if (this.pid && this.serverMode) {
-			try {
-				await new Promise((resolve, reject) => {
-					cordova.plugin.http.sendRequest(
-						`http://127.0.0.1:${this.options.port}/terminals/${this.pid}/terminate`,
-						{
-							method: "POST",
-							data: {}, // Added empty object to satisfy the plugin's type checker
-						},
-						(res) => resolve(res),
-						(err) => reject(err),
-					);
-				});
-			} catch (error) {
-				console.error("Failed to terminate terminal:", error);
-			}
-		}
+		this.pid = null;
 	}
 
 	/**
