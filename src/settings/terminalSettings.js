@@ -268,14 +268,14 @@ export default function terminalSettings() {
 
 			case "openTermux":
 				try {
-					if (typeof Termux === "undefined" || !(await Termux.isInstalled())) {
+					if (typeof Terminal === "undefined" || !(await Terminal.isInstalled())) {
 						alert(
 							"Termux",
 							"Termux is not installed. Install Termux before using the Vexa terminal.",
 						);
 						return;
 					}
-					await Termux.openSession(terminalValues.termuxWorkdir || "~");
+					await Terminal.openSession(terminalValues.termuxWorkdir || "~");
 				} catch (error) {
 					console.error("Failed to open Termux:", error);
 					alert("Termux", error?.message || "Unable to open Termux.");
