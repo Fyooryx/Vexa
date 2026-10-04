@@ -222,7 +222,10 @@ class TerminalManager {
 				: terminalName;
 
 			if (isTermuxTerminal) {
-				if (typeof Terminal === "undefined" || !(await Terminal.isInstalled())) {
+				if (
+					typeof Terminal === "undefined" ||
+					!(await Terminal.isInstalled())
+				) {
 					throw new Error(
 						"Termux is not installed. Install Termux before opening the Vexa terminal.",
 					);
