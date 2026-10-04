@@ -1,1 +1,38 @@
-import { describe, expect, it } from "vitest";\nimport { parseAppIntentUrl } from "../../src/utils/appIntent";\n\ndescribe("Vexa app intent parser", () => {\n\tit.each([\n\t\t["vexa://plugin/install/example.plugin", "vexa"],\n\t\t["VEXA://plugin/install/example.plugin", "vexa"],\n\t\t["acode://plugin/install/example.plugin", "acode"],\n\t])("parses supported scheme: %s", (url, scheme) => {\n\t\texpect(parseAppIntentUrl(url)).toEqual({\n\t\t\tscheme,\n\t\t\tmodule: "plugin",\n\t\t\taction: "install",\n\t\t\tvalue: "example.plugin",\n\t\t});\n\t});\n\n\tit("preserves nested values instead of truncating slash-separated data", () => {\n\t\texpect(parseAppIntentUrl("vexa://module/action/a/b/c")).toEqual({\n\t\t\tscheme: "vexa",\n\t\t\tmodule: "module",\n\t\t\taction: "action",\n\t\t\tvalue: "a/b/c",\n\t\t});\n\t});\n\n\tit.each([\n\t\tundefined,\n\t\tnull,\n\t\t123,\n\t\t"",\n\t\t"https://example.com/plugin/install/example.plugin",\n\t\t"vexa://",\n\t\t"vexa://module",\n\t])("rejects invalid app intents: %s", (url) => {\n\t\texpect(parseAppIntentUrl(url)).toBeNull();\n\t});\n});\n
+import { describe, expect, it } from "vitest";
+import { parseAppIntentUrl } from "../../src/utils/appIntent";
+
+describe("Vexa app intent parser", () => {
+	it.each([
+		["vexa://plugin/install/example.plugin", "vexa"],
+		["VEXA://plugin/install/example.plugin", "vexa"],
+		["acode://plugin/install/example.plugin", "acode"],
+	])("parses supported scheme: %s", (url, scheme) => {
+		expect(parseAppIntentUrl(url)).toEqual({
+			scheme,
+			module: "plugin",
+			action: "install",
+			value: "example.plugin",
+		});
+	});
+
+	it("preserves nested values instead of truncating slash-separated data", () => {
+		expect(parseAppIntentUrl("vexa://module/action/a/b/c")).toEqual({
+			scheme: "vexa",
+			module: "module",
+			action: "action",
+			value: "a/b/c",
+		});
+	});
+
+	it.each([
+		undefined,
+		null,
+		123,
+		"",
+		"https://example.com/plugin/install/example.plugin",
+		"vexa://",
+		"vexa://module",
+	])("rejects invalid app intents: %s", (url) => {
+		expect(parseAppIntentUrl(url)).toBeNull();
+	});
+});
