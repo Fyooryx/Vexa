@@ -1,4 +1,4 @@
-package com.foxdebug.acode.rk.auth;
+package com.vexa.app.rk.auth;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -6,7 +6,7 @@ import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.WebView;
 import androidx.browser.customtabs.CustomTabsIntent;
-import com.foxdebug.acode.rk.auth.EncryptedPreferenceManager;
+import com.vexa.app.rk.auth.EncryptedPreferenceManager;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
