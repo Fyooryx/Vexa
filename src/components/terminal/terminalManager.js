@@ -17,7 +17,7 @@ import Url from "utils/Url";
 import TerminalComponent from "./terminal";
 import TerminalTouchSelection from "./terminalTouchSelection";
 
-const TERMINAL_SESSION_STORAGE_KEY = "acodeTerminalSessions";
+const TERMINAL_SESSION_STORAGE_KEY = "vexaShellSessions";
 
 class TerminalManager {
 	constructor() {
@@ -141,42 +141,15 @@ class TerminalManager {
 	}
 
 	async getPersistedSessions() {
+		// Termux owns interactive local shell lifecycles. Vexa does not persist
+		// Termux PIDs because those sessions are external to the app process.
 		try {
-			const { sessions, changed } = this.readPersistedSessions();
-			if (!sessions.length) {
-				if (changed) {
-					this.savePersistedSessions([]);
-				}
-				return [];
-			}
-
-			if (!(await Terminal.isAxsRunning())) {
-				// Once the backend is gone, previously persisted PIDs are invalid.
-				this.savePersistedSessions([]);
-				return [];
-			}
-
-			if (changed) {
-				this.savePersistedSessions(sessions);
-			}
-
-			return sessions;
-		} catch (error) {
-			console.error("Failed to read persisted terminal sessions:", error);
-			return [];
-		}
+			localStorage.removeItem("acodeTerminalSessions");
+			localStorage.removeItem(TERMINAL_SESSION_STORAGE_KEY);
+		} catch {}
+		return [];
 	}
 
-	savePersistedSessions(sessions) {
-		try {
-			localStorage.setItem(
-				TERMINAL_SESSION_STORAGE_KEY,
-				JSON.stringify(sessions),
-			);
-		} catch (error) {
-			console.error("Failed to persist terminal sessions:", error);
-		}
-	}
 
 	async persistTerminalSession(pid, name, pinned = false) {
 		if (!pid) return;
@@ -217,53 +190,14 @@ class TerminalManager {
 	}
 
 	async restorePersistedSessions() {
-		const sessions = await this.getPersistedSessions();
-		if (!sessions.length) return;
-
-		const manager = window.editorManager;
-		const activeFileId = manager?.activeFile?.id;
-		const restoredTerminals = [];
-		const failedSessions = [];
-
-		for (const session of sessions) {
-			if (!session?.pid) continue;
-			if (this.terminals.has(session.pid)) continue;
-
-			try {
-				const instance = await this.createServerTerminal({
-					pid: session.pid,
-					name: session.name,
-					pinned: session.pinned === true,
-					reconnecting: true,
-					render: false,
-				});
-				if (instance) restoredTerminals.push(instance);
-			} catch (error) {
-				console.error(
-					`Failed to restore terminal session ${session.pid}:`,
-					error,
-				);
-				failedSessions.push(session.name || session.pid);
-				await this.removePersistedSession(session.pid);
-			}
-		}
-
-		// Stale session entries are expected after force-closes; keep startup quiet.
-		if (failedSessions.length > 0) {
-			const message =
-				failedSessions.length === 1
-					? `Skipped unavailable terminal: ${failedSessions[0]}`
-					: `Skipped ${failedSessions.length} unavailable terminals`;
-			toast(message);
-		}
-
-		if (activeFileId && manager?.getFile) {
-			const fileToRestore = manager.getFile(activeFileId, "id");
-			fileToRestore?.makeActive();
-		} else if (!manager?.activeFile && restoredTerminals.length) {
-			restoredTerminals[0]?.file?.makeActive();
-		}
+		// Old Alpine/AXS local sessions cannot be safely reattached after the
+		// backend migration. Termux owns the real interactive session lifecycle.
+		try {
+			localStorage.removeItem("acodeTerminalSessions");
+			localStorage.removeItem(TERMINAL_SESSION_STORAGE_KEY);
+		} catch {}
 	}
+
 
 	/**
 	 * Create a new terminal session
@@ -275,9 +209,9 @@ class TerminalManager {
 			const { render, serverMode, reconnecting, pinned, ...terminalOptions } =
 				options;
 			const shouldRender = render !== false;
-			const isServerMode = serverMode !== false;
 			const isReconnecting = reconnecting === true;
 			const isRemoteSsh = !!terminalOptions.remoteSsh;
+			const isTermuxTerminal = !isRemoteSsh;
 
 			const terminalId = `terminal_${++this.terminalCounter}`;
 			const providedName =
@@ -290,17 +224,18 @@ class TerminalManager {
 				? `Terminal ${terminalNumber}`
 				: terminalName;
 
-			// Check if terminal is installed before proceeding
-			if (isServerMode && !isRemoteSsh) {
-				const installationResult = await this.checkAndInstallTerminal();
-				if (!installationResult.success) {
-					throw new Error(installationResult.error);
+			if (isTermuxTerminal) {
+				if (typeof Termux === "undefined" || !(await Termux.isInstalled())) {
+					throw new Error(
+						"Termux is not installed. Install Termux before opening the Vexa terminal.",
+					);
 				}
 			}
 
 			// Create terminal component
 			const terminalComponent = new TerminalComponent({
-				serverMode: isServerMode,
+				serverMode: isTermuxTerminal ? false : serverMode !== false,
+				termuxMode: isTermuxTerminal,
 				...terminalOptions,
 			});
 
@@ -429,60 +364,23 @@ class TerminalManager {
 	 */
 	async checkAndInstallTerminal() {
 		try {
-			// Check if terminal is already installed
-			const isInstalled = await Terminal.isInstalled();
-			if (isInstalled) {
-				return { success: true };
-			}
-
-			// Check if terminal is supported on this device
-			const isSupported = await Terminal.isSupported();
-			if (!isSupported) {
-				return {
-					success: false,
-					error: "Terminal is not supported on this device architecture",
-				};
-			}
-
-			// Create installation progress terminal
-			const installTerminal = await this.createInstallationTerminal();
-
-			// Install terminal with progress logging
-			const installResult = await Terminal.install(
-				(message) => {
-					// Remove stdout/stderr prefix for
-					const cleanMessage = this.formatInstallLog(message);
-					installTerminal.component.write(`${cleanMessage}\r\n`);
-				},
-				(...errorParts) => {
-					// Remove stdout/stderr prefix
-					const cleanError = this.formatInstallLog(errorParts);
-					installTerminal.component.write(
-						`\x1b[31mError: ${cleanError}\x1b[0m\r\n`,
-					);
-				},
-			);
-
-			// Only return success if Terminal.install() indicates success (exit code 0)
-			if (installResult === true) {
-				return { success: true };
-			} else {
-				const error =
-					Terminal.lastInstallError ||
-					"Terminal installation failed - process did not exit with code 0";
-				return {
-					success: false,
-					error,
-				};
-			}
+			const installed =
+				typeof Termux !== "undefined" && (await Termux.isInstalled());
+			return installed
+				? { success: true }
+				: {
+						success: false,
+						error:
+							"Termux is not installed. Install Termux and grant Vexa RUN_COMMAND access.",
+					};
 		} catch (error) {
-			console.error("Terminal installation failed:", error);
 			return {
 				success: false,
-				error: `Terminal installation failed: ${this.formatInstallLog(error)}`,
+				error: error?.message || "Unable to verify Termux installation.",
 			};
 		}
 	}
+
 
 	formatInstallLog(value) {
 		const values = Array.isArray(value) ? value : [value];
@@ -500,8 +398,8 @@ class TerminalManager {
 	 * @returns {Promise<object>} Installation terminal instance
 	 */
 	async createInstallationTerminal() {
-		const terminalId = `install_terminal_${++this.terminalCounter}`;
-		const terminalName = "Terminal Installation";
+		const terminalId = `termux_setup_${++this.terminalCounter}`;
+		const terminalName = "Termux Setup";
 
 		// Create terminal component in local mode (no server needed)
 		const terminalComponent = new TerminalComponent({
@@ -543,9 +441,9 @@ class TerminalManager {
 					terminalComponent.mount(terminalContainer);
 
 					// Write initial message
-					terminalComponent.write("🚀 Installing Terminal Environment...\r\n");
+					terminalComponent.write("Termux is the Vexa terminal backend.\r\n");
 					terminalComponent.write(
-						"This may take a few minutes depending on your connection.\r\n\r\n",
+						"Use the Termux app for the interactive shell.\r\n\r\n",
 					);
 
 					// Setup event handlers
@@ -557,7 +455,7 @@ class TerminalManager {
 
 					// Set up custom title for installation terminal
 					terminalFile.setCustomTitle(
-						() => "Installing Terminal Environment...",
+						() => "Termux Setup",
 					);
 
 					const instance = {
