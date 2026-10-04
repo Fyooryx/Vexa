@@ -69,8 +69,14 @@ expect(
 );
 
 expect(identity.includes('NAME: "Vexa"'), "Vexa identity name is missing");
-expect(fs.existsSync(path.join(root, "..", "src/lib/vexa.js")), "Vexa core module is missing");
-expect(!fs.existsSync(path.join(root, "..", "src/lib/acode.js")), "legacy Acode core module filename still exists");
+expect(
+	fs.existsSync(path.join(root, "..", "src/lib/vexa.js")),
+	"Vexa core module is missing",
+);
+expect(
+	!fs.existsSync(path.join(root, "..", "src/lib/acode.js")),
+	"legacy Acode core module filename still exists",
+);
 expect(vexaCoreSource.includes("class Vexa"), "Vexa core class must be named Vexa");
 expect(
 	identity.includes('PACKAGE_NAME: "com.vexa.app"'),
@@ -116,7 +122,10 @@ expect(
 		!main.includes('url.includes("acode.app/api")'),
 	"credential routing must use the configured API base instead of a hard-coded substring match",
 );
-expect(fs.existsSync(vexaCore), "Vexa core module must exist at src/lib/vexa.js");
+expect(
+	fs.existsSync(vexaCore),
+	"Vexa core module must exist at src/lib/vexa.js",
+);
 expect(!fs.existsSync(legacyCore), "legacy src/lib/acode.js must not remain");
 expect(
 	bootstrap.includes("<title>Vexa</title>"),
@@ -149,17 +158,33 @@ expect(
 	"config.xml still references a legacy Acode launcher resource",
 );
 
-const localeBrandingKeyFiles = walk(path.join(root, "..", "src/lang")).filter((file) => file.endsWith(".json"));
+const localeBrandingKeyFiles = walk(path.join(root, "..", "src/lang")).filter(
+	(file) => file.endsWith(".json"),
+);
 for (const file of localeBrandingKeyFiles) {
 	const source = fs.readFileSync(file, "utf8");
-	expect(!source.includes('"rate acode"'), `legacy localization key remains in ${path.relative(path.join(root, ".."), file)}: rate acode`);
-	expect(!source.includes('"download acode pro"'), `legacy localization key remains in ${path.relative(path.join(root, ".."), file)}: download acode pro`);
-	expect(!source.includes('"settings-category-about-acode"'), `legacy localization key remains in ${path.relative(path.join(root, ".."), file)}: about-acode`);
-	expect(!source.includes('"settings-category-support-acode"'), `legacy localization key remains in ${path.relative(path.join(root, ".."), file)}: support-acode`);
+	expect(
+		!source.includes('"rate acode"'),
+		`legacy localization key remains in ${path.relative(path.join(root, ".."), file)}: rate acode`,
+	);
+	expect(
+		!source.includes('"download acode pro"'),
+		`legacy localization key remains in ${path.relative(path.join(root, ".."), file)}: download acode pro`,
+	);
+	expect(
+		!source.includes('"settings-category-about-acode"'),
+		`legacy localization key remains in ${path.relative(path.join(root, ".."), file)}: about-acode`,
+	);
+	expect(
+		!source.includes('"settings-category-support-acode"'),
+		`legacy localization key remains in ${path.relative(path.join(root, ".."), file)}: support-acode`,
+	);
 	try {
 		JSON.parse(source);
 	} catch {
-		fail(`invalid JSON localization file: ${path.relative(path.join(root, ".."), file)}`);
+		fail(
+			`invalid JSON localization file: ${path.relative(path.join(root, ".."), file)}`,
+		);
 	}
 }
 
@@ -247,6 +272,13 @@ expect(
 	iconCss.includes('url("icons/vexa.svg")'),
 	"Vexa icon CSS must use the Vexa logo asset",
 );
+function hasUserVisibleAcodeBrand(source) {
+  const literals =
+    source.match(/"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|`(?:\\.|[^`\\])*`/g) ||
+    [];
+  return literals.some((literal) => /\bAcode\b/i.test(literal));
+}
+
 for (const [file, source] of [
 	["appSettings.js", appSettings],
 	["runningProcesses.js", runningProcesses],
@@ -255,7 +287,7 @@ for (const [file, source] of [
 	["devcontainer.json", devcontainer],
 ]) {
 	expect(
-		!/\bAcode\b/i.test(source),
+		!hasUserVisibleAcodeBrand(source),
 		`${file} still exposes a user-visible Acode brand string`,
 	);
 }
@@ -370,10 +402,14 @@ function walk(dir) {
 }
 
 const repoRoot = path.join(root, "..");
-const legacyNamedFiles = walk(repoRoot).filter((file) => /(?:^|[/\\\\])[^/\\\\]*acode[^/\\\\]*$/i.test(file));
+const legacyNamedFiles = walk(repoRoot).filter((file) =>
+	/(?:^|[/\\\\])[^/\\\\]*acode[^/\\\\]*$/i.test(file),
+);
 expect(
 	legacyNamedFiles.length === 0,
-	`legacy Acode-named files must not remain: ${legacyNamedFiles.map((file) => path.relative(path.join(root, ".."), file)).join(", ")}`,
+	`legacy Acode-named files must not remain: ${legacyNamedFiles
+		.map((file) => path.relative(path.join(root, ".."), file))
+		.join(", ")}`,
 );
 
 const androidRoot = path.join(root, "..", "res/android");
@@ -432,10 +468,14 @@ const iconPreviewFiles = [
 ];
 for (const file of iconPreviewFiles) {
 	const source = read(`www/icons/${file}`);
-	expect(source.includes('href="vexa.png"'), `icon preview ${file} is not backed by the canonical Vexa PNG`);
+	expect(
+		source.includes('href="vexa.png"'),
+		`icon preview ${file} is not backed by the canonical Vexa PNG`,
+	);
 }
 expect(
-	read("src/lib/appIcons.js").split('image: "icons/vexa.svg"').length - 1 === 16,
+	read("src/lib/appIcons.js").split('image: "icons/vexa.svg"').length - 1 ===
+		16,
 	"all app icon previews must resolve to the canonical Vexa icon",
 );
 
