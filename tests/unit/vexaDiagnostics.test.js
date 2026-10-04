@@ -27,7 +27,7 @@ describe("Vexa diagnostics", () => {
 
 		expect(report).toContain("App: Vexa");
 		expect(report).toContain("Diagnostics version: 4");
-		expect(report).toContain("Version: 1.14.2");
+		expect(report).toContain("Version: 1.14.3");
 		expect(report).toContain("Package: com.vexa.app");
 		expect(report).toContain("Android: 14");
 		expect(report).toContain("Model: Test Device");
