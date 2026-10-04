@@ -7,20 +7,23 @@
  * @returns {boolean}
  */
 export function isTrustedApiRequest(
-\trequestUrl,
-\tapiBaseUrl,
-\tdocumentUrl = "https://vexa.invalid/",
+  requestUrl,
+  apiBaseUrl,
+  documentUrl = "https://vexa.invalid/",
 ) {
-\ttry {
-\t\tconst request = new URL(requestUrl, documentUrl);
-\t\tconst base = new URL(apiBaseUrl, documentUrl);
-\t\tconst basePath = base.pathname.replace(/\/$/, "");
+  try {
+    const request = new URL(requestUrl, documentUrl);
+    const base = new URL(apiBaseUrl, documentUrl);
+    const basePath = base.pathname.endsWith("/")
+      ? base.pathname.slice(0, -1)
+      : base.pathname;
 
-\t\treturn (
-\t\t\trequest.origin === base.origin &&
-\t\t\t(request.pathname === basePath || request.pathname.startsWith(`${basePath}/`))
-\t\t);
-\t} catch {
-\t\treturn false;
-\t}
+    return (
+      request.origin === base.origin &&
+      (request.pathname === basePath ||
+        request.pathname.startsWith(basePath + "/"))
+    );
+  } catch {
+    return false;
+  }
 }
