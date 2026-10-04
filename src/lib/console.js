@@ -24,7 +24,7 @@ import ConsoleExecutor, {
 	let themeSignature = null;
 	const isStandaloneConsole = sessionStorage.getItem("__mode") === "console";
 	const themeEndpoint = document.querySelector(
-		'meta[name="acode-console-theme-endpoint"]',
+		'meta[name="vexa-console-theme-endpoint"]',
 	)?.content;
 	const startupScriptUrl = document.querySelector(
 		'meta[name="acode-console-executing-script"]',
