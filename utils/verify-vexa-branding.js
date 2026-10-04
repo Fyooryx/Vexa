@@ -152,6 +152,29 @@ for (const [locale, strings] of [
 	}
 }
 
+const langDir = path.join(root, "..", "src/lang");
+for (const localeFile of fs.readdirSync(langDir).filter((name) => name.endsWith(".json"))) {
+	const locale = readJson(`src/lang/${localeFile}`);
+	for (const [key, value] of Object.entries(locale)) {
+		if (
+			typeof value === "string" &&
+			!/\bAcode\b/i.test(value) &&
+			!/\bacode\b/i.test(value)
+		) {
+			continue;
+		}
+		if (
+			typeof value === "string" &&
+			!value.includes("://") &&
+			!/\bcom\./i.test(value)
+		) {
+			fail(
+				`${localeFile} exposes the old product name at key: ${key}`,
+			);
+		}
+	}
+}
+
 const pluginView = read("src/pages/plugin/plugin.view.js");
 expect(
 	!pluginView.includes("Built for older Acode"),
