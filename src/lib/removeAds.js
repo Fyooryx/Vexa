@@ -57,9 +57,8 @@ export default function removeAds({ signal } = {}) {
 				(products) => {
 					if (settled) return;
 					try {
-						const product = products?.find(
-							({ productId }) =>
-								VEXA_IDENTITY.PRO_PRODUCT_IDS.includes(productId),
+						const product = products?.find(({ productId }) =>
+							VEXA_IDENTITY.PRO_PRODUCT_IDS.includes(productId),
 						);
 						if (!product) return fail(strings["no-product-info"]);
 						iap.setPurchaseUpdatedListener(
