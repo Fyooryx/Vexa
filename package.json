@@ -1,8 +1,8 @@
 {
   "name": "com.vexa.app",
   "displayName": "Vexa",
-  "version": "1.14.3",
-  "description": "Vexa is a code editor and web IDE for Android",
+  "version": "1.15.0",
+  "description": "Vexa is a code editor and web IDE for Android with a Termux terminal backend",
   "scripts": {
     "lang": "node ./utils/lang.js",
     "build": "sh utils/scripts/build.sh",
@@ -22,7 +22,8 @@
     "updateAce": "node ./utils/updateAce.js",
     "test:watch": "vitest",
     "verify:branding": "node utils/verify-vexa-branding.js",
-    "prebuild": "npm run verify:branding",
+    "verify:termux": "node utils/verify-vexa-termux.js",
+    "prebuild": "npm run verify:branding && npm run verify:termux",
     "check:vexa": "npm run verify:branding && npm run verify:workflows && npm run typecheck && npm run test",
     "verify:workflows": "node utils/verify-vexa-workflows.js"
   },
