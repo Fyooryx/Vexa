@@ -222,7 +222,7 @@ class TerminalManager {
 				: terminalName;
 
 			if (isTermuxTerminal) {
-				if (typeof Termux === "undefined" || !(await Termux.isInstalled())) {
+				if (typeof Terminal === "undefined" || !(await Terminal.isInstalled())) {
 					throw new Error(
 						"Termux is not installed. Install Termux before opening the Vexa terminal.",
 					);
@@ -362,7 +362,7 @@ class TerminalManager {
 \tasync checkAndInstallTerminal() {
 \t\ttry {
 \t\t\tconst installed =
-\t\t\t\ttypeof Termux !== "undefined" && (await Termux.isInstalled());
+\t\t\t\ttypeof Terminal !== "undefined" && (await Terminal.isInstalled());
 \t\t\treturn installed
 \t\t\t\t? { success: true }
 \t\t\t\t: {
