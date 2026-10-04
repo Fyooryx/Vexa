@@ -1,4 +1,3 @@
-import fsOperation from "fileSystem";
 import settingsPage from "components/settingsPage";
 import {
 	DEFAULT_TERMINAL_SETTINGS,
@@ -226,6 +225,28 @@ export default function terminalSettings() {
 			text: "Open Termux automatically",
 			checkbox: terminalValues.termuxAutoOpen !== false,
 			info: "Open a new interactive Termux shell when the Vexa terminal tab is created.",
+			category: categories.maintenance,
+		},
+		{
+			key: "termuxWorkdir",
+			text: "Termux working directory",
+			value: terminalValues.termuxWorkdir || "~",
+			prompt: "Termux working directory",
+			promptType: "text",
+			promptOptions: {
+				test(value) {
+					const normalized = String(value || "").trim();
+					return (
+						normalized === "~" ||
+						normalized.startsWith("~/") ||
+						normalized.startsWith("/data/data/com.termux/") ||
+						normalized.startsWith("/data/data/com.termux/files/usr/") ||
+						normalized.startsWith("/sdcard/") ||
+						normalized.startsWith("/storage/")
+					);
+				},
+			},
+			info: "Choose the starting directory for new Termux shells.",
 			category: categories.maintenance,
 		},
 		{
