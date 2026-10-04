@@ -2,6 +2,18 @@
 
 ## Unreleased — Vexa hardening
 
+### Added
+- canonical Vexa deep-link routing for `vexa://` with `acode://` compatibility
+- expanded diagnostics with primary and legacy deep-link identity
+- unit coverage for Vexa identity and upstream URL boundaries
+
+### Fixed
+- upstream API credential detection no longer depends on hard-coded `acode.app/api` string matching
+- startup, terminal-preview, and process-monitor fallbacks now consistently display Vexa branding
+
+### Improved
+- centralized URL/deep-link boundary logic so future service migration can change one identity module
+
 ### Improved
 - pinned remaining third-party GitHub Actions to immutable commit SHAs
 - standardized nightly builds on Node.js 22 and `npm ci` for reproducibility
