@@ -13,6 +13,15 @@
 
 ## Unreleased — Vexa hardening
 
+### Added
+- clarified Vexa About links with explicit repository and release destinations
+- added diagnostic boundary and report-scope fields for safer support sharing
+
+### Improved
+- kept upstream service endpoints visibly separated from Vexa product identity
+- extended regression coverage for Vexa diagnostics metadata and support boundaries
+
+
 ### Improved
 - pinned remaining third-party GitHub Actions to immutable commit SHAs
 - standardized nightly builds on Node.js 22 and `npm ci` for reproducibility

@@ -59,4 +59,14 @@ describe("Vexa branding", () => {
 		expect(authenticator).toContain('"vexa".equalsIgnoreCase(data.getScheme())');
 	});
 
+	it("keeps About links explicit about Vexa and upstream boundaries", () => {
+		const about = read("src/pages/about/about.js");
+
+		expect(about).toContain("VEXA_IDENTITY.NAME");
+		expect(about).toContain("VEXA_IDENTITY.REPOSITORY_URL");
+		expect(about).toContain("Service endpoint");
+		expect(about).toContain("Vexa repository");
+		expect(about).toContain("Vexa releases");
+	});
+
 });

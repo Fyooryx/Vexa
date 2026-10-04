@@ -25,12 +25,15 @@ describe("Vexa diagnostics", () => {
 		});
 
 		expect(report).toContain("App: Vexa");
-		expect(report).toContain("Diagnostics version: 2");
+		expect(report).toContain("Diagnostics version: 3");
 		expect(report).toContain("Version: 1.14.2");
 		expect(report).toContain("Package: com.vexa.app");
 		expect(report).toContain("Android: 14");
 		expect(report).toContain("Model: Test Device");
 		expect(report).toContain("Online: true");
+		expect(report).toContain("Product boundary: Vexa application");
+		expect(report).toContain("Service boundary: upstream service");
+		expect(report).toContain("Report scope: runtime metadata only");
 	});
 
 	it("uses the injected clipboard before global runtime state", async () => {
@@ -52,6 +55,6 @@ describe("Vexa diagnostics", () => {
 
 		expect(result).toBe(true);
 		expect(copied).toContain("Package: com.vexa.app");
-		expect(copied).toContain("Diagnostics version: 2");
+		expect(copied).toContain("Diagnostics version: 3");
 	});
 });
