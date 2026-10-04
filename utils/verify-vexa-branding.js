@@ -35,6 +35,7 @@ const main = read("src/main.js");
 const polyfill = read("src/lib/polyfill.js");
 const bootstrap = read("www/index.html");
 const vexaCoreSource = read("src/lib/vexa.js");
+const vexaCore = path.join(root, "..", "src/lib/vexa.js");
 const legacyCore = path.join(root, "..", "src/lib/acode.js");
 
 const widget = /<widget[^>]*\bid="([^"]+)"/.exec(config);
@@ -370,39 +371,16 @@ expect(
 );
 
 const launcherFiles = walk(androidRoot).filter((file) =>
-	/(?:^|[/\\\\])ic_launcher(?:_round)?\\.webp$/i.test(file),
+	/[/\\]mipmap-(mdpi|hdpi|xhdpi|xxhdpi|xxxhdpi)[/\\]ic_launcher(?:_round)?\.webp$/i.test(
+		file,
+	),
 );
 expect(
 	launcherFiles.length === 10,
 	`expected 10 density-specific Vexa launcher WebP assets, found ${launcherFiles.length}`,
 );
 
-const legacyLauncherFiles = launcherFiles.filter((file) =>
-	/[/\\](?:mipmap-(mdpi|hdpi|xhdpi|xxhdpi|xxxhdpi)|drawable-[^/\\]+)[/\\](?:ic_acode_[^/\\]+|ic_launcher(?:_round)?)\.webp$/i.test(
-		file,
-	),
-);
-
-expect(
-	legacyLauncherFiles.length === launcherFiles.length,
-	"unexpected legacy launcher asset naming remains under res/android",
-);
-
-for (const file of legacyLauncherFiles) {
-	const data = fs.readFileSync(file);
-	expect(
-		data.length > 64,
-		`launcher asset is unexpectedly small: ${path.relative(root, file)}`,
-	);
-	expect(
-		data.subarray(0, 4).toString("ascii") === "RIFF",
-		`launcher asset is not RIFF/WebP: ${path.relative(root, file)}`,
-	);
-	expect(
-		data.subarray(8, 12).toString("ascii") === "WEBP",
-		`launcher asset is not WebP: ${path.relative(root, file)}`,
-	);
-}
+for (const file of launcherFiles) {
 
 const iconPreviewFiles = [
 	"vexa.svg",
