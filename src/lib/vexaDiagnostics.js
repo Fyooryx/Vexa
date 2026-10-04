@@ -25,6 +25,8 @@ export function getVexaDiagnostics(runtime = {}) {
 		"Manufacturer: " + valueOrUnknown(deviceInfo.manufacturer),
 		"Language: " + valueOrUnknown(navigatorInfo.language),
 		"Online: " + valueOrUnknown(navigatorInfo.onLine),
+		"Deep link: " + VEXA_IDENTITY.URL_SCHEME + "://",
+		"Legacy deep link: " + VEXA_IDENTITY.LEGACY_URL_SCHEME + "://",
 		"Vexa repository: " + VEXA_IDENTITY.REPOSITORY_URL,
 		"Upstream service: " + config.BASE_URL,
 	].join("\n");
@@ -50,4 +52,4 @@ export async function copyVexaDiagnostics(runtime) {
 	// Intentionally keep diagnostics side-effect free until copy is requested.
 	return false;
 }
-export const VEXA_DIAGNOSTICS_VERSION = 1;
+export const VEXA_DIAGNOSTICS_VERSION = 2;
