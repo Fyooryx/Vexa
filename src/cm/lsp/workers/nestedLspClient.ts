@@ -31,7 +31,7 @@ export class NestedLspClient {
 		private readonly requestFile: (uri: string) => Promise<string>,
 	) {
 		this.worker = new Worker(url, {
-			name: `acode-embedded-${config.serverId}-lsp`,
+			name: `vexa-embedded-${config.serverId}-lsp`,
 		});
 		this.ready = new Promise<void>((resolve, reject) => {
 			const timeout = setTimeout(() => {
