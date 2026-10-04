@@ -1,6 +1,7 @@
 const Executor = require("./Executor");
 
 const Terminal = {
+    // Vexa-branded terminal runtime; upstream download sources remain explicit below.
     /**
      * Starts the AXS environment by writing init scripts and executing the sandbox.
      * @param {boolean} [installing=false] - Whether AXS is being started during installation.
