@@ -3,9 +3,6 @@ contact_links:
   - name: Ask Questions
     url: https://github.com/Fyooryx/Vexa/issues
     about: Ask questions, report problems, or discuss Vexa development
-  - name: Telegram Group
-    url: https://t.me/foxdebug_acode
-    about: Vexa community for development, support, and announcements
   - name: Discord Server
     url: https://discord.gg/vVxVWYUAWD
-    about: Vexa Discord server 
+    about: Vexa Discord server for development, support, and announcements
