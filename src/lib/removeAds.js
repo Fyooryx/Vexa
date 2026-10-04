@@ -5,9 +5,9 @@ import purchaseListener from "handlers/purchase";
 import helpers from "utils/helpers";
 import auth from "./auth";
 import config from "./config";
-import { VEXA_IDENTITY } from "./vexaIdentity";
 import customTab from "./customTab";
 import { BANNER_SUPPRESSION_REASON, setBannerSuppressed } from "./startAd";
+import { VEXA_IDENTITY } from "./vexaIdentity";
 
 let activePurchase = null;
 let activeRequest = null;
