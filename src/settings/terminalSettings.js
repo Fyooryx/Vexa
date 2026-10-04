@@ -4,14 +4,9 @@ import {
 	DEFAULT_TERMINAL_SETTINGS,
 	TerminalThemeManager,
 } from "components/terminal";
-import toast from "components/toast";
 import alert from "dialogs/alert";
-import confirm from "dialogs/confirm";
-import loader from "dialogs/loader";
 import fonts from "lib/fonts";
 import appSettings from "lib/settings";
-import FileBrowser from "pages/fileBrowser";
-import helpers from "utils/helpers";
 
 export default function terminalSettings() {
 	const title = strings["terminal settings"];
@@ -35,8 +30,6 @@ export default function terminalSettings() {
 
 	const terminalValues = values.terminalSettings;
 
-	Executor.setProotDebug(terminalValues.prootDebug);
-	Executor.BackgroundExecutor.setProotDebug(terminalValues.prootDebug);
 
 	const items = [
 		{
@@ -229,37 +222,16 @@ export default function terminalSettings() {
 			category: categories.session,
 		},
 		{
-			key: "failsafeMode",
-			text: strings["terminal:failsafe"],
-			checkbox: terminalValues.failsafeMode,
-			info: strings["terminal:failsafe-info"],
+			key: "termuxAutoOpen",
+			text: "Open Termux automatically",
+			checkbox: terminalValues.termuxAutoOpen !== false,
+			info: "Open a new interactive Termux shell when the Vexa terminal tab is created.",
 			category: categories.maintenance,
 		},
 		{
-			key: "prootDebug",
-			text: "PRoot Debug",
-			checkbox: terminalValues.prootDebug,
-			info: "Enable verbose PRoot logging (PROOT_VERBOSE=2). Useful for debugging sandbox issues.",
-			category: categories.maintenance,
-		},
-		{
-			key: "backup",
-			text: strings.backup,
-			info: strings["info-backup"],
-			category: categories.maintenance,
-			chevron: true,
-		},
-		{
-			key: "restore",
-			text: strings.restore,
-			info: strings["info-restore"],
-			category: categories.maintenance,
-			chevron: true,
-		},
-		{
-			key: "uninstall",
-			text: strings.uninstall,
-			info: strings["info-uninstall"],
+			key: "openTermux",
+			text: "Open Termux",
+			info: "Launch the installed Termux application.",
 			category: categories.maintenance,
 			chevron: true,
 		},
@@ -292,49 +264,23 @@ export default function terminalSettings() {
 				} else {
 					alert(strings["feature not available"]);
 				}
-
-				return;
-			case "backup":
-				terminalBackup();
 				return;
 
-			case "restore":
-				terminalRestore();
-				return;
-
-			case "uninstall":
-				const confirmation = await confirm(
-					strings.confirm,
-					strings["settings-info-terminal-uninstall"],
-				);
-				if (confirmation) {
-					loader.showTitleLoader();
-					Terminal.uninstall()
-						.then(() => {
-							loader.removeTitleLoader();
-							alert(
-								strings.success.toUpperCase(),
-								`${strings["uninstalled successfully"]}.`,
-							);
-						})
-						.catch((error) => {
-							loader.removeTitleLoader();
-							console.error("Terminal uninstall failed:", error);
-							helpers.error(error);
-						});
+			case "openTermux":
+				try {
+					if (typeof Termux === "undefined" || !(await Termux.isInstalled())) {
+						alert(
+							"Termux",
+							"Termux is not installed. Install Termux before using the Vexa terminal.",
+						);
+						return;
+					}
+					await Termux.openSession(terminalValues.termuxWorkdir || "~");
+				} catch (error) {
+					console.error("Failed to open Termux:", error);
+					alert("Termux", error?.message || "Unable to open Termux.");
 				}
 				return;
-
-			case "prootDebug":
-				appSettings.update({
-					terminalSettings: {
-						...values.terminalSettings,
-						[key]: value,
-					},
-				});
-				Executor.setProotDebug(value);
-				Executor.BackgroundExecutor.setProotDebug(value);
-				break;
 
 			default:
 				appSettings.update({
@@ -343,81 +289,11 @@ export default function terminalSettings() {
 						[key]: value,
 					},
 				});
-
-				// Update any active terminal instances
 				updateActiveTerminals(key, value);
-				break;
+				return;
 		}
 	}
 
-	/**
-	 * Creates a backup of the terminal installation
-	 */
-	async function terminalBackup() {
-		try {
-			// Ask user to select backup location
-			const { url } = await FileBrowser("folder", strings["select folder"]);
-
-			loader.showTitleLoader();
-
-			// Create backup
-			const backupPath = await Terminal.backup();
-			await system.copyToUri(
-				backupPath,
-				url,
-				"aterm_backup.tar",
-				console.log,
-				console.error,
-			);
-			loader.removeTitleLoader();
-			alert(strings.success.toUpperCase(), `${strings["backup successful"]}.`);
-		} catch (error) {
-			loader.removeTitleLoader();
-			console.error("Terminal backup failed:", error);
-			toast(error.toString());
-		}
-	}
-
-	/**
-	 * Restores terminal installation
-	 */
-	async function terminalRestore() {
-		try {
-			await Executor.execute("rm -rf $PREFIX/aterm_backup.*");
-
-			sdcard.openDocumentFile(
-				async (data) => {
-					loader.showTitleLoader();
-					//this will create a file at $PREFIX/atem_backup.tar.tar
-					await system.copyToUri(
-						data.uri,
-						cordova.file.dataDirectory,
-						"aterm_backup.tar",
-						console.log,
-						console.error,
-					);
-
-					// Restore
-					await Terminal.restore();
-
-					//Cleanup restore file
-					await Executor.execute("rm -rf $PREFIX/aterm_backup.*");
-
-					loader.removeTitleLoader();
-					alert(
-						strings.success.toUpperCase(),
-						`${strings["restored successfully"]}.`,
-					);
-				},
-				toast,
-				"application/x-tar",
-			);
-		} catch (error) {
-			loader.removeTitleLoader();
-			console.error("Terminal restore failed:", error);
-			toast(error.toString());
-		}
-	}
 }
 
 /**
