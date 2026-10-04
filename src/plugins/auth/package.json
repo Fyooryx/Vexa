@@ -1,9 +1,9 @@
 {
-  "name": "com.foxdebug.acode.rk.auth",
+  "name": "com.vexa.app.rk.auth",
   "version": "1.0.0",
   "description": "Authentication plugin",
   "cordova": {
-    "id": "com.foxdebug.acode.rk.auth",
+    "id": "com.vexa.app.rk.auth",
     "platforms": [
       "android"
     ]
