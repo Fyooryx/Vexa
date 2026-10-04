@@ -906,7 +906,7 @@
   display: inline-block;
   width: 1em;
   height: 1em;
-  background: url("/icons/vexa.svg") center / contain no-repeat;
+  background: url("icons/vexa.svg") center / contain no-repeat;
   font-family: initial !important;
 }
 .icon.vexa:before {
