@@ -53,6 +53,7 @@ import loadPlugins from "lib/loadPlugins";
 import Logger from "lib/logger";
 import notificationManager from "lib/notificationManager";
 import openFolder, { addedFolder } from "lib/openFolder";
+import { getCachedPro } from "lib/proCache";
 import { registerPrettierFormatter } from "lib/registerPrettierFormatter";
 import restoreFiles from "lib/restoreFiles";
 import settings from "lib/settings";
@@ -62,12 +63,11 @@ import startAd, {
 	setBannerSuppressed,
 } from "lib/startAd";
 import { VEXA_IDENTITY } from "lib/vexaIdentity";
-import { getCachedPro } from "lib/proCache";
 import mustache from "mustache";
 import themes from "theme/list";
+import { isTrustedApiRequest } from "utils/apiSecurity";
 import { initHighlighting } from "utils/codeHighlight";
 import { getEncoding, initEncodings } from "utils/encodings";
-import { isTrustedApiRequest } from "utils/apiSecurity";
 import helpers from "utils/helpers";
 import { INSTALL_SOURCE_PLAY, isPlayStoreInstall } from "utils/installSource";
 import loadPolyFill from "utils/polyfill";
