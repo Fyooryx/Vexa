@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.14.4 — Vexa + Nightfall integration hardening
+
+### Fixed
+- route Vexa and legacy Acode deep links through one parser instead of duplicated scheme handling
+- preserve slash-separated deep-link values instead of truncating them
+- restrict credentialed AJAX requests to the configured upstream API origin/path
+- migrate the locally cached Pro entitlement to the Vexa namespace without breaking existing installs
+- update startup compatibility messages and settings help text to Vexa
+
+### Added
+- pure deep-link parser with regression coverage for Vexa and legacy schemes
+- Pro cache migration helper with regression coverage
+
+### Improved
+- keep compatibility behavior explicit while reducing branding drift and duplicated security-sensitive URL logic
+
 ## 1.14.3 — Vexa + Nightfall usability hardening
 
 ### Fixed
