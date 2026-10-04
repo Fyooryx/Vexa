@@ -701,8 +701,19 @@ function registerCoreCommands() {
 		},
 	});
 	addCommand({
-		name: "acode:showWelcome",
+		name: "vexa:showWelcome",
 		description: "Show Welcome",
+		readOnly: true,
+		requiresView: false,
+		run() {
+			acode.exec("welcome");
+			return true;
+		},
+	});
+	// Legacy command name retained for existing custom key bindings/plugins.
+	addCommand({
+		name: "acode:showWelcome",
+		description: "Show Welcome (legacy alias)",
 		readOnly: true,
 		requiresView: false,
 		run() {
