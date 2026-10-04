@@ -36,7 +36,7 @@ import {
 import libraries from "./typescriptLibs";
 
 interface CompletionData {
-	acodeLspProvider: "typescript";
+	vexaLspProvider: "typescript";
 	uri: string;
 	offset: number;
 	name: string;
@@ -279,6 +279,7 @@ startWorkerServer(async ({
 				: 0;
 
 			switch (method) {
+				case "vexa/validate": {
 				case "acode/validate": {
 					const diagnostics: ts.Diagnostic[] = [
 						...service.getSyntacticDiagnostics(document.uri),
@@ -449,7 +450,7 @@ function completions(
 					commitCharacters:
 						entry.commitCharacters ?? result.defaultCommitCharacters,
 					data: {
-						acodeLspProvider: "typescript",
+						vexaLspProvider: "typescript",
 						uri: document.uri,
 						offset,
 						name: entry.name,
