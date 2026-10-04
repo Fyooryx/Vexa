@@ -48,6 +48,11 @@ describe("Vexa branding", () => {
 		expect(intentHandler).toContain("parseAppDeepLink(url)");
 		expect(main).toContain("config.API_BASE");
 		expect(main).not.toContain('url.includes("acode.app/api")');
+
+		const polyfill = read("src/lib/polyfill.js");
+		expect(polyfill).toContain('import config from "./config";');
+		expect(polyfill).toContain("config.API_BASE");
+		expect(polyfill).not.toContain('url.includes("acode.app/api")');
 	});
 
 	it("uses the Vexa log filename", () => {
