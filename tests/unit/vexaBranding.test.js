@@ -9,6 +9,7 @@ describe("Vexa branding", () => {
 		const config = read("config.xml");
 		const main = read("src/main.js");
 		const core = read("src/lib/vexa.js");
+		const settings = read("src/settings/mainSettings.js");
 		const packageJson = JSON.parse(read("package.json"));
 		const packageLock = JSON.parse(read("package-lock.json"));
 		expect(fs.existsSync(new URL("../../src/lib/vexa.js", import.meta.url))).toBe(true);
@@ -20,9 +21,9 @@ describe("Vexa branding", () => {
 		expect(packageJson.displayName).toBe("Vexa");
 		expect(packageLock.name).toBe("com.vexa.app");
 		expect(packageJson.version).toBe("1.14.6");
-		expect(main).toContain("strings[\"rate vexa\"]");
-		expect(main).toContain("settings-category-about-vexa");
-		expect(main).toContain("settings-category-support-vexa");
+		expect(settings).toContain('strings["rate vexa"]');
+		expect(settings).toContain('strings["settings-category-about-vexa"]');
+		expect(settings).toContain('strings["settings-category-support-vexa"]');
 		expect(packageLock.version).toBe(packageJson.version);
 		expect(main).toContain('import vexa from "lib/vexa";');
 		expect(main).toContain("window.vexa = vexa");

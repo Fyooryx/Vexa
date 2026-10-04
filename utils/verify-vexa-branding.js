@@ -152,14 +152,14 @@ expect(
 const localeBrandingKeyFiles = walk(path.join(root, "..", "src/lang")).filter((file) => file.endsWith(".json"));
 for (const file of localeBrandingKeyFiles) {
 	const source = fs.readFileSync(file, "utf8");
-	expect(!source.includes('"rate acode"'), `legacy localization key remains in ${path.relative(repoRoot, file)}: rate acode`);
-	expect(!source.includes('"download acode pro"'), `legacy localization key remains in ${path.relative(repoRoot, file)}: download acode pro`);
-	expect(!source.includes('"settings-category-about-acode"'), `legacy localization key remains in ${path.relative(repoRoot, file)}: about-acode`);
-	expect(!source.includes('"settings-category-support-acode"'), `legacy localization key remains in ${path.relative(repoRoot, file)}: support-acode`);
+	expect(!source.includes('"rate acode"'), `legacy localization key remains in ${path.relative(path.join(root, ".."), file)}: rate acode`);
+	expect(!source.includes('"download acode pro"'), `legacy localization key remains in ${path.relative(path.join(root, ".."), file)}: download acode pro`);
+	expect(!source.includes('"settings-category-about-acode"'), `legacy localization key remains in ${path.relative(path.join(root, ".."), file)}: about-acode`);
+	expect(!source.includes('"settings-category-support-acode"'), `legacy localization key remains in ${path.relative(path.join(root, ".."), file)}: support-acode`);
 	try {
 		JSON.parse(source);
 	} catch {
-		fail(`invalid JSON localization file: ${path.relative(repoRoot, file)}`);
+		fail(`invalid JSON localization file: ${path.relative(path.join(root, ".."), file)}`);
 	}
 }
 
@@ -373,7 +373,7 @@ const repoRoot = path.join(root, "..");
 const legacyNamedFiles = walk(repoRoot).filter((file) => /(?:^|[/\\\\])[^/\\\\]*acode[^/\\\\]*$/i.test(file));
 expect(
 	legacyNamedFiles.length === 0,
-	`legacy Acode-named files must not remain: ${legacyNamedFiles.map((file) => path.relative(repoRoot, file)).join(", ")}`,
+	`legacy Acode-named files must not remain: ${legacyNamedFiles.map((file) => path.relative(path.join(root, ".."), file)).join(", ")}`,
 );
 
 const androidRoot = path.join(root, "..", "res/android");
