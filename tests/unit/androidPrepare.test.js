@@ -42,7 +42,7 @@ it("refreshes stale System plugin Java alongside icons on repeated Android prepa
 			</manifest>`,
 		);
 		write("build-extras.gradle", "// build configuration");
-		write("res/android/drawable/ic_acode_pro.xml", "<vector />");
+		write("res/android/drawable/ic_vexa_pro.xml", "<vector />");
 		const source = write(
 			"src/plugins/system/android/com/foxdebug/system/System.java",
 			'aliases.put("pro", "MainActivityIconPro");',
@@ -99,7 +99,7 @@ it("refreshes stale System plugin Java alongside icons on repeated Android prepa
 			fs.readFileSync(
 				path.join(
 					root,
-					"platforms/android/app/src/main/res/drawable/ic_acode_pro.xml",
+					"platforms/android/app/src/main/res/drawable/ic_vexa_pro.xml",
 				),
 				"utf8",
 			),
