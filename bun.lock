@@ -104,11 +104,11 @@
         "autoprefixer": "^10.5.4",
         "babel-loader": "^10.1.1",
         "chokidar": "^4.0.3",
-        "com.foxdebug.acode.rk.auth": "file:src/plugins/auth",
-        "com.foxdebug.acode.rk.customtabs": "file:src/plugins/custom-tabs",
-        "com.foxdebug.acode.rk.exec.proot": "file:src/plugins/proot",
-        "com.foxdebug.acode.rk.exec.terminal": "file:src/plugins/terminal",
-        "com.foxdebug.acode.rk.plugin.plugincontext": "file:src/plugins/pluginContext",
+        "com.vexa.app.rk.auth": "file:src/plugins/auth",
+        "com.vexa.app.rk.customtabs": "file:src/plugins/custom-tabs",
+        "com.vexa.app.rk.exec.proot": "file:src/plugins/proot",
+        "com.vexa.app.rk.exec.terminal": "file:src/plugins/terminal",
+        "com.vexa.app.rk.plugin.plugincontext": "file:src/plugins/pluginContext",
         "cordova-android": "^15.1.0",
         "cordova-clipboard": "^1.3.0",
         "cordova-plugin-acode-webview": "file:src/plugins/webview",
@@ -1003,15 +1003,15 @@
 
     "colors": ["colors@1.4.0", "", {}, "sha512-a+UqTh4kgZg/SlGvfbzDHpgRu7AAQOmmqRHJnxhRZICKFUT91brVhNNt58CMWU9PsBbv3PDCZUHbVxuDiH2mtA=="],
 
-    "com.foxdebug.acode.rk.auth": ["com.foxdebug.acode.rk.auth@file:src/plugins/auth", {}],
+    "com.vexa.app.rk.auth": ["com.vexa.app.rk.auth@file:src/plugins/auth", {}],
 
-    "com.foxdebug.acode.rk.customtabs": ["com.foxdebug.acode.rk.customtabs@file:src/plugins/custom-tabs", {}],
+    "com.vexa.app.rk.customtabs": ["com.vexa.app.rk.customtabs@file:src/plugins/custom-tabs", {}],
 
-    "com.foxdebug.acode.rk.exec.proot": ["com.foxdebug.acode.rk.exec.proot@file:src/plugins/proot", {}],
+    "com.vexa.app.rk.exec.proot": ["com.vexa.app.rk.exec.proot@file:src/plugins/proot", {}],
 
-    "com.foxdebug.acode.rk.exec.terminal": ["com.foxdebug.acode.rk.exec.terminal@file:src/plugins/terminal", {}],
+    "com.vexa.app.rk.exec.terminal": ["com.vexa.app.rk.exec.terminal@file:src/plugins/terminal", {}],
 
-    "com.foxdebug.acode.rk.plugin.plugincontext": ["com.foxdebug.acode.rk.plugin.plugincontext@file:src/plugins/pluginContext", {}],
+    "com.vexa.app.rk.plugin.plugincontext": ["com.vexa.app.rk.plugin.plugincontext@file:src/plugins/pluginContext", {}],
 
     "commander": ["commander@8.3.0", "", {}, "sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww=="],
 
