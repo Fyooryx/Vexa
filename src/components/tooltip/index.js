@@ -16,7 +16,7 @@ function createTooltip() {
 	if (tooltip) return tooltip;
 
 	tooltip = document.createElement("div");
-	tooltip.className = "acode-tooltip";
+	tooltip.className = "vexa-tooltip";
 	tooltip.setAttribute("role", "tooltip");
 	document.body.appendChild(tooltip);
 
@@ -35,7 +35,7 @@ export function showTooltip(target, text, description) {
 	$tooltip.append(label);
 	if (description) {
 		const detail = document.createElement("div");
-		detail.className = "acode-tooltip-description";
+		detail.className = "vexa-tooltip-description";
 		detail.textContent = description;
 		$tooltip.append(detail);
 	}
