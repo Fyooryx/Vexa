@@ -414,7 +414,9 @@ function walk(dir) {
 
 const repoRoot = path.join(root, "..");
 const legacyNamedFiles = walk(repoRoot).filter((file) =>
-	/(?:^|[/\\\\])[^/\\\\]*acode[^/\\\\]*$/i.test(file),
+	/(?:^|[/\\\\])(?:acode(?:[-_.][^/\\\\]*)?|[^/\\\\]*[-_]acode(?:[-_.][^/\\\\]*)?)$/i.test(
+		file,
+	),
 );
 expect(
 	legacyNamedFiles.length === 0,
