@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.14.5 — Vexa visual and branding hardening
+
+### Fixed
+- replaced the launcher, splash, and in-app icon artwork with the supplied Vexa logo
+- removed legacy `ic_acode_*` Android source resource filenames from the Vexa resource tree
+- aligned visible settings, process monitor, terminal preview, backup, and development-container branding to Vexa
+
+### Added
+- Vexa-branded icon CSS backed by the canonical `www/icons/vexa.svg` asset
+- localization-wide guards for user-visible Acode branding drift
+
+### Improved
+- Android launcher resource naming is now consistent with the Vexa product identity
+- branding verification now checks the supplied logo assets and visible UI surfaces
+
+
 ## 1.14.4 — Vexa + Nightfall integration hardening
 
 ### Fixed
