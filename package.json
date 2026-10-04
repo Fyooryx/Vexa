@@ -29,7 +29,7 @@
   "keywords": [
     "ecosystem:cordova"
   ],
-  "author": "Foxdebug (Ajit Kumar)",
+  "author": "Vyrael (zavriel.id) <zavriel.studio@gmail.com>",
   "license": "MIT",
   "cordova": {
     "plugins": {
