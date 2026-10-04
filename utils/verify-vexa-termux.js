@@ -149,10 +149,7 @@ for (const file of [
 	"src/plugins/terminal/www/Terminal.js",
 	"docs/TERMUX_TERMINAL.md",
 ]) {
-	expect(
-		fs.existsSync(path.join(root, file)),
-		`missing Termux asset: ${file}`,
-	);
+		expect(fs.existsSync(path.join(root, file)), `missing Termux asset: ${file}`);
 }
 
 console.log(
