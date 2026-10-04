@@ -5,6 +5,7 @@ import config from "lib/config";
 import { isInitialPluginLoadComplete } from "lib/loadPlugins";
 import openFile from "lib/openFile";
 import { BANNER_SUPPRESSION_REASON, setBannerSuppressed } from "lib/startAd";
+import { isVexaDeepLink, VEXA_IDENTITY } from "lib/vexaIdentity";
 import helpers from "utils/helpers";
 
 const handlers = [];
@@ -28,8 +29,8 @@ export default async function HandleIntent(intent = {}) {
 			intent.fileUri ||
 			intent.data ||
 			intent.extras?.["android.intent.extra.STREAM"];
-		if (typeof url === "string" && url.startsWith("acode://")) {
-			const path = url.replace("acode://", "");
+		if (typeof url === "string" && isVexaDeepLink(url)) {
+			const path = url.replace(new RegExp(`^(${VEXA_IDENTITY.URL_SCHEME}|${VEXA_IDENTITY.LEGACY_URL_SCHEME}):\\/\\/`, "i"), "");
 			const [module, action, value] = path.split("/");
 
 			if (module === "auth" && action === "callback") {
