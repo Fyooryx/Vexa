@@ -83,7 +83,10 @@ ajax.response = (xhr) => {
 };
 
 ajax.configure = (xhr, url) => {
-	if (url.includes("acode.app/api")) {
+	if (
+		typeof url === "string" &&
+		(url === config.API_BASE || url.startsWith(config.API_BASE + "/"))
+	) {
 		xhr.withCredentials = true;
 	}
 };
