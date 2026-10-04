@@ -26,13 +26,14 @@ const SUPPORTED_EXTENSIONS = [
 ];
 
 export function registerPrettierFormatter() {
-	if (!window?.acode) return;
-	const alreadyRegistered = acode.formatters.some(
+	const api = window?.vexa || window?.acode;
+	if (!api) return;
+	const alreadyRegistered = api.formatters.some(
 		({ id }) => id === PRETTIER_ID,
 	);
 	if (alreadyRegistered) return;
 
-	acode.registerFormatter(
+	api.registerFormatter(
 		PRETTIER_ID,
 		SUPPORTED_EXTENSIONS,
 		async () => {

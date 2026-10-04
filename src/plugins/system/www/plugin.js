@@ -37,11 +37,6 @@ module.exports = {
     cordova.exec(success, error, 'System', 'getNativeLibraryPath', []);
   },
 
-
-  getNativeLibraryPath: function (success, error) {
-    cordova.exec(success, error, 'System', 'getNativeLibraryPath', []);
-  },
-
   getFilesDir: function (success, error) {
     cordova.exec(success, error, 'System', 'getFilesDir', []);
   },
@@ -99,12 +94,11 @@ module.exports = {
     cordova.exec(onSuccess, onFail, 'System', 'get-app-info', []);
   },
   addShortcut: function (shortcut, onSuccess, onFail) {
-    var id, label, description, icon, data;
+    var id, label, description, icon, action, data;
     id = shortcut.id;
     label = shortcut.label;
     description = shortcut.description;
     icon = shortcut.icon;
-    data = shortcut.data;
     action = shortcut.action;
     cordova.exec(onSuccess, onFail, 'System', 'add-shortcut', [id, label, description, icon, action, data]);
   },

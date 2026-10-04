@@ -410,8 +410,7 @@ function create($container, $toggler) {
 			$el.style.maxWidth = null;
 			$el.style.transition = null;
 			$el.remove();
-			// TODO : Codemirror
-			//editorManager.editor.resize(true);
+			editorManager?.editor?.requestMeasure?.();
 		}
 	}
 

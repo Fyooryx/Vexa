@@ -36,4 +36,22 @@ describe("Vexa runtime hardening", () => {
 		expect(main).toContain("system.getAppIcon");
 		expect(main).toContain("native Vexa app icon state");
 	});
+
+	it("keeps Vexa system bridge APIs clean", () => {
+		const bridge = read("src/plugins/system/www/plugin.js");
+		const prettier = read("src/lib/registerPrettierFormatter.js");
+		const main = read("src/main.js");
+		const sidebar = read("src/components/sidebar/index.js");
+
+		expect((bridge.match(/getNativeLibraryPath: function/g) || []).length).toBe(1);
+		expect(bridge).toContain(
+			"var id, label, description, icon, action, data;",
+		);
+		expect(prettier).toContain("const api = window?.vexa || window?.acode;");
+		expect(main).toContain("editor?.requestMeasure?.();");
+		expect(sidebar).toContain(
+			"editorManager?.editor?.requestMeasure?.();",
+		);
+	});
+
 });

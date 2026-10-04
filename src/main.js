@@ -957,9 +957,8 @@ function onClickApp(e) {
 }
 
 function mainPageOnShow() {
-	const { editor } = editorManager;
-	// TODO : Codemirror
-	//editor.resize(true);
+	const editor = editorManager?.editor;
+	editor?.requestMeasure?.();
 }
 
 function createMainMenu({ top, bottom, toggler }) {
