@@ -312,10 +312,10 @@ class TerminalManager {
 
 			// Terminal styles (inject or update)
 			const terminalStyles = this.getTerminalStyles();
-			let terminalStyle = document.getElementById("acode-terminal-styles");
+			let terminalStyle = document.getElementById("vexa-terminal-styles");
 			if (!terminalStyle) {
 				terminalStyle = tag("style", {
-					id: "acode-terminal-styles",
+					id: "vexa-terminal-styles",
 					textContent: terminalStyles,
 				});
 				document.body.appendChild(terminalStyle);
@@ -516,10 +516,10 @@ class TerminalManager {
 
 		// Terminal styles (inject or update)
 		const terminalStyles = this.getTerminalStyles();
-		let terminalStyle = document.getElementById("acode-terminal-styles");
+		let terminalStyle = document.getElementById("vexa-terminal-styles");
 		if (!terminalStyle) {
 			terminalStyle = tag("style", {
-				id: "acode-terminal-styles",
+				id: "vexa-terminal-styles",
 				textContent: terminalStyles,
 			});
 			document.body.appendChild(terminalStyle);
