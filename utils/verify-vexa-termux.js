@@ -28,18 +28,20 @@ expect(plugin.includes('android:name="com.termux.permission.RUN_COMMAND"'), "Ter
 expect(plugin.includes('<package android:name="com.termux" />'), "Termux package visibility query is missing");
 expect(plugin.includes('src/android/TermuxBridge.java'), "TermuxBridge native source is missing");
 expect(!plugin.includes("AlpineDocumentProvider.java"), "embedded Alpine document provider must not be packaged");
-expect(!plugin.includes("TerminalService.java"), "embedded terminal service must not be packaged");
-expect(!plugin.includes("init-alpine.sh"), "Alpine initialization script must not be packaged");
-expect(!plugin.includes("init-sandbox.sh"), "Alpine sandbox script must not be packaged");
+expect(plugin.includes("TerminalService.java"), "internal runtime service must remain available for built-in LSP/runtime compatibility");
+expect(plugin.includes("init-alpine.sh"), "internal Alpine runtime asset must remain available for built-in LSP compatibility");
+expect(plugin.includes("init-sandbox.sh"), "internal sandbox runtime asset must remain available for built-in LSP compatibility");
 
 expect(terminalFacade.includes('packageName: "com.termux"'), "terminal facade must target Termux");
 expect(terminalFacade.includes('backend: "termux"'), "terminal facade backend must be Termux");
 expect(terminalFacade.includes("TermuxBridge"), "terminal facade must use native Termux bridge");
+expect(terminalFacade.includes("packageName: \"com.termux\""), "terminal facade must target the official Termux package");
 expect(!terminalFacade.includes("downloadFile("), "terminal facade must not download an embedded runtime");
 
 expect(terminalComponent.includes("termuxMode"), "terminal component must expose Termux mode");
 expect(terminalComponent.includes("connectToTermuxSession"), "terminal component must connect through Termux");
 expect(terminalManager.includes("termuxMode: isTermuxTerminal"), "terminal manager must create Termux terminals");
+expect(!terminalManager.includes("Executor.stopService()"), "Termux tab lifecycle must not stop the internal runtime executor");
 expect(!terminalManager.includes("acodeTerminalSessions"), "legacy Acode terminal session storage must not be restored");
 expect(defaults.includes("termuxAutoOpen: true"), "Termux auto-open setting must be enabled by default");
 expect(settings.includes("openTermux"), "Terminal settings must expose an Open Termux action");
