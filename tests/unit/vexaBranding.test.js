@@ -41,4 +41,22 @@ describe("Vexa branding", () => {
 		expect(commands).toContain("VEXA_IDENTITY.REPOSITORY_URL");
 	});
 
+	it("pins native authentication to trusted HTTPS origins", () => {
+		const authenticator = read(
+			"src/plugins/auth/src/android/Authenticator.java",
+		);
+
+		expect(authenticator).toContain(
+			'DEFAULT_BASE_URL = "https://acode.app"',
+		);
+		expect(authenticator).toContain("Unsupported authentication endpoint");
+		expect(authenticator).toContain("Untrusted authentication endpoint");
+		expect(authenticator).toContain(
+			'("acode.app".equalsIgnoreCase(host) || "dev.acode.app".equalsIgnoreCase(host))',
+		);
+		expect(authenticator).toContain("validateBaseUrl(options.optString");
+		expect(authenticator).toContain("validateBaseUrl(");
+		expect(authenticator).toContain('"vexa".equalsIgnoreCase(data.getScheme())');
+	});
+
 });
