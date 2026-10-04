@@ -14,13 +14,14 @@ const SUPPORTED_SCHEMES = new Set([
 export function parseAppDeepLink(url) {
 	if (typeof url !== "string") return null;
 
-	const match = /^([a-z][a-z0-9+.-]*):\\/\\/(.*)$/i.exec(url);
-	if (!match) return null;
+	const separator = url.indexOf("://");
+	if (separator <= 0) return null;
 
-	const scheme = match[1].toLowerCase();
+	const scheme = url.slice(0, separator).toLowerCase();
 	if (!SUPPORTED_SCHEMES.has(scheme)) return null;
 
-	const segments = match[2].split("/");
+	const path = url.slice(separator + 3);
+	const segments = path.split("/");
 	const module = segments.shift() || "";
 	const action = segments.shift() || "";
 	if (!module || !action) return null;
