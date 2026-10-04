@@ -30,12 +30,15 @@ import TerminalTouchSelection from "./terminalTouchSelection";
 
 export default class TerminalComponent {
 	constructor(options = {}) {
+		// The local Vexa terminal delegates to the official Termux app.
+		const termuxMode = options.termuxMode === true;
 		// Get terminal settings from shared defaults
 		const terminalSettings = getTerminalSettings();
 
 		this.options = {
 			allowProposedApi: true,
 			scrollOnUserInput: true,
+			disableStdin: termuxMode || options.disableStdin === true,
 			rows: options.rows || 24,
 			cols: options.cols || 80,
 			port: options.port || 8767,
@@ -64,8 +67,10 @@ export default class TerminalComponent {
 		this.ligaturesAddon = null;
 		this.container = null;
 		this.pid = null;
+		this.termuxMode = termuxMode;
+		this.termuxWorkdir = terminalSettings.termuxWorkdir || "~";
 		this.isConnected = false;
-		this.serverMode = options.serverMode !== false; // Default true
+		this.serverMode = options.serverMode !== false && !this.termuxMode;
 		this.remoteSsh = options.remoteSsh || null;
 		this.remoteShellId = null;
 		this.remoteInputDisposable = null;
@@ -710,6 +715,48 @@ export default class TerminalComponent {
 			);
 		}
 		throw new Error("A terminal backend is not configured.");
+	}
+
+	/**
+	 * Delegate a local interactive shell to Termux.
+	 * The actual interactive terminal remains owned by Termux.
+	 */
+	async connectToTermuxSession() {
+		if (typeof Terminal === "undefined") {
+			throw new Error("Termux terminal bridge is unavailable in this build.");
+		}
+		if (!(await Terminal.isInstalled())) {
+			throw new Error(
+				"Termux is not installed. Install Termux before opening the Vexa terminal.",
+			);
+		}
+
+		this.pid = `termux:${Date.now()}`;
+		this.processExited = false;
+		this.isConnected = true;
+		this.terminal.writeln("");
+		this.terminal.writeln("[1;36mVexa → Termux[0m");
+		this.terminal.writeln(
+			"Vexa delegates the interactive shell to the Termux application.",
+		);
+		this.terminal.writeln(
+			"Opening Termux with the configured working directory…",
+		);
+
+		this.onConnect?.();
+
+		try {
+			if (getTerminalSettings().termuxAutoOpen !== false) {
+				await Terminal.openSession(this.termuxWorkdir);
+			}
+		} catch (error) {
+			this.isConnected = false;
+			this.onError?.(error);
+			throw error;
+		}
+
+		this.terminal.focus();
+		return this.pid;
 	}
 
 	/**
