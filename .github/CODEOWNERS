@@ -1,6 +1,7 @@
-.github/CODEOWNERS @Acode-Foundation/acode 
+# Vexa project owner
+* @Fyooryx
 
-# workflows
+# Workflow maintainers
 .github/workflows/nightly-build.yml @unschooledgamer
 .github/workflows/on-demand-preview-releases-PR.yml @unschooledgamer
 .github/workflows/community-release-notifier.yml @unschooledgamer
