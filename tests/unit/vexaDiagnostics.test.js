@@ -22,6 +22,8 @@ import {
 	getVexaWorkspaceReport,
 	getVexaWorkspaceSnapshot,
 	getWorkspaceSnapshot,
+	getVexaReadiness,
+	formatVexaReadiness,
 } from "lib/vexaDiagnostics";
 
 describe("Vexa advanced diagnostics", () => {
@@ -295,7 +297,7 @@ describe("Vexa advanced diagnostics", () => {
 		expect(capabilities.clipboard).toBe(true);
 		expect(formatVexaCapabilities()).toContain("Vexa Capabilities");
 	});
-	it("summarizes health checks deterministically", () => {
+\tit("derives a deterministic readiness state from health and workspace signals", () => {\n\t\tconst ready = getVexaReadiness({\n\t\t\tbuildInfo: { versionName: "1.15.0", packageName: "com.vexa.app" },\n\t\t\teditorManager: { files: [] },\n\t\t\tnavigator: { onLine: true, clipboard: { writeText: async () => {} } },\n\t\t});\n\t\texpect(ready.status).toBe("READY");\n\t\texpect(ready.blockers).toEqual([]);\n\n\t\tconst blocked = getVexaReadiness({\n\t\t\teditorManager: null,\n\t\t\tnavigator: { onLine: false },\n\t\t});\n\t\texpect(blocked.status).toBe("BLOCKED");\n\t\texpect(blocked.blockers).toContain("Editor manager unavailable");\n\t\texpect(blocked.signals).toContain("Network offline");\n\t\texpect(formatVexaReadiness({ editorManager: null, navigator: { onLine: false } })).toContain(\n\t\t\t"Vexa Readiness Gate",\n\t\t);\n\t});\n\n	it("summarizes health checks deterministically", () => {
 		const checks = getVexaHealthChecks({
 			buildInfo: { versionName: "1.15.0" },
 			editorManager: { files: [] },
