@@ -80,7 +80,7 @@ export default function showRewardedAd({
 				throw new Error(strings["rewarded ad unavailable"]);
 			}
 			const ad = new admob.RewardedAd({
-				id: `acode-reward-${++nextId}`,
+				id: `vexa-reward-${++nextId}`,
 				adUnitId: adUnitIdRewarded,
 				...(serverSideVerification ? { serverSideVerification } : {}),
 			});
