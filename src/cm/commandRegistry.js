@@ -751,9 +751,7 @@ function registerCoreCommands() {
 			copyVexaContextPack()
 				.then((copied) =>
 					toast(
-						copied
-							? "Vexa context pack copied"
-							: "Clipboard is unavailable",
+						copied ? "Vexa context pack copied" : "Clipboard is unavailable",
 					),
 				)
 				.catch(() => toast("Failed to copy Vexa context pack"));
