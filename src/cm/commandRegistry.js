@@ -82,7 +82,7 @@ import {
 	toCodeMirrorKey,
 } from "cm/keyBindingUtils";
 import {
-	renameSymbol as acodeRenameSymbol,
+	renameSymbol as vexaRenameSymbol,
 	clearDiagnosticsEffect,
 	clientManager,
 	jumpToDeclaration as lspJumpToDeclaration,
@@ -94,9 +94,9 @@ import {
 	showSignatureHelp as lspShowSignatureHelp,
 } from "cm/lsp";
 import {
-	closeReferencesPanel as acodeCloseReferencesPanel,
-	findAllReferences as acodeFindAllReferences,
-	findAllReferencesInTab as acodeFindAllReferencesInTab,
+	closeReferencesPanel as vexaCloseReferencesPanel,
+	findAllReferences as vexaFindAllReferences,
+	findAllReferencesInTab as vexaFindAllReferencesInTab,
 } from "cm/lsp/references";
 import { showDocumentSymbols } from "components/symbolsPanel";
 import toast from "components/toast";
@@ -1218,7 +1218,7 @@ function registerLspCommands() {
 		description: "Rename symbol (Language Server)",
 		readOnly: false,
 		requiresView: true,
-		run: runLspCommand(acodeRenameSymbol),
+		run: runLspCommand(vexaRenameSymbol),
 	});
 	addCommand({
 		name: "showSignatureHelp",
@@ -1282,7 +1282,7 @@ function registerLspCommands() {
 				notifyLspUnavailable();
 				return false;
 			}
-			return acodeFindAllReferences(resolvedView);
+			return vexaFindAllReferences(resolvedView);
 		},
 	});
 	addCommand({
@@ -1291,7 +1291,7 @@ function registerLspCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			return acodeCloseReferencesPanel();
+			return vexaCloseReferencesPanel();
 		},
 	});
 	addCommand({
@@ -1307,7 +1307,7 @@ function registerLspCommands() {
 				notifyLspUnavailable();
 				return false;
 			}
-			return acodeFindAllReferencesInTab(resolvedView);
+			return vexaFindAllReferencesInTab(resolvedView);
 		},
 	});
 	addCommand({
