@@ -143,7 +143,8 @@ export function clearVexaWorkspaceCheckpoints(runtime = {}) {
 
 export function formatVexaWorkspaceCheckpoints(runtime = {}) {
 	const checkpoints = getVexaWorkspaceCheckpoints(runtime);
-	if (!checkpoints.length) return "Vexa Workspace Checkpoints\n--------------------------\nnone";
+	if (!checkpoints.length)
+		return "Vexa Workspace Checkpoints\n--------------------------\nnone";
 
 	return [
 		"Vexa Workspace Checkpoints",
@@ -151,12 +152,12 @@ export function formatVexaWorkspaceCheckpoints(runtime = {}) {
 		...checkpoints.map(
 			(checkpoint, index) =>
 				(index + 1) +
-			". " +
-			checkpoint.filename +
-			":" +
-			checkpoint.line +
-			":" +
-			checkpoint.column,
+				". " +
+				checkpoint.filename +
+				":" +
+				checkpoint.line +
+				":" +
+				checkpoint.column,
 		),
 	].join("\n");
 }
