@@ -6,6 +6,7 @@
  */
 export const VEXA_IDENTITY = Object.freeze({
 	NAME: "Vexa",
+	IDENTITY_MODE: "VEXA_ONLY",
 	PACKAGE_NAME: "com.vexa.app",
 	FREE_PACKAGE_NAME: "com.vexa.appfree",
 	URL_SCHEME: "vexa",
