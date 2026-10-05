@@ -291,6 +291,7 @@ export function getVexaCapabilities(runtime = {}) {
 	const capabilities = {
 		identityLock: true,
 		workspacePulse: true,
+		readinessGate: true,
 		codemirror: Boolean(current.editorManager?.editor?.state),
 		lsp: workspace.lspProviders.length > 0,
 		multiPane: Number(workspace.paneCount || 0) > 1,
@@ -340,6 +341,7 @@ export function getVexaRuntimeProfile(runtime = {}) {
 			failed: health.failed,
 			ok: health.ok,
 		},
+		readiness: getVexaReadiness(runtime),
 	});
 }
 
@@ -674,6 +676,10 @@ export async function copyVexaText(text, runtime = {}) {
 		return true;
 	}
 	return false;
+}
+
+export async function copyVexaReadiness(runtime = {}) {
+	return copyVexaText(formatVexaReadiness(runtime), runtime);
 }
 
 export async function copyVexaRuntimeProfile(runtime = {}) {
