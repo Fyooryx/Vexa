@@ -1,11 +1,12 @@
 import { getModes } from "cm/modelist";
 import settingsPage from "components/settingsPage";
 import appSettings from "lib/settings";
+import { getVexaFormatters, vexaGetFormatterFor } from "lib/vexaApi";
 
 export default function formatterSettings(languageName) {
 	const title = strings.formatter;
 	const values = appSettings.value;
-	const { formatters } = acode;
+	const formatters = getVexaFormatters();
 	const languagesLabel = strings.languages || "Languages";
 
 	// Build items from CodeMirror modelist
@@ -21,7 +22,7 @@ export default function formatterSettings(languageName) {
 			const extList = String(extensions)
 				.split("|")
 				.filter((e) => e && !e.startsWith("^"));
-			const options = acode.getFormatterFor(extList);
+			const options = vexaGetFormatterFor(extList);
 			const sampleExt = extList[0] || name;
 
 			return {
