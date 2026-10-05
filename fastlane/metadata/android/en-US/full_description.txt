@@ -1,4 +1,4 @@
-Vexa is an Android code editor and web IDE based on the open-source Acode project. Edit projects, manage files, use a Linux terminal, work with Git and SSH, and extend your setup with community plugins.
+Vexa is an Android code editor and web IDE built as the Vexa open-source Android editor. Edit projects, manage files, use a Linux terminal, work with Git and SSH, and extend your setup with community plugins.
 
 LINUX TERMINAL
 
@@ -46,7 +46,7 @@ Extend Vexa with the in-app Plugin Store:
 
 OPEN SOURCE
 
-Vexa is released under the MIT license. The project is based on the Acode open-source codebase; original upstream attribution remains in the repository.
+Vexa is released under the MIT license. Vexa is released under the MIT license as an independent Vexa product identity.
 
 GET STARTED
 
