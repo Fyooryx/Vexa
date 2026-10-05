@@ -1,6 +1,7 @@
 import { focusEditorIfEditable } from "cm/editorReadOnly";
 import appSettings from "lib/settings";
 import { vexaExec } from "./vexaApi";
+import { vexaExec } from "./vexaApi";
 
 const exec = (command) => {
 	const { editor } = editorManager;
@@ -144,7 +145,7 @@ export default function selectionMenu(options = {}) {
 				{ id: "share", label: getLabel("share", "Share") },
 			),
 		item(
-			(color) => acode.exec("insert-color", color),
+			(color) => vexaExec("insert-color", color),
 			<span className="icon color_lenspalette"></span>,
 			"all",
 			false,
