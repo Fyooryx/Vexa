@@ -69,6 +69,36 @@ export function getWorkspaceSnapshot(runtime = {}) {
 	};
 }
 
+export function getVexaWorkspaceSnapshot(runtime = {}) {
+	const current = getRuntime(runtime);
+	const workspace = getWorkspaceSnapshot(runtime);
+	const files = getEditorFiles(current.editorManager);
+
+	return {
+		schemaVersion: 1,
+		generatedAt: new Date().toISOString(),
+		app: VEXA_IDENTITY.NAME,
+		version: valueOrUnknown(current.buildInfo.versionName),
+		package: getRuntimePackageName(current.buildInfo),
+		migrationPhase: VEXA_IDENTITY.MIGRATION_PHASE ?? null,
+		activeFile: workspace.activeFile,
+		activeUri: workspace.activeUri,
+		selection: workspace.selection,
+		paneCount: workspace.paneCount,
+		files: files.map((file) => ({
+			filename: file?.filename || file?.name || "unknown",
+			uri: file?.uri || null,
+			dirty: Boolean(file?.markChanged || file?.isUnsaved),
+			pinned: Boolean(file?.pinned),
+			readOnly: Boolean(file?.readOnly),
+			encoding: file?.encoding || null,
+		})),
+	};
+}
+
+export function formatVexaWorkspaceSnapshot(runtime = {}) {
+	return JSON.stringify(getVexaWorkspaceSnapshot(runtime), null, 2);
+}
 export function getVexaWorkspaceReport(runtime = {}) {
 	const current = getRuntime(runtime);
 	const workspace = getWorkspaceSnapshot(runtime);
@@ -314,6 +344,9 @@ export async function copyVexaDiagnostics(runtime = {}) {
 	);
 }
 
+export async function copyVexaWorkspaceSnapshot(runtime = {}) {
+	return copyVexaText(formatVexaWorkspaceSnapshot(runtime), runtime);
+}
 export async function copyVexaContextPack(runtime = {}) {
 	return copyVexaText(getVexaContextPack(runtime), runtime);
 }
