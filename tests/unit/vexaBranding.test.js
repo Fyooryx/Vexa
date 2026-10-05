@@ -19,7 +19,7 @@ describe("Vexa branding", () => {
 		expect(config).toMatch(/<name>Vexa<\/name>/);
 		expect(packageJson.name).toBe("com.vexa.app");
 		expect(packageJson.displayName).toBe("Vexa");
-		expect(read("src/lib/vexaIdentity.js")).toContain("MIGRATION_PHASE: 1");
+		expect(read("src/lib/vexaIdentity.js")).toContain("MIGRATION_PHASE: 2");
 		expect(read("src/lib/vexaIdentity.js")).toContain('LEGACY_NATIVE_NAMESPACE: "com.foxdebug"');
 		expect(read("src/lib/vexaIdentity.js")).toContain('VEXA_NATIVE_NAMESPACE: "com.vexa.app"');
 		expect(packageLock.name).toBe("com.vexa.app");
