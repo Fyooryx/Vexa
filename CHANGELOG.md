@@ -1,3 +1,13 @@
+## [Unreleased]
+
+### Added
+- Vexa Workspace Report, Health Check, Migration Status, Capability Matrix, Developer Context Pack, and metadata-only Workspace Snapshot.
+- Vexa-first developer command and LSP naming with compatibility aliases.
+
+### Changed
+- Continued gradual product branding migration toward Vexa.
+- Refreshed canonical Vexa logo assets.
+- Kept legacy technical identifiers available until verified replacement paths exist.
 # Changelog
 
 ## 1.14.6 — Vexa identity and launcher convergence
