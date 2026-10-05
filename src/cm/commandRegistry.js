@@ -82,7 +82,6 @@ import {
 	toCodeMirrorKey,
 } from "cm/keyBindingUtils";
 import {
-	renameSymbol as vexaRenameSymbol,
 	clearDiagnosticsEffect,
 	clientManager,
 	jumpToDeclaration as lspJumpToDeclaration,
@@ -92,6 +91,7 @@ import {
 	nextSignature as lspNextSignature,
 	prevSignature as lspPrevSignature,
 	showSignatureHelp as lspShowSignatureHelp,
+	renameSymbol as vexaRenameSymbol,
 } from "cm/lsp";
 import {
 	closeReferencesPanel as vexaCloseReferencesPanel,
@@ -730,7 +730,9 @@ function registerCoreCommands() {
 		run() {
 			copyVexaText(getVexaWorkspaceReport())
 				.then((copied) =>
-					toast(copied ? "Workspace report copied" : "Clipboard is unavailable"),
+					toast(
+						copied ? "Workspace report copied" : "Clipboard is unavailable",
+					),
 				)
 				.catch(() => toast("Failed to copy workspace report"));
 			return true;
