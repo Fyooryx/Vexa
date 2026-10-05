@@ -4,6 +4,8 @@ import {
 	formatMigrationStatus,
 	formatVexaCapabilities,
 	formatVexaRuntimeProfile,
+	formatVexaHealthScore,
+	formatVexaHealthSnapshot,
 	getVexaRuntimeProfile,
 	getActiveCodeLocation,
 	getVexaCapabilities,
@@ -199,7 +201,6 @@ describe("Vexa advanced diagnostics", () => {
 
 		const degraded = getVexaHealthScore({
 			buildInfo: { versionName: "1.14.6", versionCode: 1019 },
-			editorManager: { files: [] },
 			navigator: { onLine: true, clipboard: null },
 		});
 		expect(degraded.score).toBeLessThan(100);
