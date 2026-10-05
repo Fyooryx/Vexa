@@ -28,3 +28,6 @@
 - [x] Preserve newer mainline changes where an old branch would regress them.
 - [ ] Delete superseded legacy branches when a GitHub delete-ref capability is available.
 - [ ] Run full Vexa verification and Android build.
+- [x] Audit all legacy branch heads against current main.
+- [x] Reconcile material non-stale changes from diverged legacy branches.
+- [ ] Delete retired GitHub branches when a supported ref-delete operation is available.
