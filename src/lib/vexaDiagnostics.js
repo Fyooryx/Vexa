@@ -126,14 +126,21 @@ export function getVexaWorkspacePulse(runtime = {}) {
 		signals.push({
 			id: "unsaved",
 			level: "attention",
-			message: workspace.dirtyFiles + " unsaved file" + (workspace.dirtyFiles === 1 ? "" : "s"),
+			message:
+				workspace.dirtyFiles +
+				" unsaved file" +
+				(workspace.dirtyFiles === 1 ? "" : "s"),
 		});
 	}
 	if (health.failed > 0) {
 		signals.push({
 			id: "health",
 			level: "attention",
-			message: health.failed + " health check" + (health.failed === 1 ? "" : "s") + " need attention",
+			message:
+				health.failed +
+				" health check" +
+				(health.failed === 1 ? "" : "s") +
+				" need attention",
 		});
 	}
 	if (current.navigator?.onLine === false) {
@@ -159,9 +166,7 @@ export function getVexaWorkspacePulse(runtime = {}) {
 	}
 
 	const criticalHealthFailure = health.checks.some(
-		(check) =>
-			!check.ok &&
-			["identity", "runtime", "editor"].includes(check.id),
+		(check) => !check.ok && ["identity", "runtime", "editor"].includes(check.id),
 	);
 	const status = criticalHealthFailure ? "ATTENTION" : "READY";
 	return Object.freeze({
@@ -475,7 +480,9 @@ export function getVexaReadiness(runtime = {}) {
 
 	if (identity.failed > 0) {
 		blockers.push("Vexa identity check failed");
-		recommendations.push("Run Vexa Identity Lock and restore canonical product metadata.");
+		recommendations.push(
+			"Run Vexa Identity Lock and restore canonical product metadata.",
+		);
 	}
 	if (!current.editorManager) {
 		blockers.push("Editor manager unavailable");
@@ -483,19 +490,25 @@ export function getVexaReadiness(runtime = {}) {
 	}
 	if (!current.buildInfo?.versionName && !current.buildInfo?.versionCode) {
 		blockers.push("Runtime build metadata unavailable");
-		recommendations.push("Rebuild or relaunch Vexa so runtime build metadata is available.");
+		recommendations.push(
+			"Rebuild or relaunch Vexa so runtime build metadata is available.",
+		);
 	}
 	if (current.navigator?.onLine === false) {
 		signals.push("Network offline");
 		recommendations.push("Restore network connectivity for online features.");
 	}
-	if (!(
-		current.clipboard?.writeText ||
-		current.navigator?.clipboard?.writeText ||
-		current.cordova?.plugins?.clipboard?.copy
-	)) {
+	if (
+		!(
+			current.clipboard?.writeText ||
+			current.navigator?.clipboard?.writeText ||
+			current.cordova?.plugins?.clipboard?.copy
+		)
+	) {
 		signals.push("Clipboard unavailable");
-		recommendations.push("Enable clipboard access if diagnostics need to be copied.");
+		recommendations.push(
+			"Enable clipboard access if diagnostics need to be copied.",
+		);
 	}
 	if (health.failed > 0 && blockers.length === 0) {
 		signals.push(
@@ -529,10 +542,18 @@ export function formatVexaReadiness(runtime = {}) {
 		"-------------------",
 		"Status: " + readiness.status,
 		"Health: " + readiness.healthScore + "/100",
-		"Blockers: " + (readiness.blockers.length ? readiness.blockers.join("; ") : "none"),
-		"Signals: " + (readiness.signals.length ? readiness.signals.join("; ") : "none"),
+		"Blockers: " +
+			(readiness.blockers.length
+				? readiness.blockers.join("; ")
+				: "none"),
+		"Signals: " +
+			(readiness.signals.length
+				? readiness.signals.join("; ")
+				: "none"),
 		"Recommendations: " +
-			(readiness.recommendations.length ? readiness.recommendations.join("; ") : "none"),
+			(readiness.recommendations.length
+				? readiness.recommendations.join("; ")
+				: "none"),
 	].join("\n");
 }
 
