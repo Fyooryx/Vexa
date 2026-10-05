@@ -180,6 +180,7 @@ export function getVexaCapabilities(runtime = {}) {
 				globalThis.acode?.require?.("terminal"),
 		),
 		workspaceReport: true,
+		workspaceCheckpoint: true,
 		healthCheck: true,
 		migrationStatus: true,
 		clipboard: Boolean(
