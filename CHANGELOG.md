@@ -1,6 +1,12 @@
 ## [Unreleased]
 
 ### Added
+- Vexa Readiness Gate combining identity, runtime, editor, health, network, and clipboard signals into `READY`, `DEGRADED`, or `BLOCKED` states.
+- Vexa readiness diagnostics exposed through the command registry.
+
+### Improved
+- Workspace Pulse now evaluates normalized runtime state consistently.
+- Main validation now includes translation checks on the same gate as branding, workflow, type, and unit validation.
 - Vexa Identity Lock for deterministic product identity verification.
 - Vexa Workspace Pulse for compact workspace, health, and attention signals.
 - Copy support for the Workspace Pulse developer signal.
