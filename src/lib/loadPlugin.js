@@ -25,7 +25,7 @@ export default async function loadPlugin(pluginId, justInstalled = false) {
 	// listeners, etc. — is lost and can never be called. Letting the framework
 	// invoke unmountPlugin() first ensures the OLD destroy() runs while it still
 	// exists, so all old-version resources are properly cleaned up.
-	acode.unmountPlugin(pluginId);
+	requireVexaCore().unmountPlugin(pluginId);
 
 	// Remove the old <script> tag so the browser fetches the new source.
 	const oldScript = document.getElementById(`${pluginId}-mainScript`);
@@ -80,7 +80,7 @@ export default async function loadPlugin(pluginId, justInstalled = false) {
 					await fsOperation(CACHE_STORAGE).createFile(pluginId);
 				}
 
-				await acode.initPlugin(pluginId, baseUrl, $page, {
+				await requireVexaCore().initPlugin(pluginId, baseUrl, $page, {
 					fileIcons: iconApi,
 					cacheFileUrl: await helpers.toInternalUri(cacheFile),
 					cacheFile: fsOperation(cacheFile),
