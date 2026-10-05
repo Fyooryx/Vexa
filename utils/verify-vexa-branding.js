@@ -149,6 +149,14 @@ expect(
 	"Vexa repository identity is missing",
 );
 expect(
+	identity.includes("RELEASES_API_URL") &&
+		identity.includes("CHANGELOG_URL") &&
+		identity.includes("UPSTREAM_RELEASES_API_URL") &&
+		identity.includes("UPSTREAM_CHANGELOG_URL"),
+	"centralized Vexa release identity",
+);
+
+expect(
 	identity.includes(
 		'UPSTREAM_REPOSITORY_URL: "https://github.com/Acode-Foundation/Acode"',
 	),
