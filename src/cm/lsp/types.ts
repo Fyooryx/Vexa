@@ -613,6 +613,13 @@ export interface AcodeApi {
 }
 
 /**
+ * Vexa-first aliases for newly migrated code.
+ * AcodeApi remains the compatibility contract for existing plugins.
+ */
+export type VexaApi = AcodeApi;
+export type VexaFile = AcodeFile;
+
+/**
  * Uri utility interface
  */
 export interface ParsedUri {
