@@ -395,6 +395,10 @@ export async function copyVexaText(text, runtime = {}) {
 	return false;
 }
 
+export async function copyVexaRuntimeProfile(runtime = {}) {
+	return copyVexaText(formatVexaRuntimeProfile(runtime), runtime);
+}
+
 export async function copyVexaDiagnostics(runtime = {}) {
 	return copyVexaText(
 		getVexaWorkspaceReport(runtime) + "\n\n" + getVexaDiagnostics(runtime),
