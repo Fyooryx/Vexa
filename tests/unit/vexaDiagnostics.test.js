@@ -318,7 +318,30 @@ describe("Vexa advanced diagnostics", () => {
 		expect(capabilities.clipboard).toBe(true);
 		expect(formatVexaCapabilities()).toContain("Vexa Capabilities");
 	});
-\tit("derives a deterministic readiness state from health and workspace signals", () => {\n\t\tconst ready = getVexaReadiness({\n\t\t\tbuildInfo: { versionName: "1.15.0", packageName: "com.vexa.app" },\n\t\t\teditorManager: { files: [] },\n\t\t\tnavigator: { onLine: true, clipboard: { writeText: async () => {} } },\n\t\t});\n\t\texpect(ready.status).toBe("READY");\n\t\texpect(ready.blockers).toEqual([]);\n\n\t\tconst blocked = getVexaReadiness({\n\t\t\teditorManager: null,\n\t\t\tnavigator: { onLine: false },\n\t\t});\n\t\texpect(blocked.status).toBe("BLOCKED");\n\t\texpect(blocked.blockers).toContain("Editor manager unavailable");\n\t\texpect(blocked.signals).toContain("Network offline");\n\t\texpect(formatVexaReadiness({ editorManager: null, navigator: { onLine: false } })).toContain(\n\t\t\t"Vexa Readiness Gate",\n\t\t);\n\t});\n\n	it("summarizes health checks deterministically", () => {
+	it("derives a deterministic readiness state from health and workspace signals", () => {
+		const ready = getVexaReadiness({
+			buildInfo: { versionName: "1.15.0", packageName: "com.vexa.app" },
+			editorManager: { files: [] },
+			navigator: { onLine: true, clipboard: { writeText: async () => {} } },
+		});
+		expect(ready.status).toBe("READY");
+		expect(ready.blockers).toEqual([]);
+		expect(ready.recommendations).toEqual([]);
+
+		const blocked = getVexaReadiness({
+			editorManager: null,
+			navigator: { onLine: false },
+		});
+		expect(blocked.status).toBe("BLOCKED");
+		expect(blocked.blockers).toContain("Editor manager unavailable");
+		expect(blocked.signals).toContain("Network offline");
+		expect(blocked.recommendations.length).toBeGreaterThan(0);
+		expect(formatVexaReadiness({ editorManager: null, navigator: { onLine: false } })).toContain(
+			"Vexa Readiness Gate",
+		);
+	});
+
+n	it("summarizes health checks deterministically", () => {
 		const checks = getVexaHealthChecks({
 			buildInfo: { versionName: "1.15.0" },
 			editorManager: { files: [] },
