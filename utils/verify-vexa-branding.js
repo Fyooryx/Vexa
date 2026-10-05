@@ -35,6 +35,7 @@ const main = read("src/main.js");
 const polyfill = read("src/lib/polyfill.js");
 const bootstrap = read("www/index.html");
 const vexaCoreSource = read("src/lib/vexa.js");
+const vexaApiSource = read("src/lib/vexaApi.js");
 const vexaCore = path.join(root, "..", "src/lib/vexa.js");
 const legacyCore = path.join(root, "..", "src/lib/acode.js");
 
@@ -84,6 +85,30 @@ expect(
 	vexaCoreSource.includes("class Vexa"),
 	"Vexa core class must be named Vexa",
 );
+expect(
+	vexaApiSource.includes("getVexaCore") &&
+		vexaApiSource.includes("getVexaCoreBoundaryStatus") &&
+		vexaApiSource.includes("requireVexaCore"),
+	"Vexa runtime boundary must expose canonical, status, and required-core access",
+);
+
+for (const [file, source, pattern] of [
+	["applySettings.js", read("src/lib/applySettings.js"), "acode.exec("],
+	["welcome.js", read("src/pages/welcome/welcome.js"), "acode.exec("],
+	["formatterSettings.js", read("src/settings/formatterSettings.js"), "acode.getFormatterFor"],
+	["selectionMenu.js", read("src/lib/selectionMenu.js"), "acode.exec("],
+	["actionStack.js", read("src/lib/actionStack.js"), "acode.exitAppMessage"],
+	["registerPrettierFormatter.js", read("src/lib/registerPrettierFormatter.js"), "window?.acode"],
+	["commandRegistry.js", read("src/cm/commandRegistry.js"), "acode.exec("],
+	["loadPlugin.js", read("src/lib/loadPlugin.js"), "acode.initPlugin"],
+	["loadPlugins.js", read("src/lib/loadPlugins.js"), "acode[onPluginLoadCallback]"],
+]) {
+	expect(
+		!source.includes(pattern),
+		`${file} must not bypass the Vexa runtime boundary with ${pattern}`,
+	);
+}
+
 expect(
 	identity.includes('PACKAGE_NAME: "com.vexa.app"'),
 	"Vexa identity package is missing",
