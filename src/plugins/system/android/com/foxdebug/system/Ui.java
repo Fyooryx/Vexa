@@ -1,4 +1,4 @@
-package com.foxdebug.system;
+package com.vexa.app.system;
 
 import android.content.Context;
 import android.graphics.Bitmap;
