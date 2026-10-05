@@ -107,7 +107,7 @@ import keyBindings, {
 	CODEMIRROR_COMMAND_NAMES,
 } from "lib/keyBindings";
 import settings from "lib/settings";
-import { copyVexaDiagnostics } from "lib/vexaDiagnostics";
+import { copyVexaDiagnostics, copyVexaText, formatHealthSummary, getActiveCodeLocation, getVexaHealthChecks, getVexaWorkspaceReport } from "lib/vexaDiagnostics";
 import { VEXA_IDENTITY } from "lib/vexaIdentity";
 import Url from "utils/Url";
 
@@ -619,6 +619,58 @@ function registerCoreCommands() {
 		requiresView: false,
 		run() {
 			acode.exec("open", "file_browser");
+			return true;
+		},
+	});
+	addCommand({
+		name: "vexa:workspaceReport",
+		description: "Show Vexa workspace report",
+		readOnly: true,
+		requiresView: false,
+		run() {
+			const report = getVexaWorkspaceReport();
+			if (typeof globalThis.alert === "function") {
+				globalThis.alert("Vexa Workspace", report);
+			} else {
+				toast(report);
+			}
+			return true;
+		},
+	});
+	addCommand({
+		name: "vexa:healthCheck",
+		description: "Run Vexa health check",
+		readOnly: true,
+		requiresView: false,
+		run() {
+			const checks = getVexaHealthChecks();
+			const summary = formatHealthSummary(checks);
+			const details = checks
+				.map((check) => (check.ok ? "PASS " : "FAIL ") + check.label)
+				.join("\n");
+			const message = "Vexa Health Check\\n" + "Passed: " + summary.passed + " | Failed: " + summary.failed + "\n\n" + details;
+			if (typeof globalThis.alert === "function") {
+				globalThis.alert("Vexa Health", message);
+			} else {
+				toast(message);
+			}
+			return true;
+		},
+	});
+	addCommand({
+		name: "vexa:copyLocation",
+		description: "Copy active code location",
+		readOnly: true,
+		requiresView: false,
+		run() {
+			const location = getActiveCodeLocation();
+			if (!location) {
+				toast("No active file location available");
+				return true;
+			}
+			copyVexaText(location)
+				.then((copied) => toast(copied ? "Code location copied" : "Clipboard is unavailable"))
+				.catch(() => toast("Failed to copy code location"));
 			return true;
 		},
 	});
