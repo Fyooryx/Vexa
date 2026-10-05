@@ -36,6 +36,8 @@ Vexa 1.15.0 consolidates the developer tooling into a single Vexa-native surface
 - Vexa Runtime Profile: a read-only, metadata-only runtime/workspace health profile exposed to commands and plugins
 - Vexa Health Snapshot: a consolidated metadata-only health/workspace/capability snapshot with display and copy commands
 - Vexa Workspace Pulse: a compact actionable workspace/health signal with safe copy support
+- Vexa Readiness Gate: deterministic `READY`, `DEGRADED`, or `BLOCKED` readiness with actionable recommendations
+- Vexa readiness copy command for shareable troubleshooting handoff
 
 ## • Overview
 
@@ -91,7 +93,7 @@ npm ci
 npm run check:vexa
 ```
 
-This checks Vexa identity/branding, immutable GitHub Actions, TypeScript, and unit tests.
+This checks Vexa identity/branding, immutable GitHub Actions, translations, TypeScript, and unit tests.
 
 ## • Contributing & Building the Application
 
