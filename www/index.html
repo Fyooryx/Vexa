@@ -130,12 +130,15 @@
         );
       }
 
-      window.__ACODE_WEBVIEW_MAJOR__ = getWebViewMajor();
-      window.__ACODE_MIN_WEBVIEW_MAJOR__ = MIN_WEBVIEW_MAJOR;
+      window.__VEXA_WEBVIEW_MAJOR__ = getWebViewMajor();
+      window.__VEXA_MIN_WEBVIEW_MAJOR__ = MIN_WEBVIEW_MAJOR;
+      // Legacy globals remain as a compatibility bridge during migration.
+      window.__ACODE_WEBVIEW_MAJOR__ = window.__VEXA_WEBVIEW_MAJOR__;
+      window.__ACODE_MIN_WEBVIEW_MAJOR__ = window.__VEXA_MIN_WEBVIEW_MAJOR__;
 
       if (hasES6 &&
-        window.__ACODE_WEBVIEW_MAJOR__ &&
-        window.__ACODE_WEBVIEW_MAJOR__ < MIN_WEBVIEW_MAJOR
+        window.__VEXA_WEBVIEW_MAJOR__ &&
+        window.__VEXA_WEBVIEW_MAJOR__ < MIN_WEBVIEW_MAJOR
       ) {
         setStartupMessage(
           "Your Android System WebView is old. Update Android System WebView or Chrome if Vexa stays on this screen."
