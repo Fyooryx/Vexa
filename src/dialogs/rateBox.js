@@ -36,8 +36,7 @@ function rateBox() {
 				const stars = getStars(val);
 				const subject = "Feedback - Vexa editor";
 				const textBody = stars + "\n" + getFeedbackBody("\n");
-				const feedbackUrl =
-					`${config.FEEDBACK_URL}?title=${encodeURIComponent(subject)}&body=${encodeURIComponent(textBody)}`;
+				const feedbackUrl = `${config.FEEDBACK_URL}?title=${encodeURIComponent(subject)}&body=${encodeURIComponent(textBody)}`;
 				system.openInBrowser(feedbackUrl);
 			}
 		}, 100);
