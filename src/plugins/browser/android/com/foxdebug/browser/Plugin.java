@@ -1,7 +1,7 @@
-package com.foxdebug.browser;
+package com.vexa.app.browser;
 
 import android.content.Intent;
-import com.foxdebug.browser.BrowserActivity;
+import com.vexa.app.browser.BrowserActivity;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
