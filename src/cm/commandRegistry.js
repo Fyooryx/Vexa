@@ -111,6 +111,7 @@ import {
 	copyVexaContextPack,
 	copyVexaDiagnostics,
 	copyVexaText,
+	copyVexaWorkspaceSnapshot,
 	formatHealthSummary,
 	formatMigrationStatus,
 	formatVexaCapabilities,
@@ -720,6 +721,24 @@ function registerCoreCommands() {
 					toast(copied ? "Code location copied" : "Clipboard is unavailable"),
 				)
 				.catch(() => toast("Failed to copy code location"));
+			return true;
+		},
+	});
+	addCommand({
+		name: "vexa:copyWorkspaceSnapshot",
+		description: "Copy Vexa workspace snapshot",
+		readOnly: true,
+		requiresView: false,
+		run() {
+			copyVexaWorkspaceSnapshot()
+				.then((copied) =>
+					toast(
+						copied
+							? "Vexa workspace snapshot copied"
+							: "Clipboard is unavailable",
+					),
+				)
+				.catch(() => toast("Failed to copy workspace snapshot"));
 			return true;
 		},
 	});
