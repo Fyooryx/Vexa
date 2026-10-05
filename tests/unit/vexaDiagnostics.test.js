@@ -31,6 +31,8 @@ import {
 
 describe("Vexa advanced diagnostics", () => {
 	beforeEach(() => {
+		globalThis.vexa = {};
+		delete globalThis.acode;
 		globalThis.BuildInfo = {
 			versionName: "1.15.0",
 			versionCode: 1019,
@@ -353,6 +355,7 @@ describe("Vexa advanced diagnostics", () => {
 		expect(doctor.schemaVersion).toBe(1);
 		expect(doctor.app).toBe("Vexa");
 		expect(doctor.status).toBe("READY");
+		expect(doctor.coreBoundary.status).toBe("CANONICAL");
 		expect(doctor.identity.status).toBe("LOCKED");
 		expect(doctor.readiness.status).toBe("READY");
 		expect(doctor.health.status).toBe("HEALTHY");
