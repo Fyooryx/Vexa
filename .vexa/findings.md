@@ -42,3 +42,10 @@
 - The branding guard now detects direct legacy runtime calls in the migrated Vexa-native surfaces.
 - Existing upstream/legacy identifiers remain documented compatibility data and were not globally renamed without compatibility evidence.
 - Verification of the full test/type/build gates remains UNVERIFIED in this environment.
+
+## Vexa Doctor enforcement
+
+- Doctor status now treats an unavailable core boundary as `BLOCKED`.
+- Doctor status treats legacy fallback as `DEGRADED` and emits a migration recommendation.
+- Canonical `window.vexa` remains the only `READY` boundary state.
+- Diagnostics schema generation was advanced to version 7.
