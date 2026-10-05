@@ -464,18 +464,23 @@ export function getVexaReadiness(runtime = {}) {
 	const health = getVexaHealthScore(runtime);
 	const blockers = [];
 	const signals = [];
+	const recommendations = [];
 
 	if (identity.failed > 0) {
 		blockers.push("Vexa identity check failed");
+		recommendations.push("Run Vexa Identity Lock and restore canonical product metadata.");
 	}
 	if (!current.editorManager) {
 		blockers.push("Editor manager unavailable");
+		recommendations.push("Restart the Vexa editor runtime before continuing.");
 	}
 	if (!current.buildInfo?.versionName && !current.buildInfo?.versionCode) {
 		blockers.push("Runtime build metadata unavailable");
+		recommendations.push("Rebuild or relaunch Vexa so runtime build metadata is available.");
 	}
 	if (current.navigator?.onLine === false) {
 		signals.push("Network offline");
+		recommendations.push("Restore network connectivity for online features.");
 	}
 	if (!(
 		current.clipboard?.writeText ||
@@ -483,6 +488,7 @@ export function getVexaReadiness(runtime = {}) {
 		current.cordova?.plugins?.clipboard?.copy
 	)) {
 		signals.push("Clipboard unavailable");
+		recommendations.push("Enable clipboard access if diagnostics need to be copied.");
 	}
 	if (health.failed > 0 && blockers.length === 0) {
 		signals.push(
@@ -505,6 +511,7 @@ export function getVexaReadiness(runtime = {}) {
 		healthScore: health.score,
 		blockers,
 		signals,
+		recommendations: [...new Set(recommendations)],
 	});
 }
 
@@ -517,6 +524,8 @@ export function formatVexaReadiness(runtime = {}) {
 		"Health: " + readiness.healthScore + "/100",
 		"Blockers: " + (readiness.blockers.length ? readiness.blockers.join("; ") : "none"),
 		"Signals: " + (readiness.signals.length ? readiness.signals.join("; ") : "none"),
+		"Recommendations: " +
+			(readiness.recommendations.length ? readiness.recommendations.join("; ") : "none"),
 	].join("\n");
 }
 
