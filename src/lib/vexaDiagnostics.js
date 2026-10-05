@@ -48,7 +48,9 @@ export function getWorkspaceSnapshot(runtime = {}) {
 		current.lspProviders ??
 		(typeof globalThis.listRuntimeProviders === "function"
 			? globalThis.listRuntimeProviders()
-			: []);
+			: (typeof globalThis.vexa?.require === "function"
+				? globalThis.vexa.require("lsp")?.runtimes?.list?.() || []
+				: []));
 
 	return {
 		openFiles: files.length,
@@ -59,7 +61,11 @@ export function getWorkspaceSnapshot(runtime = {}) {
 		paneCount: Array.isArray(current.editorManager?.panes)
 			? current.editorManager.panes.length
 			: null,
-		lspProviders: providers.map((provider) => provider?.id).filter(Boolean),
+		lspProviders: providers
+			.map((provider) =>
+				typeof provider === "string" ? provider : provider?.id,
+			)
+			.filter(Boolean),
 	};
 }
 
