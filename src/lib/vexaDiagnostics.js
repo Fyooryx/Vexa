@@ -87,6 +87,36 @@ export function getActiveCodeLocation(runtime = {}) {
 	return workspace.activeFile + selection;
 }
 
+export function getVexaMigrationStatus() {
+	return {
+		phase: VEXA_IDENTITY.MIGRATION_PHASE ?? null,
+		applicationName: VEXA_IDENTITY.NAME,
+		applicationPackage: VEXA_IDENTITY.PACKAGE_NAME,
+		freePackage: VEXA_IDENTITY.FREE_PACKAGE_NAME,
+		legacyNamespace: VEXA_IDENTITY.LEGACY_NATIVE_NAMESPACE,
+		vexaNamespace: VEXA_IDENTITY.VEXA_NATIVE_NAMESPACE,
+		nativeMigrationEnabled:
+			VEXA_IDENTITY.LEGACY_PLUGIN_NAMESPACE_MIGRATION_ENABLED === true,
+		legacyDeepLink: VEXA_IDENTITY.LEGACY_URL_SCHEME + "://",
+		primaryDeepLink: VEXA_IDENTITY.URL_SCHEME + "://",
+	};
+}
+
+export function formatMigrationStatus() {
+	const status = getVexaMigrationStatus();
+	return [
+		"Vexa Migration Status",
+		"---------------------",
+		"Phase: " + valueOrUnknown(status.phase),
+		"Application: " + status.applicationName,
+		"Package: " + status.applicationPackage,
+		"Vexa namespace: " + status.vexaNamespace,
+		"Legacy namespace: " + status.legacyNamespace,
+		"Native migration enabled: " + status.nativeMigrationEnabled,
+		"Primary deep link: " + status.primaryDeepLink,
+		"Legacy deep link: " + status.legacyDeepLink,
+	].join("\n");
+}
 export function getVexaHealthChecks(runtime = {}) {
 	const current = getRuntime(runtime);
 	const workspace = getWorkspaceSnapshot(runtime);
@@ -94,7 +124,12 @@ export function getVexaHealthChecks(runtime = {}) {
 		{ id: "identity", label: "Vexa identity", ok: VEXA_IDENTITY.NAME === "Vexa" && VEXA_IDENTITY.PACKAGE_NAME === "com.vexa.app" },
 		{ id: "runtime", label: "Runtime metadata", ok: Boolean(current.buildInfo?.versionName || current.buildInfo?.versionCode) },
 		{ id: "editor", label: "Editor manager", ok: Boolean(current.editorManager) },
-		{ id: "lsp", label: "LSP runtime registry", ok: true, detail: workspace.lspProviders.length + " providers registered" },
+		{
+			id: "lsp",
+			label: "LSP runtime registry",
+			ok: true,
+			detail: workspace.lspProviders.length + " providers registered",
+		},
 		{ id: "clipboard", label: "Clipboard", ok: Boolean(current.clipboard?.writeText || current.navigator?.clipboard?.writeText || current.cordova?.plugins?.clipboard?.copy) },
 		{ id: "network", label: "Network connectivity", ok: current.navigator.onLine !== false },
 	];
