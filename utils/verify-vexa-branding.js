@@ -507,6 +507,24 @@ expect(
 	"Vexa app icon preview entries must use distinct Vexa assets",
 );
 
+const packageNamespaceFiles = walk(path.join(root, "..", "src")).filter((file) =>
+	/\\.(?:java|xml|js|ts)$/.test(file),
+);
+const legacyPackageCompatFiles = new Set([
+	"src/utils/helpers.js",
+	"src/cm/lsp/runtimeProviders.ts",
+	"src/test/url.tests.js",
+]);
+for (const file of packageNamespaceFiles) {
+	const relative = path.relative(path.join(root, ".."), file);
+	if (legacyPackageCompatFiles.has(relative)) continue;
+	const source = fs.readFileSync(file, "utf8");
+	expect(
+		!source.includes("com.foxdebug"),
+		`legacy com.foxdebug package namespace remains in \${relative}`,
+	);
+}
+
 console.log(
 	`[Vexa branding] PASS | Version: ${pkg.version} | Package: ${pkg.name} | Launcher WebP assets checked: ${launcherFiles.length}`,
 );
