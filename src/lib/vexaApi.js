@@ -14,6 +14,12 @@ export function getVexaCore() {
   return resolveCore();
 }
 
+export function requireVexaCore() {
+  const core = resolveCore();
+  if (!core) throw new Error("[Vexa] core runtime unavailable");
+  return core;
+}
+
 export function vexaExec(...args) {
   return resolveCore()?.exec?.(...args);
 }
