@@ -1,7 +1,7 @@
 {
   "name": "com.vexa.app",
   "displayName": "Vexa",
-  "version": "1.14.6",
+  "version": "1.15.0",
   "description": "Vexa is a code editor and web IDE for Android",
   "scripts": {
     "lang": "node ./utils/lang.js",
@@ -29,7 +29,7 @@
   "keywords": [
     "ecosystem:cordova"
   ],
-  "author": "Foxdebug (Ajit Kumar)",
+  "author": "Vexa Project",
   "license": "MIT",
   "cordova": {
     "plugins": {
