@@ -93,8 +93,8 @@ expect(
 	"Vexa free package identity is missing",
 );
 expect(
-	identity.includes("MIGRATION_PHASE: 1"),
-	"Vexa repository must remain on gradual migration Phase 1",
+	identity.includes("MIGRATION_PHASE: 2"),
+	"Vexa repository must remain on gradual migration Phase 2",
 );
 expect(
 	identity.includes('LEGACY_NATIVE_NAMESPACE: "com.foxdebug"') &&
