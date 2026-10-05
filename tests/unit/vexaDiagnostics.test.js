@@ -1,60 +1,120 @@
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import {
-	copyVexaDiagnostics,
+	formatHealthSummary,
+	getActiveCodeLocation,
 	getVexaDiagnostics,
-} from "../../src/lib/vexaDiagnostics";
+	getVexaHealthChecks,
+	getVexaWorkspaceReport,
+	getWorkspaceSnapshot,
+} from "lib/vexaDiagnostics";
 
-describe("Vexa diagnostics", () => {
-	it("produces a stable support report from injected runtime data", () => {
+describe("Vexa advanced diagnostics", () => {
+	beforeEach(() => {
+		globalThis.BuildInfo = {
+			versionName: "1.14.6",
+			versionCode: 1019,
+			packageName: "com.vexa.app",
+		};
+	});
+
+	it("captures active workspace state", () => {
+		const editorManager = {
+			files: [
+				{
+					type: "editor",
+					filename: "main.js",
+					uri: "file:///workspace/main.js",
+					markChanged: true,
+				},
+				{
+					type: "editor",
+					filename: "README.md",
+					uri: "file:///workspace/README.md",
+					markChanged: false,
+				},
+			],
+			activeFile: {
+				filename: "main.js",
+				uri: "file:///workspace/main.js",
+			},
+			editor: {
+				state: {
+					doc: { lineAt: () => ({ number: 12, from: 40 }) },
+					selection: { main: { head: 46 } },
+				},
+			},
+		};
+		const snapshot = getWorkspaceSnapshot({
+			editorManager,
+			navigator: { onLine: true },
+		});
+		expect(snapshot.openFiles).toBe(2);
+		expect(snapshot.dirtyFiles).toBe(1);
+		expect(snapshot.activeFile).toBe("main.js");
+		expect(snapshot.selection).toEqual({ line: 12, column: 7 });
+	});
+
+	it("creates a copyable code location", () => {
+		const editorManager = {
+			files: [
+				{ type: "editor", filename: "main.js", uri: "file:///workspace/main.js" },
+			],
+			activeFile: { filename: "main.js" },
+			editor: {
+				state: {
+					doc: { lineAt: () => ({ number: 4, from: 10 }) },
+					selection: { main: { head: 14 } },
+				},
+			},
+		};
+		expect(getActiveCodeLocation({ editorManager })).toBe("main.js:4:5");
+	});
+
+	it("produces a Vexa workspace report", () => {
+		const report = getVexaWorkspaceReport({
+			buildInfo: { versionName: "1.14.6", packageName: "com.vexa.app" },
+			navigator: { onLine: true },
+			editorManager: { files: [], activeFile: null },
+		});
+		expect(report).toContain("Vexa Workspace Report");
+		expect(report).toContain("Package: com.vexa.app");
+		expect(report).toContain("Migration phase: 1");
+	});
+
+	it("reports runtime diagnostics with workspace counts", () => {
 		const report = getVexaDiagnostics({
 			buildInfo: {
-				versionName: "1.14.2",
-				versionCode: 1015,
+				versionName: "1.14.6",
+				versionCode: 1019,
 				packageName: "com.vexa.app",
 			},
+			navigator: { onLine: false, language: "id-ID" },
 			device: {
 				version: "14",
 				platform: "Android",
-				model: "Test Device",
-				manufacturer: "Test",
+				model: "test",
+				manufacturer: "test",
 			},
-			navigator: {
-				language: "en-US",
-				onLine: true,
+			editorManager: {
+				files: [{ type: "editor", markChanged: true }],
 			},
 		});
-
-		expect(report).toContain("App: Vexa");
-		expect(report).toContain("Diagnostics version: 3");
-		expect(report).toContain("Version: 1.14.2");
-		expect(report).toContain("Package: com.vexa.app");
-		expect(report).toContain("Android: 14");
-		expect(report).toContain("Model: Test Device");
-		expect(report).toContain("Online: true");
-		expect(report).toContain("Product boundary: Vexa application");
-		expect(report).toContain("Service boundary: upstream service");
-		expect(report).toContain("Report scope: runtime metadata only");
+		expect(report).toContain("Diagnostics version: 4");
+		expect(report).toContain("Online: false");
+		expect(report).toContain("Unsaved files: 1");
 	});
 
-	it("uses the injected clipboard before global runtime state", async () => {
-		let copied = "";
-		const result = await copyVexaDiagnostics({
+	it("summarizes health checks deterministically", () => {
+		const checks = getVexaHealthChecks({
+			buildInfo: { versionName: "1.14.6" },
+			editorManager: { files: [] },
 			navigator: {
-				clipboard: {
-					writeText: async (value) => {
-						copied = value;
-					},
-				},
-			},
-			buildInfo: {
-				versionName: "1.14.2",
-				versionCode: 1015,
-				packageName: "com.vexa.app",
+				onLine: true,
+				clipboard: { writeText: async () => {} },
 			},
 		});
-
-		expect(result).toBe(true);
-		expect(copied).toContain("Package: com.vexa.app");
-		expect(copied).toContain("Diagnostics version: 3");
+		const summary = formatHealthSummary(checks);
+		expect(summary).toMatchObject({ ok: true, failed: 0 });
+		expect(summary.passed).toBe(checks.length);
 	});
 });
