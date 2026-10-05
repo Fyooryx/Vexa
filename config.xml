@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.vexa.app" android-versionCode="1019" version="1.14.6"
+<widget id="com.vexa.app" android-versionCode="1020" version="1.15.0"
     xmlns="http://www.w3.org/ns/widgets"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:cdv="http://cordova.apache.org/ns/1.0">
@@ -7,7 +7,7 @@
     <description>
         Vexa is a lightweight code editor and web IDE for Android.
     </description>
-    <author email="ajit@foxdebug.com" href="https://github.com/Fyooryx/Vexa">
+    <author href="https://github.com/Fyooryx/Vexa">
         Vexa Project
     </author>
     <content src="index.html" />
