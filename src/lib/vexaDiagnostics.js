@@ -129,17 +129,26 @@ export function getVexaDiagnostics(runtime = {}) {
 	].join("\n");
 }
 
+export async function copyVexaText(text, runtime = {}) {
+	const current = getRuntime(runtime);
+	const value = String(text ?? "");
+	if (!value) return false;
+	if (current.clipboard?.writeText) {
+		try { await current.clipboard.writeText(value); return true; } catch { /* fall through */ }
+	}
+	if (current.navigator?.clipboard?.writeText) {
+		try { await current.navigator.clipboard.writeText(value); return true; } catch { /* fall through */ }
+	}
+	if (current.cordova?.plugins?.clipboard?.copy) {
+		current.cordova.plugins.clipboard.copy(value);
+		return true;
+	}
+	return false;
+}
 export async function copyVexaDiagnostics(runtime = {}) {
 	const current = getRuntime(runtime);
 	const report = getVexaWorkspaceReport(runtime) + "\n\n" + getVexaDiagnostics(runtime);
-	if (current.clipboard?.writeText) {
-		try { await current.clipboard.writeText(report); return true; } catch { /* fall through */ }
-	}
-	if (current.navigator?.clipboard?.writeText) {
-		try { await current.navigator.clipboard.writeText(report); return true; } catch { /* fall through */ }
-	}
-	if (current.cordova?.plugins?.clipboard?.copy) { current.cordova.plugins.clipboard.copy(report); return true; }
-	return false;
+	return copyVexaText(report, runtime);
 }
 
 export const VEXA_DIAGNOSTICS_VERSION = 4;
