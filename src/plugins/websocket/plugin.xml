@@ -11,7 +11,7 @@
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="WebSocketPlugin">
-                <param name="android-package" value="com.foxdebug.websocket.WebSocketPlugin" />
+                <param name="android-package" value="com.vexa.app.websocket.WebSocketPlugin" />
             </feature>
         </config-file>
         <source-file src="src/android/WebSocketPlugin.java" target-dir="src/com/foxdebug/websocket" />
