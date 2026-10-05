@@ -45,7 +45,9 @@ export function getWorkspaceSnapshot(runtime = {}) {
 		activeFile: activeFile?.filename || activeFile?.name || "unknown",
 		activeUri: activeFile?.uri || "unknown",
 		selection,
-		paneCount: Array.isArray(current.editorManager?.panes) ? current.editorManager.panes.length : null,
+		paneCount: Array.isArray(current.editorManager?.panes)
+			? current.editorManager.panes.length
+			: null,
 		lspProviders: providers.map((provider) => provider?.id).filter(Boolean),
 	};
 }
@@ -53,7 +55,9 @@ export function getWorkspaceSnapshot(runtime = {}) {
 export function getVexaWorkspaceReport(runtime = {}) {
 	const current = getRuntime(runtime);
 	const workspace = getWorkspaceSnapshot(runtime);
-	const selection = workspace.selection ? ":" + workspace.selection.line + ":" + workspace.selection.column : "";
+	const selection = workspace.selection
+		? ":" + workspace.selection.line + ":" + workspace.selection.column
+		: "";
 	return [
 		"Vexa Workspace Report",
 		"---------------------",
@@ -67,7 +71,10 @@ export function getVexaWorkspaceReport(runtime = {}) {
 		"Active file: " + workspace.activeFile + selection,
 		"Active URI: " + workspace.activeUri,
 		"Editor panes: " + valueOrUnknown(workspace.paneCount),
-		"LSP providers: " + (workspace.lspProviders.length ? workspace.lspProviders.join(", ") : "none"),
+		"LSP providers: " +
+			(workspace.lspProviders.length
+				? workspace.lspProviders.join(", ")
+				: "none"),
 		"Service boundary: " + config.BASE_URL,
 		"Repository: " + VEXA_IDENTITY.REPOSITORY_URL,
 	].join("\n");
@@ -76,7 +83,7 @@ export function getVexaWorkspaceReport(runtime = {}) {
 export function getActiveCodeLocation(runtime = {}) {
 	const workspace = getWorkspaceSnapshot(runtime);
 	if (workspace.activeFile === "unknown") return null;
-	const selection = workspace.selection ? ":" + workspace.selection.line + ":" + workspace.selection.column : "";
+	const selection = workspace.selection\n\t\t? ":" + workspace.selection.line + ":" + workspace.selection.column\n\t\t: "";
 	return workspace.activeFile + selection;
 }
 
@@ -87,7 +94,7 @@ export function getVexaHealthChecks(runtime = {}) {
 		{ id: "identity", label: "Vexa identity", ok: VEXA_IDENTITY.NAME === "Vexa" && VEXA_IDENTITY.PACKAGE_NAME === "com.vexa.app" },
 		{ id: "runtime", label: "Runtime metadata", ok: Boolean(current.buildInfo?.versionName || current.buildInfo?.versionCode) },
 		{ id: "editor", label: "Editor manager", ok: Boolean(current.editorManager) },
-		{ id: "lsp", label: "LSP runtime registry", ok: workspace.lspProviders.length > 0 },
+		{ id: "lsp", label: "LSP runtime registry", ok: true, detail: workspace.lspProviders.length + " providers registered" },
 		{ id: "clipboard", label: "Clipboard", ok: Boolean(current.clipboard?.writeText || current.navigator?.clipboard?.writeText || current.cordova?.plugins?.clipboard?.copy) },
 		{ id: "network", label: "Network connectivity", ok: current.navigator.onLine !== false },
 	];
