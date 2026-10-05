@@ -31,11 +31,6 @@ New code follows these rules:
 5. Do not introduce new compatibility aliases or new alternate product branding.
 6. Prefer root-cause fixes and bounded migrations over broad unverified rewrites.
 7. Route new runtime access through `src/lib/vexaApi.js`; do not address the legacy `acode` global directly outside compatibility-boundary code.
-2. Use `com.vexa.app` for the application identity.
-3. Use `vexa://` as the canonical application deep link.
-4. Use the supplied Vexa artwork as the canonical visual source.
-5. Do not introduce new compatibility aliases or new alternate product branding.
-6. Prefer root-cause fixes and bounded migrations over broad unverified rewrites.
 
 ## Advanced developer layer
 
@@ -53,7 +48,8 @@ The Vexa developer layer now provides:
 - Identity Lock
 - Developer Context Pack
 - Vexa Doctor diagnostics and copy support
-- Vexa Core Boundary API with explicit canonical/fallback state reporting
+- Vexa Core Boundary API with explicit canonical/fallback/unavailable state reporting
+- Optional Vexa Termux bridge for external shell delegation
 - Active Code Location
 - Copy actions for diagnostics and safe metadata-only reports
 
