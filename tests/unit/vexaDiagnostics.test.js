@@ -2,6 +2,8 @@ import { beforeEach, describe, expect, it } from "vitest";
 import {
 	formatHealthSummary,
 	formatMigrationStatus,
+	formatVexaCapabilities,
+	getVexaCapabilities,
 	getActiveCodeLocation,
 	getVexaDiagnostics,
 	getVexaHealthChecks,
@@ -106,6 +108,18 @@ describe("Vexa advanced diagnostics", () => {
 		expect(report).toContain("Unsaved files: 1");
 	});
 
+	it("reports the Vexa capability matrix", () => {
+		const capabilities = getVexaCapabilities({
+			buildInfo: { versionName: "1.14.6" },
+			editorManager: { files: [], editor: { state: {} } },
+			navigator: { clipboard: { writeText: async () => {} } },
+		});
+		expect(capabilities.workspaceReport).toBe(true);
+		expect(capabilities.healthCheck).toBe(true);
+		expect(capabilities.migrationStatus).toBe(true);
+		expect(capabilities.clipboard).toBe(true);
+		expect(formatVexaCapabilities()).toContain("Vexa Capabilities");
+	});
 	it("summarizes health checks deterministically", () => {
 		const checks = getVexaHealthChecks({
 			buildInfo: { versionName: "1.14.6" },
