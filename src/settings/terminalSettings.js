@@ -49,6 +49,17 @@ export default function terminalSettings() {
 			chevron: true,
 		},
 		{
+			key: "openTermuxSession",
+			text:
+				strings["open termux session"] ||
+				"Open Termux shell",
+			info:
+				strings["info-open-termux-session"] ||
+				"Start an interactive shell in the official Termux environment.",
+			category: categories.session,
+			chevron: true,
+		},
+		{
 			key: "termuxWorkdir",
 			text: strings["termux working directory"] || "Termux working directory",
 			value: terminalValues.termuxWorkdir,
@@ -311,6 +322,15 @@ export default function terminalSettings() {
 				await Terminal.openTermux();
 			} catch (error) {
 				console.error("Failed to open Termux:", error);
+				toast(error?.message || String(error));
+			}
+			return;
+
+		case "openTermuxSession":
+			try {
+				await Terminal.openTermuxSession(terminalValues.termuxWorkdir);
+			} catch (error) {
+				console.error("Failed to open Termux session:", error);
 				toast(error?.message || String(error));
 			}
 			return;
