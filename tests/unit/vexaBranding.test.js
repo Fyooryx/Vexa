@@ -71,6 +71,19 @@ describe("Vexa branding", () => {
 		expect(verifier).not.toContain('src/plugins/browser/android/com/foxdebug/browser/Menu.java');
 	});
 
+	it("keeps terminal and WebSocket lifecycle hardening", () => {
+		const terminalPlugin = read("src/plugins/terminal/plugin.xml");
+		const terminalService = read("src/plugins/terminal/src/android/TerminalService.java");
+		const websocket = read("src/plugins/websocket/src/android/WebSocketInstance.java");
+		const identity = read("src/lib/vexaIdentity.js");
+
+		expect(terminalPlugin).toContain("PROPERTY_SPECIAL_USE_FGS_SUBTYPE");
+		expect(terminalService).toContain("FOREGROUND_SERVICE_TYPE_SPECIAL_USE");
+		expect(websocket).toContain("WebSocketPlugin.removeInstance(this.instanceId)");
+		expect(identity).toContain("RELEASES_API_URL");
+		expect(identity).toContain("UPSTREAM_RELEASES_API_URL");
+	});
+
 	it("uses the Vexa runtime boundary for migrated internal surfaces", () => {
 		const api = read("src/lib/vexaApi.js");
 		const commandRegistry = read("src/cm/commandRegistry.js");
