@@ -116,6 +116,7 @@ export function formatVexaIdentityStatus(runtime = {}) {
 }
 
 export function getVexaWorkspacePulse(runtime = {}) {
+	const current = getRuntime(runtime);
 	const workspace = getWorkspaceSnapshot(runtime);
 	const health = getVexaHealthScore(runtime);
 	const signals = [];
@@ -134,7 +135,7 @@ export function getVexaWorkspacePulse(runtime = {}) {
 			message: health.failed + " health check" + (health.failed === 1 ? "" : "s") + " need attention",
 		});
 	}
-	if (runtime.navigator?.onLine === false) {
+	if (current.navigator?.onLine === false) {
 		signals.push({
 			id: "offline",
 			level: "info",
@@ -455,6 +456,65 @@ export function getVexaHealthScore(runtime = {}) {
 	});
 }
 
+export function getVexaReadiness(runtime = {}) {
+	const current = getRuntime(runtime);
+	const identity = getVexaIdentityStatus(runtime);
+	const health = getVexaHealthScore(runtime);
+	const blockers = [];
+	const signals = [];
+
+	if (identity.failed > 0) {
+		blockers.push("Vexa identity check failed");
+	}
+	if (!current.editorManager) {
+		blockers.push("Editor manager unavailable");
+	}
+	if (!current.buildInfo?.versionName && !current.buildInfo?.versionCode) {
+		blockers.push("Runtime build metadata unavailable");
+	}
+	if (current.navigator?.onLine === false) {
+		signals.push("Network offline");
+	}
+	if (!(
+		current.clipboard?.writeText ||
+		current.navigator?.clipboard?.writeText ||
+		current.cordova?.plugins?.clipboard?.copy
+	)) {
+		signals.push("Clipboard unavailable");
+	}
+	if (health.failed > 0 && blockers.length === 0) {
+		signals.push(
+		health.failed + " health check" + (health.failed === 1 ? "" : "s") + " require attention",
+		);
+	}
+
+	const status = blockers.length
+		? "BLOCKED"
+		: signals.length
+			? "DEGRADED"
+			: "READY";
+
+	return Object.freeze({
+		schemaVersion: 1,
+		status,
+		healthScore: health.score,
+		blockers,
+		signals,
+	});
+}
+
+export function formatVexaReadiness(runtime = {}) {
+	const readiness = getVexaReadiness(runtime);
+	return [
+		"Vexa Readiness Gate",
+		"-------------------",
+		"Status: " + readiness.status,
+		"Health: " + readiness.healthScore + "/100",
+		"Blockers: " + (readiness.blockers.length ? readiness.blockers.join("; ") : "none"),
+		"Signals: " + (readiness.signals.length ? readiness.signals.join("; ") : "none"),
+	].join("\n");
+}
+
 export function formatVexaHealthScore(runtime = {}) {
 	const health = getVexaHealthScore(runtime);
 	return [
@@ -477,6 +537,7 @@ export function getVexaHealthSnapshot(runtime = {}) {
 	const current = getRuntime(runtime);
 	const workspace = getWorkspaceSnapshot(runtime);
 	const health = getVexaHealthScore(runtime);
+	const readiness = getVexaReadiness(runtime);
 	const capabilities = getVexaCapabilities(runtime);
 
 	return Object.freeze({
@@ -491,6 +552,12 @@ export function getVexaHealthSnapshot(runtime = {}) {
 			status: health.status,
 			passed: health.passed,
 			failed: health.failed,
+		},
+		readiness: {
+			status: readiness.status,
+			healthScore: readiness.healthScore,
+			blockers: readiness.blockers,
+			signals: readiness.signals,
 		},
 		workspace: {
 			openFiles: workspace.openFiles,
@@ -564,6 +631,8 @@ export function getVexaContextPack(runtime = {}) {
 		formatVexaCapabilities(runtime),
 
 		formatVexaHealthScore(runtime),
+
+		formatVexaReadiness(runtime),
 
 		"Vexa Health Summary",
 		"-------------------",
