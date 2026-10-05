@@ -95,13 +95,25 @@ expect(
 for (const [file, source, pattern] of [
 	["applySettings.js", read("src/lib/applySettings.js"), "acode.exec("],
 	["welcome.js", read("src/pages/welcome/welcome.js"), "acode.exec("],
-	["formatterSettings.js", read("src/settings/formatterSettings.js"), "acode.getFormatterFor"],
+	[
+		"formatterSettings.js",
+		read("src/settings/formatterSettings.js"),
+		"acode.getFormatterFor",
+	],
 	["selectionMenu.js", read("src/lib/selectionMenu.js"), "acode.exec("],
 	["actionStack.js", read("src/lib/actionStack.js"), "acode.exitAppMessage"],
-	["registerPrettierFormatter.js", read("src/lib/registerPrettierFormatter.js"), "window?.acode"],
+	[
+		"registerPrettierFormatter.js",
+		read("src/lib/registerPrettierFormatter.js"),
+		"window?.acode",
+	],
 	["commandRegistry.js", read("src/cm/commandRegistry.js"), "acode.exec("],
 	["loadPlugin.js", read("src/lib/loadPlugin.js"), "acode.initPlugin"],
-	["loadPlugins.js", read("src/lib/loadPlugins.js"), "acode[onPluginLoadCallback]"],
+	[
+		"loadPlugins.js",
+		read("src/lib/loadPlugins.js"),
+		"acode[onPluginLoadCallback]",
+	],
 ]) {
 	expect(
 		!source.includes(pattern),
@@ -143,7 +155,10 @@ expect(
 	"upstream repository identity is missing",
 );
 
-expect(deepLink.includes("VEXA_IDENTITY.URL_SCHEME"), "deep-link parser must derive the canonical Vexa scheme");
+expect(
+	deepLink.includes("VEXA_IDENTITY.URL_SCHEME"),
+	"deep-link parser must derive the canonical Vexa scheme",
+);
 expect(
 	intentHandler.includes("parseAppDeepLink(url)"),
 	"intent handler must use the canonical deep-link parser",
@@ -268,8 +283,14 @@ expect(
 );
 
 const terminalInit = read("src/plugins/terminal/scripts/init-alpine.sh");
-expect(terminalInit.includes("Welcome to Alpine Linux in Vexa!"), "Alpine terminal MOTD must use Vexa branding");
-expect(terminalInit.includes("/usr/local/bin/vexa"), "Vexa terminal CLI must be installed under the Vexa command name");
+expect(
+	terminalInit.includes("Welcome to Alpine Linux in Vexa!"),
+	"Alpine terminal MOTD must use Vexa branding",
+);
+expect(
+	terminalInit.includes("/usr/local/bin/vexa"),
+	"Vexa terminal CLI must be installed under the Vexa command name",
+);
 
 const testRunner = read("src/test/tester.js");
 expect(
@@ -394,14 +415,28 @@ const migratedNativePluginXml = [
 ];
 for (const file of migratedNativePluginXml) {
 	const source = read(file);
-	expect(!source.includes("com.foxdebug"), `${file} still references the retired first-party native namespace`);
-	expect(!source.includes("com/foxdebug"), `${file} still references a legacy native source path`);
+	expect(
+		!source.includes("com.foxdebug"),
+		`${file} still references the retired first-party native namespace`,
+	);
+	expect(
+		!source.includes("com/foxdebug"),
+		`${file} still references a legacy native source path`,
+	);
 }
 
-expect(helpers.includes("isVexaTerminalPublicSafUri") && helpers.includes("com.vexa.app"), "helpers.js must expose the canonical Vexa terminal SAF URI");
+expect(
+	helpers.includes("isVexaTerminalPublicSafUri") &&
+		helpers.includes("com.vexa.app"),
+	"helpers.js must expose the canonical Vexa terminal SAF URI",
+);
 
 const openFolder = read("src/lib/openFolder.js");
-expect(openFolder.includes("isTerminalPublicSafUri") && openFolder.includes("com\\.vexa\\.app"), "openFolder.js must use the canonical Vexa SAF boundary");
+expect(
+	openFolder.includes("isTerminalPublicSafUri") &&
+		openFolder.includes("com\\.vexa\\.app"),
+	"openFolder.js must use the canonical Vexa SAF boundary",
+);
 
 const packageJsonText = read("package.json");
 expect(
