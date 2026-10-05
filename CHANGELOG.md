@@ -3,11 +3,13 @@
 ### Added
 - Vexa Core Boundary API with canonical, legacy-fallback, and unavailable runtime states.
 - Vexa Doctor reporting of the active runtime boundary mode.
+- Vexa Doctor now degrades on legacy boundary fallback and blocks when the canonical Vexa runtime is unavailable.
 - Regression coverage for Vexa boundary resolution and required-core behavior.
 
 ### Improved
 - Migrated selected command, formatter, project, welcome, selection, exit-state, and plugin lifecycle paths to Vexa-native runtime access.
 - Extended the branding guard to prevent boundary bypass in migrated Vexa-native surfaces.
+- Diagnostics now use the Vexa boundary for terminal capability evaluation.
 
 ### Added
 - Vexa Readiness Gate combining identity, runtime, editor, health, network, and clipboard signals into `READY`, `DEGRADED`, or `BLOCKED` states.
