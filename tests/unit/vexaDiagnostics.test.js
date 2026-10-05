@@ -10,6 +10,8 @@ import {
 	getVexaContextPack,
 	getVexaDiagnostics,
 	getVexaHealthChecks,
+	getVexaHealthScore,
+	getVexaHealthSnapshot,
 	getVexaMigrationStatus,
 	getVexaWorkspaceReport,
 	getVexaWorkspaceSnapshot,
@@ -205,6 +207,41 @@ describe("Vexa advanced diagnostics", () => {
 		expect(formatVexaHealthScore({ buildInfo: { versionName: "1.14.6" }, editorManager: { files: [] } })).toContain(
 			"Vexa Health Score",
 		);
+	});
+
+	it("builds a consolidated Vexa health snapshot", () => {
+		const snapshot = getVexaHealthSnapshot({
+			buildInfo: { versionName: "1.14.6", versionCode: 1019 },
+			navigator: {
+				onLine: true,
+				language: "id-ID",
+				clipboard: { writeText: async () => {} },
+			},
+			editorManager: {
+				files: [
+					{ type: "editor", markChanged: true },
+					{ type: "editor", markChanged: false },
+				],
+				activeFile: {
+					filename: "main.js",
+					uri: "file:///workspace/main.js",
+				},
+			},
+		});
+		expect(snapshot.schemaVersion).toBe(1);
+		expect(snapshot.app).toBe("Vexa");
+		expect(snapshot.package).toBe("com.vexa.app");
+		expect(snapshot.health.score).toBe(100);
+		expect(snapshot.health.status).toBe("HEALTHY");
+		expect(snapshot.workspace.openFiles).toBe(2);
+		expect(snapshot.workspace.dirtyFiles).toBe(1);
+		expect(snapshot.capabilities.healthSnapshot).toBe(true);
+		expect(
+			formatVexaHealthSnapshot({
+				buildInfo: { versionName: "1.14.6" },
+				editorManager: { files: [] },
+			}),
+		).toContain("Vexa Health Snapshot");
 	});
 
 	it("reports the Vexa capability matrix", () => {
