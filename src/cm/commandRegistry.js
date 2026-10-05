@@ -656,7 +656,14 @@ function registerCoreCommands() {
 			const details = checks
 				.map((check) => (check.ok ? "PASS " : "FAIL ") + check.label)
 				.join("\n");
-			const message = "Vexa Health Check\\n" + "Passed: " + summary.passed + " | Failed: " + summary.failed + "\n\n" + details;
+			const message =
+				"Vexa Health Check\n" +
+				"Passed: " +
+				summary.passed +
+				" | Failed: " +
+				summary.failed +
+				"\n\n" +
+				details;
 			if (typeof globalThis.alert === "function") {
 				globalThis.alert("Vexa Health", message);
 			} else {
