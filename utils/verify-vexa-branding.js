@@ -394,6 +394,9 @@ const canonicalPngFiles = [
 	"res/android/drawable/vexa_icon.png",
 	"res/vexa_logo.png",
 	"www/icons/vexa.png",
+	"src/components/logo/logo.png",
+	"res/logo.png",
+	"fastlane/metadata/android/en-US/images/icon.png",
 ];
 for (const file of canonicalPngFiles) expectFile(file);
 const pngHashes = new Set(
