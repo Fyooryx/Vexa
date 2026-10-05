@@ -5,6 +5,7 @@ import {
   vexaExec,
   getVexaFormatters,
   vexaGetFormatterFor,
+  getVexaCoreBoundaryStatus,
 } from "lib/vexaApi";
 
 describe("Vexa core boundary", () => {
@@ -29,6 +30,29 @@ describe("Vexa core boundary", () => {
 
     expect(getVexaCore()).toBe(acode);
     expect(vexaExec("noop")).toBe("legacy");
+  });
+
+  it("reports explicit canonical, legacy-fallback, and unavailable boundary states", () => {
+    expect(getVexaCoreBoundaryStatus()).toMatchObject({
+      schemaVersion: 1,
+      status: "UNAVAILABLE",
+      canonical: false,
+      legacyFallback: false,
+    });
+
+    globalThis.acode = {};
+    expect(getVexaCoreBoundaryStatus()).toMatchObject({
+      status: "LEGACY_FALLBACK",
+      canonical: false,
+      legacyFallback: true,
+    });
+
+    globalThis.vexa = {};
+    expect(getVexaCoreBoundaryStatus()).toMatchObject({
+      status: "CANONICAL",
+      canonical: true,
+      legacyFallback: false,
+    });
   });
 
   it("keeps capability calls safe when the runtime boundary is unavailable", () => {
