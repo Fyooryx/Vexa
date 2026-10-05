@@ -24,10 +24,13 @@ Technical compatibility may exist below the product boundary while it is being r
 
 New code follows these rules:
 
-7. Route new runtime access through `src/lib/vexaApi.js`; do not address the legacy `acode` global directly outside compatibility-boundary code.
-
-
 1. Import and call Vexa-named modules and APIs.
+2. Use `com.vexa.app` for the application identity.
+3. Use `vexa://` as the canonical application deep link.
+4. Use the supplied Vexa artwork as the canonical visual source.
+5. Do not introduce new compatibility aliases or new alternate product branding.
+6. Prefer root-cause fixes and bounded migrations over broad unverified rewrites.
+7. Route new runtime access through `src/lib/vexaApi.js`; do not address the legacy `acode` global directly outside compatibility-boundary code.
 2. Use `com.vexa.app` for the application identity.
 3. Use `vexa://` as the canonical application deep link.
 4. Use the supplied Vexa artwork as the canonical visual source.
