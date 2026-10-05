@@ -83,7 +83,9 @@ export function getVexaWorkspaceReport(runtime = {}) {
 export function getActiveCodeLocation(runtime = {}) {
 	const workspace = getWorkspaceSnapshot(runtime);
 	if (workspace.activeFile === "unknown") return null;
-	const selection = workspace.selection\n\t\t? ":" + workspace.selection.line + ":" + workspace.selection.column\n\t\t: "";
+	const selection = workspace.selection
+		? ":" + workspace.selection.line + ":" + workspace.selection.column
+		: "";
 	return workspace.activeFile + selection;
 }
 
