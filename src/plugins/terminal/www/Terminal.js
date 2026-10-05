@@ -1,6 +1,67 @@
 const Executor = require("./Executor");
+const exec = require("cordova/exec");
 
 const Terminal = {
+    /**
+     * Check whether the official Termux app is installed.
+     * @returns {Promise<boolean>}
+     */
+    isTermuxInstalled() {
+        return new Promise((resolve, reject) => {
+            exec(
+                (result) => resolve(result === "1" || result === 1 || result === true),
+                reject,
+                "TermuxBridge",
+                "isInstalled",
+                [],
+            );
+        });
+    },
+
+    /**
+     * Open the official Termux application.
+     * @returns {Promise<void>}
+     */
+    openTermux() {
+        return new Promise((resolve, reject) => {
+            exec(resolve, reject, "TermuxBridge", "open", []);
+        });
+    },
+
+    /**
+     * Start an interactive shell session in Termux.
+     * @param {string} [workdir="~"]
+     * @returns {Promise<void>}
+     */
+    openTermuxSession(workdir = "~") {
+        return new Promise((resolve, reject) => {
+            exec(resolve, reject, "TermuxBridge", "openSession", [String(workdir || "~")]);
+        });
+    },
+
+    /**
+     * Dispatch a shell command to Termux.
+     * @param {string} command
+     * @param {{workdir?: string, background?: boolean}} [options]
+     * @returns {Promise<void>}
+     */
+    runTermuxCommand(command, options = {}) {
+        const workdir =
+            typeof options.workdir === "string" && options.workdir.trim()
+                ? options.workdir.trim()
+                : "~";
+        const background = options.background !== false;
+
+        return new Promise((resolve, reject) => {
+            exec(
+                resolve,
+                reject,
+                "TermuxBridge",
+                "runShell",
+                [String(command ?? ""), workdir, background],
+            );
+        });
+    },
     // Vexa-branded terminal runtime; upstream download sources remain explicit below.
     /**
      * Starts the AXS environment by writing init scripts and executing the sandbox.
