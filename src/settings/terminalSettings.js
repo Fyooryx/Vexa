@@ -40,6 +40,32 @@ export default function terminalSettings() {
 
 	const items = [
 		{
+			key: "openTermux",
+			text: strings["open termux"] || "Open Termux",
+			info:
+				strings["info-open-termux"] ||
+				"Open the official Termux application for an external shell environment.",
+			category: categories.session,
+			chevron: true,
+		},
+		{
+			key: "termuxWorkdir",
+			text: strings["termux working directory"] || "Termux working directory",
+			value: terminalValues.termuxWorkdir,
+			prompt:
+				strings["termux working directory"] ||
+				"Termux working directory",
+			promptOptions: {
+				test(value) {
+					return typeof value === "string" && value.trim().length > 0;
+				},
+			},
+			info:
+				strings["info-termux-working-directory"] ||
+				"Default directory used when Vexa delegates a shell session to Termux.",
+			category: categories.session,
+		},
+		{
 			key: "all_file_access",
 			text: strings["allFileAccess"],
 			info: strings["info-all_file_access"],
@@ -280,7 +306,25 @@ export default function terminalSettings() {
 	 */
 	async function callback(key, value) {
 		switch (key) {
-			case "all_file_access":
+			case "openTermux":
+			try {
+				await Terminal.openTermux();
+			} catch (error) {
+				console.error("Failed to open Termux:", error);
+				toast(error?.message || String(error));
+			}
+			return;
+
+		case "termuxWorkdir":
+			appSettings.update({
+				terminalSettings: {
+					...values.terminalSettings,
+					termuxWorkdir: String(value || "~"),
+				},
+			});
+			return;
+
+				case "all_file_access":
 				if (ANDROID_SDK_INT >= 30) {
 					system.isManageExternalStorageDeclared((boolStr) => {
 						if (boolStr === "true") {
