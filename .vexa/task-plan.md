@@ -11,4 +11,11 @@
 - [x] Add readiness display/copy command surface.
 - [x] Extend branding guard to the in-app test runner.
 - [x] Document readiness and validation changes.
-- [x] Add consolidated Vexa Doctor diagnostics and copy command.\n- [ ] Review remaining legacy technical identifiers before any further namespace retirement.
+- [x] Add consolidated Vexa Doctor diagnostics and copy command.
+- [ ] Review remaining legacy technical identifiers before any further namespace retirement.
+
+- [x] Add Vexa core runtime boundary with canonical and legacy-fallback states.
+- [x] Migrate a bounded set of internal runtime calls to the Vexa boundary.
+- [x] Integrate boundary state into Vexa Doctor and capability diagnostics.
+- [x] Extend branding verification for migrated Vexa-native surfaces.
+- [ ] Continue the remaining legacy technical identifier review only where compatibility evidence supports retirement.
