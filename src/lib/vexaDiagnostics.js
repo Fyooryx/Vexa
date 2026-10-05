@@ -92,7 +92,7 @@ export function getVexaIdentityStatus(runtime = {}) {
 	const failed = checks.filter((check) => !check.ok).length;
 	return Object.freeze({
 		schemaVersion: 1,
-		mode: "VEXA_ONLY",
+		mode: VEXA_IDENTITY.IDENTITY_MODE,
 		status: failed === 0 ? "LOCKED" : "ATTENTION",
 		passed: checks.length - failed,
 		failed,
@@ -266,7 +266,7 @@ export function getVexaMigrationStatus() {
 		applicationPackage: VEXA_IDENTITY.PACKAGE_NAME,
 		freePackage: VEXA_IDENTITY.FREE_PACKAGE_NAME,
 		primaryDeepLink: VEXA_IDENTITY.URL_SCHEME + "://",
-		identityMode: "VEXA_ONLY",
+		identityMode: VEXA_IDENTITY.IDENTITY_MODE,
 	};
 }
 
@@ -545,7 +545,7 @@ export function getVexaDiagnostics(runtime = {}) {
 				? workspace.lspProviders.join(", ")
 				: "none"),
 		"Product identity: Vexa",
-		"Identity mode: VEXA_ONLY",
+		"Identity mode: " + VEXA_IDENTITY.IDENTITY_MODE,
 		"Vexa repository: " + VEXA_IDENTITY.REPOSITORY_URL,
 		"Report scope: runtime and workspace metadata only",
 	].join("\n");
