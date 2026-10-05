@@ -46,7 +46,7 @@ function rateBox() {
 }
 
 /**
- * Gets body for feedback email
+ * Gets body for Vexa issue feedback
  * @param {String} eol
  * @returns
  */
