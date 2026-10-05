@@ -1,4 +1,5 @@
 import quickTools from "../components/quickTools";
+import { vexaExec } from "./vexaApi";
 import actions from "../handlers/quickTools";
 import appSettings from "../lib/settings";
 import themes from "../theme/list";
@@ -12,7 +13,7 @@ export default {
 
 		//full-screen
 		if (appSettings.value.fullscreen) {
-			acode.exec("enable-fullscreen");
+			vexaExec("enable-fullscreen");
 		}
 
 		//setup vibration
