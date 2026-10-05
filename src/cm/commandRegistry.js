@@ -109,6 +109,7 @@ import keyBindings, {
 import settings from "lib/settings";
 import {
 	copyVexaContextPack,
+	copyVexaRuntimeProfile,
 	copyVexaDiagnostics,
 	copyVexaText,
 	copyVexaWorkspaceSnapshot,
@@ -724,6 +725,22 @@ function registerCoreCommands() {
 			} else {
 				toast(profile);
 			}
+			return true;
+		},
+	});
+	addCommand({
+		name: "vexa:copyRuntimeProfile",
+		description: "Copy Vexa runtime profile",
+		readOnly: true,
+		requiresView: false,
+		run() {
+			copyVexaRuntimeProfile()
+				.then((copied) =>
+					toast(
+						copied ? "Vexa runtime profile copied" : "Clipboard is unavailable",
+					),
+				)
+				.catch(() => toast("Failed to copy Vexa runtime profile"));
 			return true;
 		},
 	});
