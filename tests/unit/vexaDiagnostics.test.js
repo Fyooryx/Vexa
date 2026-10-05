@@ -13,6 +13,7 @@ import {
 	getVexaCapabilities,
 	getVexaContextPack,
 	getVexaDiagnostics,
+	getVexaDiagnosticData,
 	getVexaHealthChecks,
 	getVexaHealthScore,
 	getVexaHealthSnapshot,
@@ -38,6 +39,22 @@ describe("Vexa advanced diagnostics", () => {
 			versionCode: 1019,
 			packageName: "com.vexa.app",
 		};
+	});
+
+	it("exposes structured metadata with explicit product and service boundaries", () => {
+		const data = getVexaDiagnosticData({
+			buildInfo: { versionName: "1.15.0", versionCode: 1020, packageName: "com.vexa.app" },
+			navigator: { language: "id-ID", onLine: true },
+		});
+		expect(data.diagnosticsVersion).toBe(8);
+		expect(data.app).toBe("Vexa");
+		expect(data.urlScheme).toBe("vexa");
+		expect(data.legacyUrlScheme).toBe("acode");
+		expect(data.productBoundary).toBe("Vexa application");
+		expect(data.serviceBoundary).toBe("upstream service");
+		expect(data.reportScope).toContain("metadata only");
+		expect(JSON.stringify(data).toLowerCase()).not.toContain("token");
+		expect(JSON.stringify(data).toLowerCase()).not.toContain("password");
 	});
 
 	it("captures active workspace state", () => {
