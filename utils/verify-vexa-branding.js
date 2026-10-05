@@ -349,7 +349,7 @@ expect(
 
 const helpers = read("src/utils/helpers.js");
 const browserMenu = read(
-	"src/plugins/browser/android/com/foxdebug/browser/Menu.java",
+	"src/plugins/browser/android/com/vexa/app/browser/Menu.java",
 );
 const terminalProvider = read(
 	"src/plugins/terminal/src/android/AlpineDocumentProvider.java",
@@ -359,6 +359,44 @@ expect(
 		!terminalProvider.includes("com.foxdebug.acode.R"),
 	"native Vexa plugins must import the generated com.vexa.app.R class",
 );
+
+const migratedNativeJavaFiles = [
+	"src/plugins/browser/android/com/vexa/app/browser/Browser.java",
+	"src/plugins/browser/android/com/vexa/app/browser/BrowserActivity.java",
+	"src/plugins/browser/android/com/vexa/app/browser/Emulator.java",
+	"src/plugins/browser/android/com/vexa/app/browser/Menu.java",
+	"src/plugins/browser/android/com/vexa/app/browser/Plugin.java",
+	"src/plugins/ftp/src/android/com/vexa/app/ftp/Ftp.java",
+	"src/plugins/iap/src/com/vexa/app/iap/Iap.java",
+	"src/plugins/server/src/android/com/vexa/app/server/Server.java",
+	"src/plugins/server/src/android/com/vexa/app/server/NanoHTTPDWebserver.java",
+	"src/plugins/sftp/src/com/vexa/app/sftp/Sftp.java",
+	"src/plugins/sftp/src/com/vexa/app/sftp/SftpSecurityStore.java",
+	"src/plugins/system/android/com/vexa/app/system/Ui.java",
+	"src/plugins/system/android/com/vexa/app/system/System.java",
+	"src/plugins/system/android/com/vexa/app/system/RewardPassManager.java",
+	"src/plugins/system/android/com/vexa/app/system/StreamHttp.java",
+	"src/plugins/webview/src/android/com/vexa/app/webview/WebViewPlugin.java",
+	"src/plugins/webview/src/android/com/vexa/app/webview/WebViewInstance.java",
+	"src/plugins/webview/src/android/com/vexa/app/webview/WebViewActivity.java",
+];
+for (const file of migratedNativeJavaFiles) expectFile(file);
+
+const migratedNativePluginXml = [
+	"src/plugins/browser/plugin.xml",
+	"src/plugins/ftp/plugin.xml",
+	"src/plugins/iap/plugin.xml",
+	"src/plugins/server/plugin.xml",
+	"src/plugins/sftp/plugin.xml",
+	"src/plugins/system/plugin.xml",
+	"src/plugins/webview/plugin.xml",
+	"src/plugins/cordova-plugin-crashhandler/plugin.xml",
+];
+for (const file of migratedNativePluginXml) {
+	const source = read(file);
+	expect(!source.includes("com.foxdebug"), `${file} still references the retired first-party native namespace`);
+	expect(!source.includes("com/foxdebug"), `${file} still references a legacy native source path`);
+}
 
 expect(helpers.includes("isVexaTerminalPublicSafUri") && helpers.includes("com.vexa.app"), "helpers.js must expose the canonical Vexa terminal SAF URI");
 
