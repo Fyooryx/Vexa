@@ -17,7 +17,7 @@ describe("appIcons", () => {
 	it("keeps picker IDs, native mappings, and launcher aliases in sync", () => {
 		const native = fs.readFileSync(
 			new URL(
-				"../../src/plugins/system/android/com/foxdebug/system/System.java",
+				"../../src/plugins/system/android/com/vexa/app/system/System.java",
 				import.meta.url,
 			),
 			"utf8",
