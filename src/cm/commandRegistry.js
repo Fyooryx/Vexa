@@ -699,7 +699,9 @@ function registerCoreCommands() {
 				return true;
 			}
 			copyVexaText(location)
-				.then((copied) => toast(copied ? "Code location copied" : "Clipboard is unavailable"))
+				.then((copied) =>
+					toast(copied ? "Code location copied" : "Clipboard is unavailable"),
+				)
 				.catch(() => toast("Failed to copy code location"));
 			return true;
 		},
