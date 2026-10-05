@@ -1,6 +1,6 @@
 import config from "./config";
 import { getRuntimePackageName, VEXA_IDENTITY } from "./vexaIdentity";
-import { getVexaCoreBoundaryStatus } from "./vexaApi";
+import { getVexaCore, getVexaCoreBoundaryStatus } from "./vexaApi";
 
 function valueOrUnknown(value) {
 	return value === undefined || value === null || value === ""
@@ -299,10 +299,8 @@ export function getVexaCapabilities(runtime = {}) {
 		codemirror: Boolean(current.editorManager?.editor?.state),
 		lsp: workspace.lspProviders.length > 0,
 		multiPane: Number(workspace.paneCount || 0) > 1,
-		terminal: Boolean(
-			globalThis.vexa?.require?.("terminal") ||
-				globalThis.acode?.require?.("terminal"),
-		),
+		terminal: Boolean(getVexaCore()?.require?.("terminal")),
+
 		workspaceReport: true,
 		workspaceCheckpoint: true,
 		healthCheck: true,
