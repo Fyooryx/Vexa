@@ -826,6 +826,22 @@ function registerCoreCommands() {
 		},
 	});
 	addCommand({
+		name: "vexa:copyReadiness",
+		description: "Copy Vexa readiness gate",
+		readOnly: true,
+		requiresView: false,
+		run() {
+			copyVexaReadiness()
+				.then((copied) =>
+					toast(
+						copied ? "Vexa readiness copied" : "Clipboard is unavailable",
+					),
+				)
+				.catch(() => toast("Failed to copy Vexa readiness"));
+			return true;
+		},
+	});
+	addCommand({
 		name: "vexa:runtimeProfile",
 		description: "Show Vexa runtime profile",
 		readOnly: true,
