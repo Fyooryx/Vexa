@@ -11,4 +11,4 @@
 - [x] Add readiness display/copy command surface.
 - [x] Extend branding guard to the in-app test runner.
 - [x] Document readiness and validation changes.
-- [ ] Review remaining legacy technical identifiers before any further namespace retirement.
+- [x] Add consolidated Vexa Doctor diagnostics and copy command.\n- [ ] Review remaining legacy technical identifiers before any further namespace retirement.
