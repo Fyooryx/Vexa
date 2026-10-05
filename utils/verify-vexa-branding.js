@@ -246,6 +246,13 @@ const terminalInit = read("src/plugins/terminal/scripts/init-alpine.sh");
 expect(terminalInit.includes("Welcome to Alpine Linux in Vexa!"), "Alpine terminal MOTD must use Vexa branding");
 expect(terminalInit.includes("/usr/local/bin/vexa"), "Vexa terminal CLI must be installed under the Vexa command name");
 
+const testRunner = read("src/test/tester.js");
+expect(
+	testRunner.includes("Running Vexa test suite...") &&
+		!testRunner.includes("Running Acode test suite..."),
+	"test runner must use Vexa branding",
+);
+
 const aboutPage = read("src/pages/about/about.js");
 const welcomePage = read("src/pages/welcome/welcome.js");
 const appSettings = read("src/settings/appSettings.js");
