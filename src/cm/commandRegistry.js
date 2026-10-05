@@ -112,6 +112,7 @@ import {
 	copyVexaText,
 	formatHealthSummary,
 	formatMigrationStatus,
+	formatVexaCapabilities,
 	getActiveCodeLocation,
 	getVexaHealthChecks,
 	getVexaWorkspaceReport,
@@ -668,6 +669,21 @@ function registerCoreCommands() {
 				globalThis.alert("Vexa Health", message);
 			} else {
 				toast(message);
+			}
+			return true;
+		},
+	});
+	addCommand({
+		name: "vexa:capabilities",
+		description: "Show Vexa capability matrix",
+		readOnly: true,
+		requiresView: false,
+		run() {
+			const capabilities = formatVexaCapabilities();
+			if (typeof globalThis.alert === "function") {
+				globalThis.alert("Vexa Capabilities", capabilities);
+			} else {
+				toast(capabilities);
 			}
 			return true;
 		},
