@@ -20,6 +20,21 @@ export function requireVexaCore() {
   return core;
 }
 
+export function getVexaCoreBoundaryStatus() {
+  const canonical = globalThis.vexa != null;
+  const legacyFallback = !canonical && globalThis.acode != null;
+  return Object.freeze({
+    schemaVersion: 1,
+    status: canonical
+      ? "CANONICAL"
+      : legacyFallback
+        ? "LEGACY_FALLBACK"
+        : "UNAVAILABLE",
+    canonical,
+    legacyFallback,
+  });
+}
+
 export function vexaExec(...args) {
   return resolveCore()?.exec?.(...args);
 }
