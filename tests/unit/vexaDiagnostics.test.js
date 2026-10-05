@@ -3,6 +3,8 @@ import {
 	formatHealthSummary,
 	formatMigrationStatus,
 	formatVexaCapabilities,
+	formatVexaRuntimeProfile,
+	getVexaRuntimeProfile,
 	getActiveCodeLocation,
 	getVexaCapabilities,
 	getVexaContextPack,
@@ -148,6 +150,32 @@ describe("Vexa advanced diagnostics", () => {
 		expect(pack).toContain("Vexa Migration Status");
 		expect(pack).toContain("Vexa Capabilities");
 		expect(pack).toContain("Vexa Health Summary");
+	});
+
+	it("builds a stable Vexa runtime profile", () => {
+		const profile = getVexaRuntimeProfile({
+			buildInfo: { versionName: "1.14.6", packageName: "com.vexa.app" },
+			device: { platform: "Android" },
+			navigator: { language: "id-ID", onLine: true },
+			editorManager: {
+				files: [
+					{ type: "editor", markChanged: true },
+					{ type: "editor", markChanged: false },
+				],
+				activeFile: { filename: "main.js" },
+			},
+		});
+		expect(profile.schemaVersion).toBe(1);
+		expect(profile.app).toBe("Vexa");
+		expect(profile.package).toBe("com.vexa.app");
+		expect(profile.platform).toBe("Android");
+		expect(profile.openFiles).toBe(2);
+		expect(profile.dirtyFiles).toBe(1);
+		expect(profile.health).toMatchObject({ ok: true, failed: 0 });
+		expect(formatVexaRuntimeProfile({
+			buildInfo: { versionName: "1.14.6", packageName: "com.vexa.app" },
+			editorManager: { files: [], activeFile: null },
+	})).toContain("Vexa Runtime Profile");
 	});
 
 	it("reports the Vexa capability matrix", () => {
