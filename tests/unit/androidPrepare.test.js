@@ -44,11 +44,11 @@ it("refreshes stale System plugin Java alongside icons on repeated Android prepa
 		write("build-extras.gradle", "// build configuration");
 		write("res/android/drawable/ic_vexa_pro.xml", "<vector />");
 		const source = write(
-			"src/plugins/system/android/com/foxdebug/system/System.java",
+			"src/plugins/system/android/com/vexa/app/system/System.java",
 			'aliases.put("pro", "MainActivityIconPro");',
 		);
 		const generated = write(
-			"platforms/android/app/src/main/java/com/foxdebug/system/System.java",
+			"platforms/android/app/src/main/java/com/vexa/app/system/System.java",
 			'aliases.put("default", "MainActivityIconDefault");',
 		);
 		const unrelated = write(
