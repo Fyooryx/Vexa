@@ -191,6 +191,62 @@ export function getVexaCapabilities(runtime = {}) {
 	return Object.freeze(capabilities);
 }
 
+export function getVexaRuntimeProfile(runtime = {}) {
+	const current = getRuntime(runtime);
+	const workspace = getWorkspaceSnapshot(runtime);
+	const checks = getVexaHealthChecks(runtime);
+	const health = formatHealthSummary(checks);
+	return Object.freeze({
+		schemaVersion: 1,
+		app: VEXA_IDENTITY.NAME,
+		version: valueOrUnknown(current.buildInfo.versionName),
+		package: getRuntimePackageName(current.buildInfo),
+		migrationPhase: VEXA_IDENTITY.MIGRATION_PHASE ?? null,
+		platform:
+			current.device?.platform ||
+			current.navigator?.userAgentData?.platform ||
+			current.navigator?.platform ||
+			"unknown",
+		language: valueOrUnknown(current.navigator?.language),
+		online: current.navigator?.onLine !== false,
+		openFiles: workspace.openFiles,
+		dirtyFiles: workspace.dirtyFiles,
+		paneCount: workspace.paneCount,
+		lspProviders: workspace.lspProviders,
+		health: {
+			passed: health.passed,
+			failed: health.failed,
+			ok: health.ok,
+		},
+	});
+}
+
+export function formatVexaRuntimeProfile(runtime = {}) {
+	const profile = getVexaRuntimeProfile(runtime);
+	return [
+		"Vexa Runtime Profile",
+		"--------------------",
+		"Schema: " + profile.schemaVersion,
+		"App: " + profile.app,
+		"Version: " + profile.version,
+		"Package: " + profile.package,
+		"Migration phase: " + valueOrUnknown(profile.migrationPhase),
+		"Platform: " + profile.platform,
+		"Language: " + profile.language,
+		"Online: " + profile.online,
+		"Open files: " + profile.openFiles,
+		"Unsaved files: " + profile.dirtyFiles,
+		"Editor panes: " + valueOrUnknown(profile.paneCount),
+		"LSP providers: " +
+			(profile.lspProviders.length ? profile.lspProviders.join(", ") : "none"),
+		"Health: " +
+			profile.health.passed +
+			" passed / " +
+			profile.health.failed +
+			" failed",
+	].join("\n");
+}
+
 export function formatVexaCapabilities(runtime = {}) {
 	const capabilities = getVexaCapabilities(runtime);
 	return [
