@@ -484,7 +484,10 @@ export function getVexaReadiness(runtime = {}) {
 	}
 	if (health.failed > 0 && blockers.length === 0) {
 		signals.push(
-		health.failed + " health check" + (health.failed === 1 ? "" : "s") + " require attention",
+			health.failed +
+				" health check" +
+				(health.failed === 1 ? "" : "s") +
+				" require attention",
 		);
 	}
 
