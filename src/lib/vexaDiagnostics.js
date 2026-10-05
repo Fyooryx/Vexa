@@ -393,7 +393,6 @@ export function formatVexaHealthSnapshot(runtime = {}) {
 	return JSON.stringify(getVexaHealthSnapshot(runtime), null, 2);
 }
 
-
 export function formatHealthSummary(checks) {
 	const safeChecks = Array.isArray(checks) ? checks : [];
 	const passed = safeChecks.filter((check) => check.ok).length;
