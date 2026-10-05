@@ -24,6 +24,7 @@ import {
 	getWorkspaceSnapshot,
 	getVexaReadiness,
 	formatVexaReadiness,
+	copyVexaReadiness,
 } from "lib/vexaDiagnostics";
 
 describe("Vexa advanced diagnostics", () => {
@@ -282,6 +283,26 @@ describe("Vexa advanced diagnostics", () => {
 				editorManager: { files: [] },
 			}),
 		).toContain("Vexa Health Snapshot");
+	});
+
+	it("includes readiness in the runtime profile and supports copying it", async () => {
+		const runtime = {
+			buildInfo: { versionName: "1.15.0", packageName: "com.vexa.app" },
+			editorManager: { files: [] },
+			navigator: { onLine: true, clipboard: { writeText: async () => {} } },
+		};
+		const profile = getVexaRuntimeProfile(runtime);
+		expect(profile.readiness).toMatchObject({ status: "READY", blockers: [] });
+
+		const writes = [];
+		const copied = await copyVexaReadiness({
+			...runtime,
+			clipboard: {
+				writeText: async (value) => writes.push(value),
+			},
+		});
+		expect(copied).toBe(true);
+		expect(writes[0]).toContain("Vexa Readiness Gate");
 	});
 
 	it("reports the Vexa capability matrix", () => {
