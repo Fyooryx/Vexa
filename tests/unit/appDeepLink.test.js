@@ -2,6 +2,15 @@ import { describe, expect, it } from "vitest";
 import { parseAppDeepLink } from "utils/appDeepLink";
 
 describe("application deep links", () => {
+	it("preserves nested deep-link values and accepts uppercase schemes", () => {
+		expect(parseAppDeepLink("VEXA://module/action/a/b/c")).toEqual({
+			scheme: "vexa",
+			module: "module",
+			action: "action",
+			value: "a/b/c",
+		});
+	});
+
 	it("parses the primary Vexa scheme", () => {
 		expect(parseAppDeepLink("vexa://plugin/install/example.plugin")).toEqual({
 			scheme: "vexa",
