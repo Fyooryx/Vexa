@@ -1,4 +1,4 @@
-package com.foxdebug.websocket;
+package com.vexa.app.websocket;
 
 import android.util.Log;
 

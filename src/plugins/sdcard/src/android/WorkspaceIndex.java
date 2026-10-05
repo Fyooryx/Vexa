@@ -1,4 +1,4 @@
-package com.foxdebug.sdcard;
+package com.vexa.app.sdcard;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
