@@ -5,6 +5,7 @@ import Url from "utils/Url";
 import actionStack from "./actionStack";
 import fileIcons from "./fileIcons";
 import generatePluginContext, { connect } from "./pluginContext";
+import { requireVexaCore } from "./vexaApi";
 
 export default async function loadPlugin(pluginId, justInstalled = false) {
 	// Establish the trusted native session BEFORE any plugin script is appended
