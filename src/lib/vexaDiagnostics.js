@@ -69,6 +69,128 @@ export function getWorkspaceSnapshot(runtime = {}) {
 	};
 }
 
+export function getVexaIdentityStatus(runtime = {}) {
+	const current = getRuntime(runtime);
+	const packageName = getRuntimePackageName(current.buildInfo);
+	const checks = [
+		{
+			id: "name",
+			label: "Product name",
+			ok: VEXA_IDENTITY.NAME === "Vexa",
+		},
+		{
+			id: "package",
+			label: "Application package",
+			ok: packageName === VEXA_IDENTITY.PACKAGE_NAME,
+		},
+		{
+			id: "scheme",
+			label: "Primary URL scheme",
+			ok: VEXA_IDENTITY.URL_SCHEME === "vexa",
+		},
+	];
+	const failed = checks.filter((check) => !check.ok).length;
+	return Object.freeze({
+		schemaVersion: 1,
+		mode: "VEXA_ONLY",
+		status: failed === 0 ? "LOCKED" : "ATTENTION",
+		passed: checks.length - failed,
+		failed,
+		checks,
+	});
+}
+
+export function formatVexaIdentityStatus(runtime = {}) {
+	const status = getVexaIdentityStatus(runtime);
+	return [
+		"Vexa Identity Lock",
+		"------------------",
+		"Mode: " + status.mode,
+		"Status: " + status.status,
+		"Checks: " + status.passed + " passed / " + status.failed + " failed",
+		"",
+		...status.checks.map(
+			(check) => (check.ok ? "PASS " : "FAIL ") + check.label,
+		),
+	].join("\n");
+}
+
+export function getVexaWorkspacePulse(runtime = {}) {
+	const workspace = getWorkspaceSnapshot(runtime);
+	const health = getVexaHealthScore(runtime);
+	const signals = [];
+
+	if (workspace.dirtyFiles > 0) {
+		signals.push({
+			id: "unsaved",
+			level: "attention",
+			message: workspace.dirtyFiles + " unsaved file" + (workspace.dirtyFiles === 1 ? "" : "s"),
+		});
+	}
+	if (health.failed > 0) {
+		signals.push({
+			id: "health",
+			level: "attention",
+			message: health.failed + " health check" + (health.failed === 1 ? "" : "s") + " need attention",
+		});
+	}
+	if (runtime.navigator?.onLine === false) {
+		signals.push({
+			id: "offline",
+			level: "info",
+			message: "Offline mode",
+		});
+	}
+	if (workspace.lspProviders.length === 0) {
+		signals.push({
+			id: "lsp",
+			level: "info",
+			message: "No LSP providers are currently registered",
+		});
+	}
+	if (workspace.activeFile === "unknown") {
+		signals.push({
+			id: "focus",
+			level: "info",
+			message: "No active editor file",
+		});
+	}
+
+	const status = health.failed > 0 ? "ATTENTION" : "READY";
+	return Object.freeze({
+		schemaVersion: 1,
+		generatedAt: new Date().toISOString(),
+		app: VEXA_IDENTITY.NAME,
+		status,
+		healthScore: health.score,
+		activeFile: workspace.activeFile,
+		openFiles: workspace.openFiles,
+		dirtyFiles: workspace.dirtyFiles,
+		lspProviders: workspace.lspProviders,
+		signals,
+	});
+}
+
+export function formatVexaWorkspacePulse(runtime = {}) {
+	const pulse = getVexaWorkspacePulse(runtime);
+	return [
+		"Vexa Workspace Pulse",
+		"--------------------",
+		"Status: " + pulse.status,
+		"Health: " + pulse.healthScore + "/100",
+		"Open files: " + pulse.openFiles,
+		"Unsaved files: " + pulse.dirtyFiles,
+		"Active file: " + pulse.activeFile,
+		"LSP providers: " +
+			(pulse.lspProviders.length ? pulse.lspProviders.join(", ") : "none"),
+		"",
+		"Signals:",
+		...(pulse.signals.length
+			? pulse.signals.map((signal) => "- " + signal.message)
+			: ["- none"]),
+	].join("\n");
+}
+
 export function getVexaWorkspaceSnapshot(runtime = {}) {
 	const current = getRuntime(runtime);
 	const workspace = getWorkspaceSnapshot(runtime);
@@ -143,12 +265,8 @@ export function getVexaMigrationStatus() {
 		applicationName: VEXA_IDENTITY.NAME,
 		applicationPackage: VEXA_IDENTITY.PACKAGE_NAME,
 		freePackage: VEXA_IDENTITY.FREE_PACKAGE_NAME,
-		legacyNamespace: VEXA_IDENTITY.LEGACY_NATIVE_NAMESPACE,
-		vexaNamespace: VEXA_IDENTITY.VEXA_NATIVE_NAMESPACE,
-		nativeMigrationEnabled:
-			VEXA_IDENTITY.LEGACY_PLUGIN_NAMESPACE_MIGRATION_ENABLED === true,
-		legacyDeepLink: VEXA_IDENTITY.LEGACY_URL_SCHEME + "://",
 		primaryDeepLink: VEXA_IDENTITY.URL_SCHEME + "://",
+		identityMode: "VEXA_ONLY",
 	};
 }
 
@@ -160,11 +278,9 @@ export function formatMigrationStatus() {
 		"Phase: " + valueOrUnknown(status.phase),
 		"Application: " + status.applicationName,
 		"Package: " + status.applicationPackage,
-		"Vexa namespace: " + status.vexaNamespace,
-		"Legacy namespace: " + status.legacyNamespace,
-		"Native migration enabled: " + status.nativeMigrationEnabled,
+		"Free package: " + status.freePackage,
 		"Primary deep link: " + status.primaryDeepLink,
-		"Legacy deep link: " + status.legacyDeepLink,
+		"Identity mode: " + status.identityMode,
 	].join("\n");
 }
 
@@ -172,6 +288,8 @@ export function getVexaCapabilities(runtime = {}) {
 	const current = getRuntime(runtime);
 	const workspace = getWorkspaceSnapshot(runtime);
 	const capabilities = {
+		identityLock: true,
+		workspacePulse: true,
 		codemirror: Boolean(current.editorManager?.editor?.state),
 		lsp: workspace.lspProviders.length > 0,
 		multiPane: Number(workspace.paneCount || 0) > 1,
@@ -267,10 +385,8 @@ export function getVexaHealthChecks(runtime = {}) {
 	return [
 		{
 			id: "identity",
-			label: "Vexa identity",
-			ok:
-				VEXA_IDENTITY.NAME === "Vexa" &&
-				VEXA_IDENTITY.PACKAGE_NAME === "com.vexa.app",
+			label: "Vexa identity lock",
+			ok: getVexaIdentityStatus(runtime).failed === 0,
 		},
 		{
 			id: "runtime",
@@ -428,10 +544,9 @@ export function getVexaDiagnostics(runtime = {}) {
 			(workspace.lspProviders.length
 				? workspace.lspProviders.join(", ")
 				: "none"),
-		"Product boundary: Vexa application",
-		"Service boundary: upstream service",
+		"Product identity: Vexa",
+		"Identity mode: VEXA_ONLY",
 		"Vexa repository: " + VEXA_IDENTITY.REPOSITORY_URL,
-		"Upstream service: " + VEXA_IDENTITY.UPSTREAM_SERVICE_URL,
 		"Report scope: runtime and workspace metadata only",
 	].join("\n");
 }
@@ -511,4 +626,4 @@ export async function copyVexaContextPack(runtime = {}) {
 	return copyVexaText(getVexaContextPack(runtime), runtime);
 }
 
-export const VEXA_DIAGNOSTICS_VERSION = 4;
+export const VEXA_DIAGNOSTICS_VERSION = 5;
