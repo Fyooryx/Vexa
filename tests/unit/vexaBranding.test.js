@@ -63,6 +63,19 @@ describe("Vexa branding", () => {
 		expect(bindings).toContain('name: "vexa:showWelcome"');
 	});
 
+	it("uses the Vexa runtime boundary for migrated internal surfaces", () => {
+		const api = read("src/lib/vexaApi.js");
+		const commandRegistry = read("src/cm/commandRegistry.js");
+		const loadPlugin = read("src/lib/loadPlugin.js");
+		const loadPlugins = read("src/lib/loadPlugins.js");
+
+		expect(api).toContain("getVexaCoreBoundaryStatus");
+		expect(api).toContain("requireVexaCore");
+		expect(commandRegistry).not.toContain("acode.exec(");
+		expect(loadPlugin).not.toContain("acode.initPlugin");
+		expect(loadPlugins).not.toContain("acode[onPluginLoadCallback]");
+	});
+
 	it("aligns Vexa deep links and API credential routing", () => {
 		const deepLink = read("src/utils/appDeepLink.js");
 		const intentHandler = read("src/handlers/intent.js");
