@@ -303,10 +303,11 @@ export function getVexaContextPack(runtime = {}) {
 		"-------------------",
 		"Passed: " + summary.passed,
 		"Failed: " + summary.failed,
-		...checks.map((check) =>
-			(check.ok ? "PASS " : "FAIL ") +
-			check.label +
-			(check.detail ? " (" + check.detail + ")" : ""),
+		...checks.map(
+			(check) =>
+				(check.ok ? "PASS " : "FAIL ") +
+				check.label +
+				(check.detail ? " (" + check.detail + ")" : ""),
 		),
 	].join("\n");
 }
