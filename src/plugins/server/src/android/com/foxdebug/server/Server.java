@@ -1,4 +1,4 @@
-package com.foxdebug.server;
+package com.vexa.app.server;
 
 import java.io.IOException;
 import java.util.HashMap;
