@@ -18,9 +18,9 @@
       </activity>
     </config-file>
 
-    <source-file src="src/android/com/vexa/app/webview/WebViewPlugin.java" target-dir="src/com/foxdebug/webview"/>
-    <source-file src="src/android/com/vexa/app/webview/WebViewInstance.java" target-dir="src/com/foxdebug/webview"/>
-    <source-file src="src/android/com/vexa/app/webview/WebViewActivity.java" target-dir="src/com/foxdebug/webview"/>
+    <source-file src="src/android/com/vexa/app/webview/WebViewPlugin.java" target-dir="src/com/vexa/app/webview"/>
+    <source-file src="src/android/com/vexa/app/webview/WebViewInstance.java" target-dir="src/com/vexa/app/webview"/>
+    <source-file src="src/android/com/vexa/app/webview/WebViewActivity.java" target-dir="src/com/vexa/app/webview"/>
 
   </platform>
 </plugin>

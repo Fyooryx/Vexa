@@ -7,7 +7,7 @@
     <description>Cordova Sftp Plugin</description>
     <license>MIT</license>
     <keywords>cordova,ftp</keywords>
-    <repo>https://github.com/foxdebug/cordova-plugin-sftp.git</repo>
+    <repo>https://github.com/vexa/app/cordova-plugin-sftp.git</repo>
 
     <js-module src="www/sftp.js" name="sftp">
         <clobbers target="window.sftp" />

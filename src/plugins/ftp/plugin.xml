@@ -18,7 +18,7 @@
             </feature>
         </config-file>
 
-        <source-file src="src/android/com/vexa/app/ftp/Ftp.java" target-dir="src/com/foxdebug/ftp" />
+        <source-file src="src/android/com/vexa/app/ftp/Ftp.java" target-dir="src/com/vexa/app/ftp" />
         <framework src="commons-net:commons-net:3.12.0" />
     </platform>
 
