@@ -257,6 +257,29 @@ export function getVexaDiagnostics(runtime = {}) {
 	].join("\n");
 }
 
+export function getVexaContextPack(runtime = {}) {
+	const checks = getVexaHealthChecks(runtime);
+	const summary = formatHealthSummary(checks);
+	return [
+		"Vexa Developer Context Pack",
+		"===========================",
+		getVexaWorkspaceReport(runtime),
+
+		formatMigrationStatus(),
+
+		formatVexaCapabilities(runtime),
+
+		"Vexa Health Summary",
+		"-------------------",
+		"Passed: " + summary.passed,
+		"Failed: " + summary.failed,
+		...checks.map((check) =>
+			(check.ok ? "PASS " : "FAIL ") +
+			check.label +
+			(check.detail ? " (" + check.detail + ")" : ""),
+		),
+	].join("\n");
+}
 export async function copyVexaText(text, runtime = {}) {
 	const current = getRuntime(runtime);
 	const value = String(text ?? "");
@@ -285,9 +308,14 @@ export async function copyVexaText(text, runtime = {}) {
 }
 
 export async function copyVexaDiagnostics(runtime = {}) {
-	const report =
-		getVexaWorkspaceReport(runtime) + "\n\n" + getVexaDiagnostics(runtime);
-	return copyVexaText(report, runtime);
+	return copyVexaText(
+		getVexaWorkspaceReport(runtime) + "\n\n" + getVexaDiagnostics(runtime),
+		runtime,
+	);
+}
+
+export async function copyVexaContextPack(runtime = {}) {
+	return copyVexaText(getVexaContextPack(runtime), runtime);
 }
 
 export const VEXA_DIAGNOSTICS_VERSION = 4;
