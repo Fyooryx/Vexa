@@ -55,10 +55,10 @@ expect(
 );
 expect(pkg.name === "com.vexa.app", "package.json name must be com.vexa.app");
 expect(pkg.displayName === "Vexa", "package.json displayName must be Vexa");
-expect(pkg.version === "1.14.6", "package.json version must be 1.14.6");
+expect(pkg.version === "1.15.0", "package.json version must be 1.15.0");
 expect(
-	config.includes('android-versionCode="1019"'),
-	"config.xml Android versionCode must be 1019",
+	config.includes('android-versionCode="1020"'),
+	"config.xml Android versionCode must be 1020",
 );
 expect(
 	pkg.engines?.node && /(?:^|\D)22(?:\D|$)/.test(pkg.engines.node),
@@ -108,10 +108,6 @@ expect(
 
 expect(identity.includes('URL_SCHEME: "vexa"'), "Vexa URL scheme is missing");
 expect(
-	identity.includes('LEGACY_URL_SCHEME: "acode"'),
-	"legacy URL scheme identity is missing",
-);
-expect(
 	identity.includes('REPOSITORY_URL: "https://github.com/Fyooryx/Vexa"'),
 	"Vexa repository identity is missing",
 );
@@ -122,11 +118,7 @@ expect(
 	"upstream repository identity is missing",
 );
 
-expect(
-	deepLink.includes("VEXA_IDENTITY.URL_SCHEME") &&
-		deepLink.includes("VEXA_IDENTITY.LEGACY_URL_SCHEME"),
-	"deep-link parser must derive both Vexa and legacy schemes from canonical identity",
-);
+expect(deepLink.includes("VEXA_IDENTITY.URL_SCHEME"), "deep-link parser must derive the canonical Vexa scheme");
 expect(
 	intentHandler.includes("parseAppDeepLink(url)"),
 	"intent handler must use the canonical deep-link parser",
@@ -164,10 +156,6 @@ for (const text of [
 }
 
 expect(config.includes('android:scheme="vexa"'), "vexa:// scheme is missing");
-expect(
-	config.includes('android:scheme="acode"'),
-	"legacy acode:// compatibility scheme is missing",
-);
 expect(
 	config.includes('android:icon="@drawable/vexa_icon"'),
 	"active launcher icon must use vexa_icon",
@@ -255,15 +243,8 @@ expect(
 );
 
 const terminalInit = read("src/plugins/terminal/scripts/init-alpine.sh");
-expect(
-	terminalInit.includes("Welcome to Alpine Linux in Vexa!"),
-	"Alpine terminal MOTD must use Vexa branding",
-);
-expect(
-	terminalInit.includes("/usr/local/bin/vexa") &&
-		terminalInit.includes('ln -sfn vexa "$PREFIX/alpine/usr/local/bin/acode"'),
-	"Vexa terminal CLI must be installed with an Acode compatibility alias",
-);
+expect(terminalInit.includes("Welcome to Alpine Linux in Vexa!"), "Alpine terminal MOTD must use Vexa branding");
+expect(terminalInit.includes("/usr/local/bin/vexa"), "Vexa terminal CLI must be installed under the Vexa command name");
 
 const aboutPage = read("src/pages/about/about.js");
 const welcomePage = read("src/pages/welcome/welcome.js");
@@ -347,21 +328,10 @@ expect(
 	"native Vexa plugins must import the generated com.vexa.app.R class",
 );
 
-expect(
-	helpers.includes("isVexaTerminalPublicSafUri") &&
-		helpers.includes("com.vexa.app") &&
-		helpers.includes("isLegacyAcodeTerminalPublicSafUri") &&
-		helpers.includes("com.foxdebug.acode"),
-	"helpers.js must support Vexa and legacy Acode SAF URIs",
-);
+expect(helpers.includes("isVexaTerminalPublicSafUri") && helpers.includes("com.vexa.app"), "helpers.js must expose the canonical Vexa terminal SAF URI");
 
 const openFolder = read("src/lib/openFolder.js");
-expect(
-	openFolder.includes("isTerminalPublicSafUri") &&
-		openFolder.includes("com\\.vexa\\.app") &&
-		openFolder.includes("com\\.foxdebug\\.acode"),
-	"openFolder.js must support Vexa SAF and legacy compatibility",
-);
+expect(openFolder.includes("isTerminalPublicSafUri") && openFolder.includes("com\\.vexa\\.app"), "openFolder.js must use the canonical Vexa SAF boundary");
 
 const packageJsonText = read("package.json");
 expect(
