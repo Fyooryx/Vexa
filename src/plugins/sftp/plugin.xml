@@ -17,12 +17,12 @@
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="Sftp">
-                <param name="android-package" value="com.foxdebug.sftp.Sftp" />
+                <param name="android-package" value="com.vexa.app.sftp.Sftp" />
             </feature>
         </config-file>
 
-        <source-file src="src/com/foxdebug/sftp/Sftp.java" target-dir="src/com/foxdebug/sftp" />
-        <source-file src="src/com/foxdebug/sftp/SftpSecurityStore.java" target-dir="src/com/foxdebug/sftp" />
+        <source-file src="src/com/vexa/app/sftp/Sftp.java" target-dir="src/com/vexa/app/sftp" />
+        <source-file src="src/com/vexa/app/sftp/SftpSecurityStore.java" target-dir="src/com/vexa/app/sftp" />
     </platform>
 
     <framework src="commons-io:commons-io:2.11.0" />

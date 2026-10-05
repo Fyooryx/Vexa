@@ -15,11 +15,11 @@
   <platform name="android">
     <framework src="org.nanohttpd:nanohttpd:+" />
     <framework src="androidx.documentfile:documentfile:1.0.1" />
-    <source-file src="src/android/com/foxdebug/server/Server.java" target-dir="src/com/foxdebug/server"/>
-    <source-file src="src/android/com/foxdebug/server/NanoHTTPDWebserver.java" target-dir="src/com/foxdebug/server"/>
+    <source-file src="src/android/com/vexa/app/server/Server.java" target-dir="src/com/foxdebug/server"/>
+    <source-file src="src/android/com/vexa/app/server/NanoHTTPDWebserver.java" target-dir="src/com/foxdebug/server"/>
     <config-file target="config.xml" parent="/*">
       <feature name="Server">
-        <param name="android-package" value="com.foxdebug.server.Server"/>
+        <param name="android-package" value="com.vexa.app.server.Server"/>
       </feature>
     </config-file>
   </platform>

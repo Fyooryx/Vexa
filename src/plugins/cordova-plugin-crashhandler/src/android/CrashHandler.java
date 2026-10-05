@@ -1,4 +1,4 @@
-package com.foxdebug.crashhandler;
+package com.vexa.app.crashhandler;
 
 import android.content.Context;
 import android.content.Intent;
