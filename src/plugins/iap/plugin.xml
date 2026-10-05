@@ -14,7 +14,7 @@
 
     <config-file target="res/xml/config.xml" parent="/*">
       <feature name="Iap">
-        <param name="android-package" value="com.foxdebug.iap.Iap"/>
+        <param name="android-package" value="com.vexa.app.iap.Iap"/>
       </feature>
     </config-file>
     <config-file target="AndroidManifest.xml" parent="/manifest">
