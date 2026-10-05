@@ -158,7 +158,12 @@ export function getVexaWorkspacePulse(runtime = {}) {
 		});
 	}
 
-	const status = health.failed > 0 ? "ATTENTION" : "READY";
+	const criticalHealthFailure = health.checks.some(
+		(check) =>
+			!check.ok &&
+			["identity", "runtime", "editor"].includes(check.id),
+	);
+	const status = criticalHealthFailure ? "ATTENTION" : "READY";
 	return Object.freeze({
 		schemaVersion: 1,
 		generatedAt: new Date().toISOString(),
