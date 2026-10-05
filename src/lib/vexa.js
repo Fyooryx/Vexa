@@ -87,6 +87,10 @@ import helpers from "utils/helpers";
 import KeyboardEvent from "utils/keyboardEvent";
 import Url from "utils/Url";
 import config from "./config";
+import {
+	formatVexaRuntimeProfile,
+	getVexaRuntimeProfile,
+} from "./vexaDiagnostics";
 import quickToolsAdapters from "./quickToolsAdapter";
 import webview from "./webview";
 
@@ -381,6 +385,13 @@ class Vexa {
 		});
 
 		this.define("config", configProxy);
+		this.define(
+			"runtimeProfile",
+			Object.freeze({
+				get: getVexaRuntimeProfile,
+				format: formatVexaRuntimeProfile,
+			}),
+		);
 		this.define("Url", Url);
 		this.define("page", Page);
 		this.define("Color", Color);
