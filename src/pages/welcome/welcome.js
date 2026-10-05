@@ -2,6 +2,7 @@ import { getResolvedKeyBindings } from "cm/commandRegistry";
 import logoSrc from "components/logo/logo.png?inline";
 import config from "lib/config";
 import EditorFile from "lib/editorFile";
+import { vexaExec } from "lib/vexaApi";
 
 /**
  * Opens the Welcome tab as an EditorFile page
@@ -59,36 +60,36 @@ function createWelcomeContent() {
 						icon="add"
 						label={strings["new file"]}
 						shortcut={kb("newFile")}
-						onClick={() => acode.exec("new-file")}
+						onClick={() => vexaExec("new-file")}
 					/>
 					<ActionRow
 						icon="document-text-outline"
 						label={strings["open file"]}
 						shortcut={kb("openFile")}
-						onClick={() => acode.exec("open-file")}
+						onClick={() => vexaExec("open-file")}
 					/>
 					<ActionRow
 						icon="folder_open"
 						label={strings["open folder"]}
 						shortcut={kb("openFolder")}
-						onClick={() => acode.exec("open-folder")}
+						onClick={() => vexaExec("open-folder")}
 					/>
 					<ActionRow
 						icon="terminal"
 						label={strings.terminal}
 						shortcut={kb("openTerminal")}
-						onClick={() => acode.exec("new-terminal")}
+						onClick={() => vexaExec("new-terminal")}
 					/>
 					<ActionRow
 						icon="historyrestore"
 						label={strings.recent}
-						onClick={() => acode.exec("recent")}
+						onClick={() => vexaExec("recent")}
 					/>
 					<ActionRow
 						icon="tune"
 						label={strings["command palette"]}
 						shortcut={kb("openCommandPalette")}
-						onClick={() => acode.exec("command-palette")}
+						onClick={() => vexaExec("command-palette")}
 					/>
 				</div>
 			</section>
@@ -100,17 +101,17 @@ function createWelcomeContent() {
 					<ActionRow
 						icon="settings"
 						label={strings.settings}
-						onClick={() => acode.exec("open", "settings")}
+						onClick={() => vexaExec("open", "settings")}
 					/>
 					<ActionRow
 						icon="color_lenspalette"
 						label={strings["change theme"]}
-						onClick={() => acode.exec("change-app-theme")}
+						onClick={() => vexaExec("change-app-theme")}
 					/>
 					<ActionRow
 						icon="extension"
 						label={strings.explore + " " + strings.plugins}
-						onClick={() => acode.exec("open", "plugins")}
+						onClick={() => vexaExec("open", "plugins")}
 					/>
 				</div>
 			</section>
@@ -122,12 +123,12 @@ function createWelcomeContent() {
 					<ActionRow
 						icon="help"
 						label={strings.help}
-						onClick={() => acode.exec("open", "help")}
+						onClick={() => vexaExec("open", "help")}
 					/>
 					<ActionRow
 						icon="info_outline"
 						label={strings.about}
-						onClick={() => acode.exec("open", "about")}
+						onClick={() => vexaExec("open", "about")}
 					/>
 				</div>
 			</section>
