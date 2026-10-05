@@ -1,59 +1,145 @@
+import { listRuntimeProviders } from "cm/lsp/runtimeProviders";
 import config from "./config";
 import { getRuntimePackageName, VEXA_IDENTITY } from "./vexaIdentity";
 
 function valueOrUnknown(value) {
-	return value === undefined || value === null || value === ""
-		? "unknown"
-		: String(value);
+	return value === undefined || value === null || value === "" ? "unknown" : String(value);
+}
+
+function getRuntime(runtime = {}) {
+	return {
+		buildInfo: runtime.buildInfo ?? globalThis.BuildInfo ?? {},
+		device: runtime.device ?? globalThis.device ?? {},
+		navigator: runtime.navigator ?? globalThis.navigator ?? {},
+		editorManager: runtime.editorManager ?? globalThis.editorManager ?? null,
+		clipboard: runtime.clipboard ?? null,
+		cordova: runtime.cordova ?? globalThis.cordova,
+	};
+}
+
+function getEditorFiles(editorManager) {
+	return Array.isArray(editorManager?.files)
+		? editorManager.files.filter((file) => file?.type === "editor")
+		: [];
+}
+
+function getActiveSelection(editorManager) {
+	const selection = editorManager?.editor?.state?.selection?.main;
+	const doc = editorManager?.editor?.state?.doc;
+	if (!selection || !doc?.lineAt) return null;
+	const line = doc.lineAt(selection.head);
+	return { line: line.number, column: Math.max(1, selection.head - line.from + 1) };
+}
+
+export function getWorkspaceSnapshot(runtime = {}) {
+	const current = getRuntime(runtime);
+	const files = getEditorFiles(current.editorManager);
+	const activeFile = current.editorManager?.activeFile ?? null;
+	const dirtyFiles = files.filter((file) => file?.markChanged);
+	const selection = getActiveSelection(current.editorManager);
+	const providers = listRuntimeProviders();
+
+	return {
+		openFiles: files.length,
+		dirtyFiles: dirtyFiles.length,
+		activeFile: activeFile?.filename || activeFile?.name || "unknown",
+		activeUri: activeFile?.uri || "unknown",
+		selection,
+		paneCount: Array.isArray(current.editorManager?.panes) ? current.editorManager.panes.length : null,
+		lspProviders: providers.map((provider) => provider?.id).filter(Boolean),
+	};
+}
+
+export function getVexaWorkspaceReport(runtime = {}) {
+	const current = getRuntime(runtime);
+	const workspace = getWorkspaceSnapshot(runtime);
+	const selection = workspace.selection ? ":" + workspace.selection.line + ":" + workspace.selection.column : "";
+	return [
+		"Vexa Workspace Report",
+		"---------------------",
+		"App: " + VEXA_IDENTITY.NAME,
+		"Version: " + valueOrUnknown(current.buildInfo.versionName),
+		"Package: " + getRuntimePackageName(current.buildInfo),
+		"Migration phase: " + valueOrUnknown(VEXA_IDENTITY.MIGRATION_PHASE),
+		"Online: " + valueOrUnknown(current.navigator.onLine),
+		"Open files: " + workspace.openFiles,
+		"Unsaved files: " + workspace.dirtyFiles,
+		"Active file: " + workspace.activeFile + selection,
+		"Active URI: " + workspace.activeUri,
+		"Editor panes: " + valueOrUnknown(workspace.paneCount),
+		"LSP providers: " + (workspace.lspProviders.length ? workspace.lspProviders.join(", ") : "none"),
+		"Service boundary: " + config.BASE_URL,
+		"Repository: " + VEXA_IDENTITY.REPOSITORY_URL,
+	].join("\n");
+}
+
+export function getActiveCodeLocation(runtime = {}) {
+	const workspace = getWorkspaceSnapshot(runtime);
+	if (workspace.activeFile === "unknown") return null;
+	const selection = workspace.selection ? ":" + workspace.selection.line + ":" + workspace.selection.column : "";
+	return workspace.activeFile + selection;
+}
+
+export function getVexaHealthChecks(runtime = {}) {
+	const current = getRuntime(runtime);
+	const workspace = getWorkspaceSnapshot(runtime);
+	return [
+		{ id: "identity", label: "Vexa identity", ok: VEXA_IDENTITY.NAME === "Vexa" && VEXA_IDENTITY.PACKAGE_NAME === "com.vexa.app" },
+		{ id: "runtime", label: "Runtime metadata", ok: Boolean(current.buildInfo?.versionName || current.buildInfo?.versionCode) },
+		{ id: "editor", label: "Editor manager", ok: Boolean(current.editorManager) },
+		{ id: "lsp", label: "LSP runtime registry", ok: workspace.lspProviders.length > 0 },
+		{ id: "clipboard", label: "Clipboard", ok: Boolean(current.clipboard?.writeText || current.navigator?.clipboard?.writeText || current.cordova?.plugins?.clipboard?.copy) },
+		{ id: "network", label: "Network connectivity", ok: current.navigator.onLine !== false },
+	];
+}
+
+export function formatHealthSummary(checks) {
+	const safeChecks = Array.isArray(checks) ? checks : [];
+	const passed = safeChecks.filter((check) => check.ok).length;
+	const failed = safeChecks.length - passed;
+	return { passed, failed, ok: failed === 0 };
 }
 
 export function getVexaDiagnostics(runtime = {}) {
-	const buildInfo = runtime.buildInfo ?? globalThis.BuildInfo ?? {};
-	const deviceInfo = runtime.device ?? globalThis.device ?? {};
-	const navigatorInfo = runtime.navigator ?? globalThis.navigator ?? {};
-
+	const current = getRuntime(runtime);
+	const workspace = getWorkspaceSnapshot(runtime);
 	return [
 		"Vexa Diagnostics",
 		"Diagnostics version: " + VEXA_DIAGNOSTICS_VERSION,
 		"----------------",
 		"App: " + VEXA_IDENTITY.NAME,
-		"Version: " + valueOrUnknown(buildInfo.versionName),
-		"Version code: " + valueOrUnknown(buildInfo.versionCode),
-		"Package: " + getRuntimePackageName(buildInfo),
-		"Android: " + valueOrUnknown(deviceInfo.version),
-		"Platform: " + valueOrUnknown(deviceInfo.platform),
-		"Model: " + valueOrUnknown(deviceInfo.model),
-		"Manufacturer: " + valueOrUnknown(deviceInfo.manufacturer),
-		"Language: " + valueOrUnknown(navigatorInfo.language),
-		"Online: " + valueOrUnknown(navigatorInfo.onLine),
+		"Version: " + valueOrUnknown(current.buildInfo.versionName),
+		"Version code: " + valueOrUnknown(current.buildInfo.versionCode),
+		"Package: " + getRuntimePackageName(current.buildInfo),
+		"Android: " + valueOrUnknown(current.device.version),
+		"Platform: " + valueOrUnknown(current.device.platform),
+		"Model: " + valueOrUnknown(current.device.model),
+		"Manufacturer: " + valueOrUnknown(current.device.manufacturer),
+		"Language: " + valueOrUnknown(current.navigator.language),
+		"Online: " + valueOrUnknown(current.navigator.onLine),
+		"Migration phase: " + valueOrUnknown(VEXA_IDENTITY.MIGRATION_PHASE),
+		"Open files: " + workspace.openFiles,
+		"Unsaved files: " + workspace.dirtyFiles,
+		"LSP providers: " + (workspace.lspProviders.length ? workspace.lspProviders.join(", ") : "none"),
 		"Product boundary: Vexa application",
 		"Service boundary: upstream service",
 		"Vexa repository: " + VEXA_IDENTITY.REPOSITORY_URL,
-		"Upstream service: " + config.BASE_URL,
-		"Report scope: runtime metadata only",
+		"Upstream service: " + VEXA_IDENTITY.UPSTREAM_SERVICE_URL,
+		"Report scope: runtime and workspace metadata only",
 	].join("\n");
 }
 
 export async function copyVexaDiagnostics(runtime = {}) {
-	const report = getVexaDiagnostics(runtime);
-	const navigatorInfo = runtime.navigator ?? globalThis.navigator ?? {};
-	const cordova = runtime.cordova ?? globalThis.cordova;
-
-	if (navigatorInfo.clipboard?.writeText) {
-		try {
-			await navigatorInfo.clipboard.writeText(report);
-			return true;
-		} catch {
-			// Fall back to the Cordova clipboard below.
-		}
+	const current = getRuntime(runtime);
+	const report = getVexaWorkspaceReport(runtime) + "\n\n" + getVexaDiagnostics(runtime);
+	if (current.clipboard?.writeText) {
+		try { await current.clipboard.writeText(report); return true; } catch { /* fall through */ }
 	}
-
-	if (cordova?.plugins?.clipboard?.copy) {
-		cordova.plugins.clipboard.copy(report);
-		return true;
+	if (current.navigator?.clipboard?.writeText) {
+		try { await current.navigator.clipboard.writeText(report); return true; } catch { /* fall through */ }
 	}
-
-	// Intentionally keep diagnostics side-effect free until copy is requested.
+	if (current.cordova?.plugins?.clipboard?.copy) { current.cordova.plugins.clipboard.copy(report); return true; }
 	return false;
 }
-export const VEXA_DIAGNOSTICS_VERSION = 3;
+
+export const VEXA_DIAGNOSTICS_VERSION = 4;
