@@ -5,10 +5,11 @@
 - Vexa Workspace Report, Health Check, Migration Status, Capability Matrix, Developer Context Pack, and metadata-only Workspace Snapshot.
 - Vexa-first developer command and LSP naming with compatibility aliases.
 - Added a read-only Vexa Runtime Profile for lightweight runtime/workspace health visibility.
+- Added Vexa Health Snapshot: a consolidated, metadata-only machine-readable view of health, workspace state, capabilities, and migration phase.
 
 ### Changed
 - Continued gradual product branding migration toward Vexa.
-- Refreshed canonical Vexa logo assets.
+- Refreshed canonical Vexa logo assets and converged the Welcome, store-listing, and legacy logo copies to the exact canonical Vexa PNG.
 - Kept legacy technical identifiers available until verified replacement paths exist.
 # Changelog
 
