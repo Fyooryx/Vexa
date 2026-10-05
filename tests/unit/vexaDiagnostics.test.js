@@ -3,6 +3,8 @@ import {
 	formatHealthSummary,
 	getActiveCodeLocation,
 	getVexaDiagnostics,
+	getVexaMigrationStatus,
+	formatMigrationStatus,
 	getVexaHealthChecks,
 	getVexaWorkspaceReport,
 	getWorkspaceSnapshot,
