@@ -1,11 +1,11 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import {
 	formatHealthSummary,
+	formatMigrationStatus,
 	getActiveCodeLocation,
 	getVexaDiagnostics,
-	getVexaMigrationStatus,
-	formatMigrationStatus,
 	getVexaHealthChecks,
+	getVexaMigrationStatus,
 	getVexaWorkspaceReport,
 	getWorkspaceSnapshot,
 } from "lib/vexaDiagnostics";
