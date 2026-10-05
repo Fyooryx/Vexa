@@ -125,6 +125,9 @@ jobs:
       - name: Verify Vexa identity
         run: npm run verify:branding
 
+      - name: Validate translations
+        run: npm run lang check
+
       - name: Typecheck
         run: npm run typecheck
 
