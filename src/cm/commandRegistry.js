@@ -109,8 +109,8 @@ import keyBindings, {
 import settings from "lib/settings";
 import {
 	copyVexaContextPack,
-	copyVexaRuntimeProfile,
 	copyVexaDiagnostics,
+	copyVexaRuntimeProfile,
 	copyVexaText,
 	copyVexaWorkspaceSnapshot,
 	formatHealthSummary,
@@ -804,7 +804,11 @@ function registerCoreCommands() {
 		requiresView: false,
 		run() {
 			const cleared = clearVexaWorkspaceCheckpoints();
-			toast(cleared ? "Vexa checkpoints cleared" : "Unable to clear Vexa checkpoints");
+			toast(
+				cleared
+					? "Vexa checkpoints cleared"
+					: "Unable to clear Vexa checkpoints",
+			);
 			return true;
 		},
 	});
