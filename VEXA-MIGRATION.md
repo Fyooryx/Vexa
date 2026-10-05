@@ -1,114 +1,57 @@
-# Vexa Repository Migration
+# Vexa Identity and Development Policy
 
 ## Current state
 
-The repository default branch is **main** and remains the authoritative Vexa branch.
+The repository default branch is **main** and is the authoritative Vexa integration line.
 
-The previous pre-rebrand `main` snapshot is preserved at:
+The active release baseline is **Vexa 1.15.0** with Android versionCode **1020**.
 
-`legacy-main-2026-10-04`
-
-Snapshot commit:
-
-`640a472682398f25eac3a259b1784c7a16bd2a90`
-
-The active Vexa development line uses the 1.14.6 branding baseline and keeps legacy technical identifiers where removing them immediately would break compatibility.
-
-## Vexa identity
+## Canonical identity
 
 - Application name: `Vexa`
 - Android application package: `com.vexa.app`
 - Free-build package: `com.vexa.appfree`
 - Primary deep-link scheme: `vexa://`
-- Legacy deep-link scheme: `acode://`
 - Repository: `https://github.com/Fyooryx/Vexa`
-- Upstream repository: `https://github.com/Acode-Foundation/Acode`
-- Upstream service endpoint: `https://acode.app`
 
-## Migration principle
+Product-facing surfaces must use Vexa naming, Vexa artwork, Vexa commands, Vexa diagnostics, and Vexa documentation.
 
-Vexa is migrated **progressively**, not by a blind global search-and-replace.
+## Identity rule
 
-The rule is:
+Vexa is the single product identity.
 
-> Change product identity first, preserve technical compatibility second, migrate technical internals only when a replacement path has been verified.
+Technical compatibility may exist below the product boundary while it is being retired, but it must not create a second product identity, appear in user-facing copy, or be introduced into new Vexa-native code.
 
-A legacy identifier may remain when it is an external contract, persisted data key, deep-link scheme, SAF authority, Play Billing SKU, upstream endpoint, plugin API surface, or other compatibility boundary.
+New code follows these rules:
 
-A legacy identifier must not remain merely because it is convenient when it is user-visible product branding.
+1. Import and call Vexa-named modules and APIs.
+2. Use `com.vexa.app` for the application identity.
+3. Use `vexa://` as the canonical application deep link.
+4. Use the supplied Vexa artwork as the canonical visual source.
+5. Do not introduce new compatibility aliases or new alternate product branding.
+6. Prefer root-cause fixes and bounded migrations over broad unverified rewrites.
 
-## Migration phases
+## Advanced developer layer
 
-### Phase 1 — Product branding convergence
+The Vexa developer layer now provides:
 
-Target:
+- Workspace Report
+- Workspace Snapshot
+- Workspace Checkpoints
+- Workspace Pulse
+- Runtime Profile
+- Health Check
+- Health Score
+- Health Snapshot
+- Capability Matrix
+- Identity Lock
+- Developer Context Pack
+- Active Code Location
+- Copy actions for diagnostics and safe metadata-only reports
 
-- Visible product name becomes **Vexa**.
-- User-facing settings, startup screens, diagnostics, labels, documentation and icon previews use Vexa branding.
-- Canonical Vexa logo assets are centralized and verified.
-- Application package remains `com.vexa.app`.
-- Legacy technical namespaces and compatibility identifiers are intentionally retained.
-- Upstream URLs remain upstream until Vexa-owned infrastructure exists.
+All exported workspace reports remain metadata-only and must not include file contents or secrets.
 
-Gate:
-
-`npm run verify:branding`
-
-### Phase 2 — Internal API convergence
-
-Incremental feature additions in this phase may introduce Vexa-native modules that sit above existing runtime contracts. The Workspace Checkpoint feature is one such bounded layer: it stores only file metadata and cursor location in a Vexa-namespaced local key, with a small fixed history and the existing `openFile` path used for restore. The Health Snapshot feature is another bounded layer: it composes existing health, workspace, capability, and migration data without collecting file contents.
-
-Target:
-
-- New application code imports and calls Vexa-named modules/APIs.
-- Compatibility aliases remain available for existing plugins and old integrations.
-- New code must not introduce fresh user-visible Acode branding.
-- Deprecated aliases receive explicit migration comments/tests.
-
-Gate:
-
-`npm run check:vexa`
-
-### Phase 3 — Native/package migration
-
-Target:
-
-- Migrate native plugin namespaces one plugin at a time.
-- Introduce compatibility bridges where package/class/resource references cross the migration boundary.
-- Update generated Android references only after each plugin builds and its tests pass.
-- Never replace all `com.foxdebug.*` namespaces in one unverified operation.
-
-Gate:
-
-Android build + plugin-specific verification.
-
-### Phase 4 — Legacy retirement
-
-Target:
-
-- Remove legacy identifiers only after compatibility usage reaches zero or an explicit breaking-change policy permits removal.
-- Remove temporary aliases, migration code and legacy test fixtures.
-- Remove obsolete technical namespaces and resource names.
-
-Gate:
-
-Full regression suite + release candidate verification.
-
-## Compatibility rules
-
-The following are compatibility identifiers unless explicitly migrated with a replacement:
-
-- `acode://`
-- legacy SAF authorities
-- legacy persisted storage keys
-- Google Play Billing product IDs
-- Acode plugin API aliases
-- upstream Acode repository/service URLs
-- native plugin namespaces that have not yet completed a controlled migration
-
-Do not treat the presence of these identifiers alone as evidence of failed branding.
-
-## Verification
+## Validation gates
 
 Run:
 
@@ -123,4 +66,22 @@ For an Android build:
 npm run build paid dev apk
 ```
 
-Do not treat a source-level verification pass as proof that a release APK was successfully built; the Android build itself must complete successfully.
+A source-level branding or type check is not proof of a successful APK build. The Android build itself must complete successfully.
+
+## Branch policy
+
+`main` is the single integration target for this evolution track.
+
+Do not create replacement PRs for incremental Vexa development unless a future change genuinely requires isolated review. Direct main integration is used only when the change has been verified against the repository gates and the current task explicitly authorizes it.
+
+## Completion criteria
+
+A Vexa change is complete only when:
+
+- the requested behavior exists on `main`;
+- product identity remains Vexa-only at the user-facing boundary;
+- static validation passes;
+- unit/type validation passes where applicable;
+- branding and asset checks pass;
+- residual technical compatibility is documented rather than presented as product identity;
+- remaining uncertainty is reported explicitly.
