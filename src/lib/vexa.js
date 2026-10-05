@@ -408,7 +408,7 @@ class Vexa {
 			if (!didWarnAboutFileList) {
 				didWarnAboutFileList = true;
 				console.warn(
-					'vexa.require("fileList") is deprecated. Use the asynchronous "fileIndex" API. fileList now contains only non-native storage providers.',
+					'acode.require("fileList") is deprecated. Use the asynchronous "fileIndex" API. fileList now contains only non-native storage providers.',
 				);
 			}
 			return files(...args);
