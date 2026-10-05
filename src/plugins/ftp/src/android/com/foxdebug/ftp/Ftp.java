@@ -1,4 +1,4 @@
-package com.foxdebug.ftp;
+package com.vexa.app.ftp;
 
 import android.app.Activity;
 import android.content.Context;
