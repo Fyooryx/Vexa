@@ -33,6 +33,7 @@ export function vexaGetFormatterFor(extensions) {
 
 export default Object.freeze({
   getCore: getVexaCore,
+  requireCore: requireVexaCore,
   exec: vexaExec,
   addIcon: vexaAddIcon,
   getFormatters: getVexaFormatters,
