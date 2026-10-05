@@ -113,8 +113,7 @@ export function formatVexaIdentityStatus(runtime = {}) {
 		...status.checks.map(
 			(check) => (check.ok ? "PASS " : "FAIL ") + check.label,
 		),
-	].join("
-");
+	].join("\n");
 }
 
 export function getVexaWorkspacePulse(runtime = {}) {
@@ -191,8 +190,7 @@ export function formatVexaWorkspacePulse(runtime = {}) {
 		...(pulse.signals.length
 			? pulse.signals.map((signal) => "- " + signal.message)
 			: ["- none"]),
-	].join("
-");
+	].join("\n");
 }
 
 export function getVexaWorkspaceSnapshot(runtime = {}) {
@@ -251,8 +249,7 @@ export function getVexaWorkspaceReport(runtime = {}) {
 				: "none"),
 		"Service boundary: " + config.BASE_URL,
 		"Repository: " + VEXA_IDENTITY.REPOSITORY_URL,
-	].join("
-");
+	].join("\n");
 }
 
 export function getActiveCodeLocation(runtime = {}) {
@@ -286,8 +283,7 @@ export function formatMigrationStatus() {
 		"Free package: " + status.freePackage,
 		"Primary deep link: " + status.primaryDeepLink,
 		"Identity mode: " + status.identityMode,
-	].join("
-");
+	].join("\n");
 }
 
 export function getVexaCapabilities(runtime = {}) {
@@ -374,8 +370,7 @@ export function formatVexaRuntimeProfile(runtime = {}) {
 			" passed / " +
 			profile.health.failed +
 			" failed",
-	].join("
-");
+	].join("\n");
 }
 
 export function formatVexaCapabilities(runtime = {}) {
@@ -386,8 +381,7 @@ export function formatVexaCapabilities(runtime = {}) {
 		...Object.entries(capabilities).map(
 			([name, enabled]) => (enabled ? "PASS " : "---- ") + name,
 		),
-	].join("
-");
+	].join("\n");
 }
 
 export function getVexaHealthChecks(runtime = {}) {
@@ -534,8 +528,7 @@ export function formatVexaReadiness(runtime = {}) {
 		"Signals: " + (readiness.signals.length ? readiness.signals.join("; ") : "none"),
 		"Recommendations: " +
 			(readiness.recommendations.length ? readiness.recommendations.join("; ") : "none"),
-	].join("
-");
+	].join("\n");
 }
 
 
@@ -618,8 +611,7 @@ export function formatVexaDoctorReport(runtime = {}) {
 		...(doctor.recommendations.length
 			? doctor.recommendations.map((recommendation) => "- " + recommendation)
 			: ["- none"]),
-	].join("
-");
+	].join("\n");
 }
 
 export function formatVexaHealthScore(runtime = {}) {
@@ -637,8 +629,7 @@ export function formatVexaHealthScore(runtime = {}) {
 				check.label +
 				(check.detail ? " (" + check.detail + ")" : ""),
 		),
-	].join("
-");
+	].join("\n");
 }
 
 export function getVexaHealthSnapshot(runtime = {}) {
@@ -685,8 +676,7 @@ export function formatVexaHealthSnapshot(runtime = {}) {
 		"Vexa Health Snapshot",
 		"---------------------",
 		JSON.stringify(getVexaHealthSnapshot(runtime), null, 2),
-	].join("
-");
+	].join("\n");
 }
 
 export function formatHealthSummary(checks) {
@@ -724,8 +714,7 @@ export function getVexaDiagnostics(runtime = {}) {
 		"Identity mode: " + VEXA_IDENTITY.IDENTITY_MODE,
 		"Vexa repository: " + VEXA_IDENTITY.REPOSITORY_URL,
 		"Report scope: runtime and workspace metadata only",
-	].join("
-");
+	].join("\n");
 }
 
 export function getVexaContextPack(runtime = {}) {
@@ -754,8 +743,7 @@ export function getVexaContextPack(runtime = {}) {
 				check.label +
 				(check.detail ? " (" + check.detail + ")" : ""),
 		),
-	].join("
-");
+	].join("\n");
 }
 export async function copyVexaText(text, runtime = {}) {
 	const current = getRuntime(runtime);
@@ -802,9 +790,7 @@ export async function copyVexaHealthSnapshot(runtime = {}) {
 
 export async function copyVexaDiagnostics(runtime = {}) {
 	return copyVexaText(
-		getVexaWorkspaceReport(runtime) + "
-
-" + getVexaDiagnostics(runtime),
+		getVexaWorkspaceReport(runtime) + "\n\n" + getVexaDiagnostics(runtime),
 		runtime,
 	);
 }
