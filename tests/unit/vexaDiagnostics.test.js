@@ -25,6 +25,8 @@ import {
 	getVexaReadiness,
 	formatVexaReadiness,
 	copyVexaReadiness,
+	getVexaDoctorReport,
+	formatVexaDoctorReport,
 } from "lib/vexaDiagnostics";
 
 describe("Vexa advanced diagnostics", () => {
@@ -341,7 +343,24 @@ describe("Vexa advanced diagnostics", () => {
 		);
 	});
 
-n	it("summarizes health checks deterministically", () => {
+	it("builds a consolidated Vexa Doctor report", () => {
+		const runtime = {
+			buildInfo: { versionName: "1.15.0", packageName: "com.vexa.app" },
+			navigator: { onLine: true, clipboard: { writeText: async () => {} } },
+			editorManager: { files: [], activeFile: null },
+		};
+		const doctor = getVexaDoctorReport(runtime);
+		expect(doctor.schemaVersion).toBe(1);
+		expect(doctor.app).toBe("Vexa");
+		expect(doctor.status).toBe("READY");
+		expect(doctor.identity.status).toBe("LOCKED");
+		expect(doctor.readiness.status).toBe("READY");
+		expect(doctor.health.status).toBe("HEALTHY");
+		expect(doctor.capabilities.workspaceReport).toBe(true);
+		expect(formatVexaDoctorReport(runtime)).toContain("Vexa Doctor");
+	});
+
+	it("summarizes health checks deterministically", () => {
 		const checks = getVexaHealthChecks({
 			buildInfo: { versionName: "1.15.0" },
 			editorManager: { files: [] },
