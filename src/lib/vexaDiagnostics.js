@@ -182,6 +182,8 @@ export function getVexaCapabilities(runtime = {}) {
 		workspaceReport: true,
 		workspaceCheckpoint: true,
 		healthCheck: true,
+		healthScore: true,
+		healthSnapshot: true,
 		migrationStatus: true,
 		clipboard: Boolean(
 			current.clipboard?.writeText ||
@@ -355,6 +357,43 @@ export function formatVexaHealthScore(runtime = {}) {
 	].join("\n");
 }
 
+export function getVexaHealthSnapshot(runtime = {}) {
+	const current = getRuntime(runtime);
+	const workspace = getWorkspaceSnapshot(runtime);
+	const health = getVexaHealthScore(runtime);
+	const capabilities = getVexaCapabilities(runtime);
+
+	return Object.freeze({
+		schemaVersion: 1,
+		generatedAt: new Date().toISOString(),
+		app: VEXA_IDENTITY.NAME,
+		version: valueOrUnknown(current.buildInfo.versionName),
+		package: getRuntimePackageName(current.buildInfo),
+		migrationPhase: VEXA_IDENTITY.MIGRATION_PHASE ?? null,
+		health: {
+			score: health.score,
+			status: health.status,
+			passed: health.passed,
+			failed: health.failed,
+		},
+		workspace: {
+			openFiles: workspace.openFiles,
+			dirtyFiles: workspace.dirtyFiles,
+			activeFile: workspace.activeFile,
+			activeUri: workspace.activeUri,
+			selection: workspace.selection,
+			paneCount: workspace.paneCount,
+			lspProviders: workspace.lspProviders,
+		},
+		capabilities,
+	});
+}
+
+export function formatVexaHealthSnapshot(runtime = {}) {
+	return JSON.stringify(getVexaHealthSnapshot(runtime), null, 2);
+}
+
+
 export function formatHealthSummary(checks) {
 	const safeChecks = Array.isArray(checks) ? checks : [];
 	const passed = safeChecks.filter((check) => check.ok).length;
@@ -406,6 +445,8 @@ export function getVexaContextPack(runtime = {}) {
 
 		formatVexaCapabilities(runtime),
 
+		formatVexaHealthScore(runtime),
+
 		"Vexa Health Summary",
 		"-------------------",
 		"Passed: " + summary.passed,
@@ -447,6 +488,10 @@ export async function copyVexaText(text, runtime = {}) {
 
 export async function copyVexaRuntimeProfile(runtime = {}) {
 	return copyVexaText(formatVexaRuntimeProfile(runtime), runtime);
+}
+
+export async function copyVexaHealthSnapshot(runtime = {}) {
+	return copyVexaText(formatVexaHealthSnapshot(runtime), runtime);
 }
 
 export async function copyVexaDiagnostics(runtime = {}) {
