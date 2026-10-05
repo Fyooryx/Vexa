@@ -84,7 +84,7 @@ describe("Vexa advanced diagnostics", () => {
 		});
 		expect(report).toContain("Vexa Workspace Report");
 		expect(report).toContain("Package: com.vexa.app");
-		expect(report).toContain("Migration phase: 1");
+		expect(report).toContain("Migration phase: 2");
 	});
 
 	it("reports runtime diagnostics with workspace counts", () => {
