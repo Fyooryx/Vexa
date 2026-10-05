@@ -542,17 +542,24 @@ export function getVexaDoctorReport(runtime = {}) {
 	const migration = getVexaMigrationStatus();
 
 	const status =
+		coreBoundary.status === "UNAVAILABLE" ||
 		readiness.status === "BLOCKED" ||
 		identity.status !== "LOCKED" ||
 		health.status === "ATTENTION"
 			? "BLOCKED"
-			: readiness.status === "DEGRADED" ||
+: coreBoundary.status === "LEGACY_FALLBACK" ||
+					readiness.status === "DEGRADED" ||
 					health.status === "DEGRADED" ||
 					workspace.status !== "READY"
 				? "DEGRADED"
 				: "READY";
 
 	const recommendations = [
+		...(coreBoundary.status === "UNAVAILABLE"
+			? ["Restore the canonical Vexa runtime before continuing."]
+			: coreBoundary.status === "LEGACY_FALLBACK"
+				? ["Migrate the runtime to the canonical Vexa core boundary."]
+				: []),
 		...readiness.recommendations,
 		...(health.failed
 			? health.checks
