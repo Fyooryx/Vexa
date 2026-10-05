@@ -73,7 +73,11 @@
                 android:name="com.vexa.app.rk.exec.terminal.TerminalService"
                 android:enabled="true"
                 android:foregroundServiceType="specialUse"
-                android:exported="false" />
+                android:exported="false">
+                <property
+                    android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                    android:value="Run user-invoked terminal processes for the Vexa development environment." />
+            </service>
 
         </config-file>
 
