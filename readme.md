@@ -105,7 +105,7 @@ This checks Vexa identity/branding, immutable GitHub Actions, translations, Type
 See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed instructions.
 
 ## • Contributors
-Isi kalo sudah ada Contributor
+See the Contributors tab on GitHub for the current contributor list.
 
 
 ## • Developing a Plugin for Vexa
