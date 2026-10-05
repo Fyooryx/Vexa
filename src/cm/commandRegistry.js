@@ -842,6 +842,37 @@ function registerCoreCommands() {
 		},
 	});
 	addCommand({
+		name: "vexa:doctor",
+		description: "Run Vexa Doctor diagnostics",
+		readOnly: true,
+		requiresView: false,
+		run() {
+			const report = formatVexaDoctorReport();
+			if (typeof globalThis.alert === "function") {
+				globalThis.alert("Vexa Doctor", report);
+			} else {
+				toast(report);
+			}
+			return true;
+		},
+	});
+	addCommand({
+		name: "vexa:copyDoctor",
+		description: "Copy Vexa Doctor diagnostics",
+		readOnly: true,
+		requiresView: false,
+		run() {
+			copyVexaDoctorReport()
+				.then((copied) =>
+					toast(
+						copied ? "Vexa Doctor report copied" : "Clipboard is unavailable",
+					),
+				)
+				.catch(() => toast("Failed to copy Vexa Doctor report"));
+			return true;
+		},
+	});
+	addCommand({
 		name: "vexa:runtimeProfile",
 		description: "Show Vexa runtime profile",
 		readOnly: true,
