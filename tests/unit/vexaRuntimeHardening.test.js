@@ -24,7 +24,7 @@ describe("Vexa runtime hardening", () => {
 
 	it("keeps native Vexa app-icon state synchronized with settings", () => {
 		const systemJava = read(
-			"src/plugins/system/android/com/foxdebug/system/System.java",
+			"src/plugins/system/android/com/vexa/app/system/System.java",
 		);
 		const systemApi = read("src/plugins/system/www/plugin.js");
 		const main = read("src/main.js");
@@ -47,7 +47,7 @@ describe("Vexa runtime hardening", () => {
 		expect(bridge).toContain(
 			"var id, label, description, icon, action, data;",
 		);
-		expect(prettier).toContain("const api = window?.vexa || window?.acode;");
+		expect(prettier).toContain("const api = getVexaCore();");
 		expect(main).toContain("editor?.requestMeasure?.();");
 		expect(sidebar).toContain(
 			"editorManager?.editor?.requestMeasure?.();",
