@@ -22,6 +22,11 @@ export const VEXA_IDENTITY = Object.freeze({
 		"https://api.github.com/repos/Fyooryx/Vexa/releases/latest",
 	UPSTREAM_RELEASE_API_URL:
 		"https://api.github.com/repos/Acode-Foundation/Acode/releases/latest",
+	// Technical identifiers are migrated only after a compatibility bridge is verified.
+	MIGRATION_PHASE: 1,
+	LEGACY_NATIVE_NAMESPACE: "com.foxdebug",
+	VEXA_NATIVE_NAMESPACE: "com.vexa.app",
+	LEGACY_PLUGIN_NAMESPACE_MIGRATION_ENABLED: false,
 });
 
 export function getRuntimePackageName(buildInfo = globalThis.BuildInfo) {
