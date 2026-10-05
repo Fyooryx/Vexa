@@ -67,7 +67,7 @@ describe("Vexa workspace checkpoints", () => {
 	it("deduplicates identical checkpoints and caps history", () => {
 		const manager = createEditorManager();
 		for (let time = 1; time <= VEXA_CHECKPOINT_LIMIT + 2; time++) {
-			manager.editor.state.selection.main.head = time;
+			manager.editor.state.selection.main.head = 40 + time;
 			saveVexaWorkspaceCheckpoint({
 				storage,
 				editorManager: manager,
