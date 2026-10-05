@@ -56,7 +56,7 @@ Gate:
 
 ### Phase 2 — Internal API convergence
 
-Incremental feature additions in this phase may introduce Vexa-native modules that sit above existing runtime contracts. The Workspace Checkpoint feature is one such bounded layer: it stores only file metadata and cursor location in a Vexa-namespaced local key, with a small fixed history and the existing `openFile` path used for restore.
+Incremental feature additions in this phase may introduce Vexa-native modules that sit above existing runtime contracts. The Workspace Checkpoint feature is one such bounded layer: it stores only file metadata and cursor location in a Vexa-namespaced local key, with a small fixed history and the existing `openFile` path used for restore. The Health Snapshot feature is another bounded layer: it composes existing health, workspace, capability, and migration data without collecting file contents.
 
 Target:
 
