@@ -1,4 +1,5 @@
 import config from "lib/config";
+import { getRuntimePackageName } from "lib/vexaIdentity";
 import template from "views/rating.hbs";
 import dialog from "./dialog";
 
@@ -29,7 +30,7 @@ function rateBox() {
 		setTimeout(() => {
 			if (val === 5) {
 				system.openInBrowser(
-					`https://play.google.com/store/apps/details?id=${BuildInfo.packageName}`,
+					`https://play.google.com/store/apps/details?id=${getRuntimePackageName(BuildInfo)}`,
 				);
 				localStorage.dontAskForRating = true;
 			} else {
