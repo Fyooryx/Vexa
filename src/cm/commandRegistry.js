@@ -834,9 +834,7 @@ function registerCoreCommands() {
 		run() {
 			copyVexaReadiness()
 				.then((copied) =>
-					toast(
-						copied ? "Vexa readiness copied" : "Clipboard is unavailable",
-					),
+					toast(copied ? "Vexa readiness copied" : "Clipboard is unavailable"),
 				)
 				.catch(() => toast("Failed to copy Vexa readiness"));
 			return true;
