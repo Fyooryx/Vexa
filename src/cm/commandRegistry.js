@@ -116,6 +116,7 @@ import {
 	formatHealthSummary,
 	formatMigrationStatus,
 	formatVexaCapabilities,
+	formatVexaHealthScore,
 	formatVexaRuntimeProfile,
 	getActiveCodeLocation,
 	getVexaHealthChecks,
@@ -679,6 +680,21 @@ function registerCoreCommands() {
 				globalThis.alert("Vexa Health", message);
 			} else {
 				toast(message);
+			}
+			return true;
+		},
+	});
+	addCommand({
+		name: "vexa:healthScore",
+		description: "Show Vexa health score",
+		readOnly: true,
+		requiresView: false,
+		run() {
+			const score = formatVexaHealthScore();
+			if (typeof globalThis.alert === "function") {
+				globalThis.alert("Vexa Health Score", score);
+			} else {
+				toast(score);
 			}
 			return true;
 		},
