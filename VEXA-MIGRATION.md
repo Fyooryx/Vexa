@@ -45,7 +45,7 @@ The Vexa developer layer now provides:
 - Health Snapshot
 - Capability Matrix
 - Identity Lock
-- Developer Context Pack
+- Developer Context Pack\n- Vexa Doctor diagnostics and copy support
 - Active Code Location
 - Copy actions for diagnostics and safe metadata-only reports
 
