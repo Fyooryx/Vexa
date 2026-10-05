@@ -7,57 +7,57 @@
  */
 
 function resolveCore() {
-  return globalThis.vexa ?? globalThis.acode ?? null;
+	return globalThis.vexa ?? globalThis.acode ?? null;
 }
 
 export function getVexaCore() {
-  return resolveCore();
+	return resolveCore();
 }
 
 export function requireVexaCore() {
-  const core = resolveCore();
-  if (!core) throw new Error("[Vexa] core runtime unavailable");
-  return core;
+	const core = resolveCore();
+	if (!core) throw new Error("[Vexa] core runtime unavailable");
+	return core;
 }
 
 export function getVexaCoreBoundaryStatus() {
-  const canonical = globalThis.vexa != null;
-  const legacyFallback = !canonical && globalThis.acode != null;
-  return Object.freeze({
-    schemaVersion: 1,
-    status: canonical
-      ? "CANONICAL"
-      : legacyFallback
-        ? "LEGACY_FALLBACK"
-        : "UNAVAILABLE",
-    canonical,
-    legacyFallback,
-  });
+	const canonical = globalThis.vexa != null;
+	const legacyFallback = !canonical && globalThis.acode != null;
+	return Object.freeze({
+		schemaVersion: 1,
+		status: canonical
+			? "CANONICAL"
+			: legacyFallback
+				? "LEGACY_FALLBACK"
+				: "UNAVAILABLE",
+		canonical,
+		legacyFallback,
+	});
 }
 
 export function vexaExec(...args) {
-  return resolveCore()?.exec?.(...args);
+	return resolveCore()?.exec?.(...args);
 }
 
 export function vexaAddIcon(...args) {
-  return resolveCore()?.addIcon?.(...args);
+	return resolveCore()?.addIcon?.(...args);
 }
 
 export function getVexaFormatters() {
-  const formatters = resolveCore()?.formatters;
-  return Array.isArray(formatters) ? formatters : [];
+	const formatters = resolveCore()?.formatters;
+	return Array.isArray(formatters) ? formatters : [];
 }
 
 export function vexaGetFormatterFor(extensions) {
-  return resolveCore()?.getFormatterFor?.(extensions) ?? [];
+	return resolveCore()?.getFormatterFor?.(extensions) ?? [];
 }
 
 export default Object.freeze({
-  getCore: getVexaCore,
-  requireCore: requireVexaCore,
-  getBoundaryStatus: getVexaCoreBoundaryStatus,
-  exec: vexaExec,
-  addIcon: vexaAddIcon,
-  getFormatters: getVexaFormatters,
-  getFormatterFor: vexaGetFormatterFor,
+	getCore: getVexaCore,
+	requireCore: requireVexaCore,
+	getBoundaryStatus: getVexaCoreBoundaryStatus,
+	exec: vexaExec,
+	addIcon: vexaAddIcon,
+	getFormatters: getVexaFormatters,
+	getFormatterFor: vexaGetFormatterFor,
 });
