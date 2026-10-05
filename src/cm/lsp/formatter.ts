@@ -4,7 +4,7 @@ import toast from "components/toast";
 import lspClientManager from "./clientManager";
 import { supportsBuiltinFormatting } from "./formattingSupport";
 import serverRegistry from "./serverRegistry";
-import type { AcodeApi, FileMetadata } from "./types";
+import type { FileMetadata, VexaApi, VexaFile } from "./types";
 
 interface Mode {
 	name?: string;
@@ -13,13 +13,13 @@ interface Mode {
 
 interface EditorManagerWithLsp {
 	editor?: EditorView;
-	activeFile?: AcodeFile;
-	getLspMetadata?: (file: AcodeFile) => FileMetadata | null;
+	activeFile?: VexaFile;
+	getLspMetadata?: (file: VexaFile) => FileMetadata | null;
 }
 
 function getActiveMetadata(
 	manager: EditorManagerWithLsp | undefined,
-	file: AcodeFile | undefined,
+	file: VexaFile | undefined,
 ): (FileMetadata & { view?: EditorView }) | null {
 	if (!manager?.getLspMetadata || !file) return null;
 	const metadata = manager.getLspMetadata(file);
@@ -30,7 +30,7 @@ function getActiveMetadata(
 	};
 }
 
-export function registerLspFormatter(acode: AcodeApi): void {
+export function registerLspFormatter(vexa: VexaApi): void {
 	const languages = new Set<string>();
 	serverRegistry.listServers().forEach((server) => {
 		if (!supportsBuiltinFormatting(server)) return;
@@ -42,7 +42,7 @@ export function registerLspFormatter(acode: AcodeApi): void {
 		? collectFormatterExtensions(languages)
 		: ["*"];
 
-	acode.registerFormatter(
+	vexa.registerFormatter(
 		"lsp",
 		extensions,
 		async () => {
