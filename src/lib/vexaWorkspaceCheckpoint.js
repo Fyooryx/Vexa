@@ -9,7 +9,7 @@ function getStorage(runtime = {}) {
 }
 
 function getNow(runtime = {}) {
-	return typeof runtime.now === "function" ? runtime.now() : () => Date.now();
+	return typeof runtime.now === "function" ? runtime.now : () => Date.now();
 }
 
 function readCheckpoints(runtime = {}) {
@@ -49,6 +49,8 @@ function isValidCheckpoint(value) {
 			value.line >= 1 &&
 			Number.isInteger(value.column) &&
 			value.column >= 1 &&
+			Number.isInteger(value.createdAt) &&
+			value.createdAt >= 0 &&
 			typeof value.filename === "string" &&
 			value.filename,
 	);
