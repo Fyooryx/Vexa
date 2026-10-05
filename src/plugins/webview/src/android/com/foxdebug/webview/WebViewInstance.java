@@ -1,4 +1,4 @@
-package com.foxdebug.webview;
+package com.vexa.app.webview;
 
 import android.app.Activity;
 import android.app.AlertDialog;
