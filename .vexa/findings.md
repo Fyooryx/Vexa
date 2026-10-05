@@ -58,3 +58,11 @@
 - The complete-identity migration delta for first-party Android namespaces was safely converged onto current main.
 - The Termux branch was not copied wholesale because it replaces the current terminal architecture; only its additive, independently bounded Termux bridge capability was integrated.
 - Branch deletion remains pending because no delete-ref operation is exposed by the GitHub connector.
+## Legacy branch consolidation audit — 2026-10-06
+
+- Branches behind `main` were treated as already represented in the current mainline rather than reapplying stale version bumps.
+- Diverged branch work was compared against the current mainline and the remaining material hardening deltas were reconciled into main where they were still applicable.
+- Reconciled items include centralized release/changelog endpoints, Android cleartext hardening, terminal special-use foreground-service declaration, WebSocket failure cleanup, structured Vexa diagnostics, deep-link regression coverage, identity regression coverage, and existing Termux integration.
+- Redundant duplicate implementations were not added when the current mainline already contained a newer equivalent, e.g. `appIntent.js` versus the canonical `appDeepLink.js`.
+- Personal contact fields from the owner-contact branch were not propagated into the product code; non-sensitive repository ownership/contributor cleanup was retained.
+- Branch deletion is still pending because the available GitHub connector exposes no branch/ref deletion operation. No force-reset was used as a substitute.
