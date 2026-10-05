@@ -2,6 +2,7 @@ import fsOperation from "../fileSystem";
 import Url from "../utils/Url";
 import loadPlugin from "./loadPlugin";
 import settings from "./settings";
+import { requireVexaCore } from "./vexaApi";
 
 // theme-related keywords for determining theme plugins
 const THEME_IDENTIFIERS = new Set([
@@ -113,7 +114,7 @@ export default async function loadPlugins(loadOnlyTheme = false) {
 
 		await Promise.allSettled(loadPromises);
 
-		acode[onPluginsLoadCompleteCallback]();
+		requireVexaCore()[onPluginsLoadCompleteCallback]();
 		return results.filter(Boolean).length;
 	} finally {
 		if (!loadOnlyTheme) {
@@ -164,7 +165,7 @@ export async function loadPluginWithTimeout(pluginId, justInstalled = false) {
 
 async function markPluginLoaded(pluginId, justInstalled = false) {
 	LOADED_PLUGINS.add(pluginId);
-	acode[onPluginLoadCallback](pluginId);
+	requireVexaCore()[onPluginLoadCallback](pluginId);
 
 	// clear broken mark if present
 	if (BROKEN_PLUGINS.has(pluginId)) {
