@@ -155,7 +155,7 @@ describe("Vexa advanced diagnostics", () => {
 				files: [{ type: "editor", markChanged: true }],
 			},
 		});
-		expect(report).toContain("Diagnostics version: 5");
+		expect(report).toContain("Diagnostics version: 7");
 		expect(report).toContain("Online: false");
 		expect(report).toContain("Unsaved files: 1");
 	});
