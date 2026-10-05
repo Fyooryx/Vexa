@@ -112,6 +112,10 @@ import {
 	copyVexaDiagnostics,
 	copyVexaHealthSnapshot,
 	copyVexaRuntimeProfile,
+	formatVexaIdentityStatus,
+	formatVexaWorkspacePulse,
+	getVexaIdentityStatus,
+	getVexaWorkspacePulse,
 	copyVexaText,
 	copyVexaWorkspaceSnapshot,
 	formatHealthSummary,
@@ -759,6 +763,52 @@ function registerCoreCommands() {
 			} else {
 				toast(status);
 			}
+			return true;
+		},
+	});
+	addCommand({
+		name: "vexa:identityStatus",
+		description: "Show Vexa identity lock status",
+		readOnly: true,
+		requiresView: false,
+		run() {
+			const status = formatVexaIdentityStatus();
+			if (typeof globalThis.alert === "function") {
+				globalThis.alert("Vexa Identity", status);
+			} else {
+				toast(status);
+			}
+			return true;
+		},
+	});
+	addCommand({
+		name: "vexa:workspacePulse",
+		description: "Show Vexa workspace pulse",
+		readOnly: true,
+		requiresView: false,
+		run() {
+			const pulse = formatVexaWorkspacePulse();
+			if (typeof globalThis.alert === "function") {
+				globalThis.alert("Vexa Workspace Pulse", pulse);
+			} else {
+				toast(pulse);
+			}
+			return true;
+		},
+	});
+	addCommand({
+		name: "vexa:copyWorkspacePulse",
+		description: "Copy Vexa workspace pulse",
+		readOnly: true,
+		requiresView: false,
+		run() {
+			copyVexaText(formatVexaWorkspacePulse())
+				.then((copied) =>
+					toast(
+						copied ? "Vexa workspace pulse copied" : "Clipboard is unavailable",
+					),
+				)
+				.catch(() => toast("Failed to copy Vexa workspace pulse"));
 			return true;
 		},
 	});
