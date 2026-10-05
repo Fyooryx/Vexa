@@ -1,10 +1,10 @@
 import quickTools from "../components/quickTools";
-import { vexaExec } from "./vexaApi";
 import actions from "../handlers/quickTools";
 import appSettings from "../lib/settings";
 import themes from "../theme/list";
 import config from "./config";
 import fonts from "./fonts";
+import { vexaExec } from "./vexaApi";
 
 export default {
 	beforeRender() {
