@@ -4,7 +4,7 @@ const path = require("path");
 const configXML = path.resolve(__dirname, "../../../config.xml");
 const menuJava = path.resolve(
   __dirname,
-  "../../../platforms/android/app/src/main/java/com/foxdebug/browser/Menu.java",
+  "../../../platforms/android/app/src/main/java/com/vexa/app/browser/Menu.java",
 );
 const docProvider = path.resolve(
   __dirname,
@@ -21,7 +21,7 @@ function replaceImport(filePath, packageName) {
 
   const data = fs.readFileSync(filePath, "utf8");
   const updated = data.replace(
-    /import\s+com\.foxdebug\.(?:acode|acodefree)\.R;/,
+    /import\s+com\.vexa\.app(?:free)?\.R;/,
     "import " + packageName + ".R;",
   );
 
