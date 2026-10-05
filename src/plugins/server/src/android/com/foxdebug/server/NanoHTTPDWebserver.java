@@ -1,4 +1,4 @@
-package com.foxdebug.server;
+package com.vexa.app.server;
 
 import android.content.ContentResolver;
 import android.content.Context;
