@@ -567,7 +567,7 @@ async function runTestsInternal() {
 	}
 
 	writeOutput("🚀 Test Runner Started\n");
-	writeOutput("Running Acode test suite...\n");
+	writeOutput("Running Vexa test suite...\n");
 
 	try {
 		for (const runner of activeRunners) {
