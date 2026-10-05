@@ -16,3 +16,13 @@
 - Copy support for Workspace Pulse.
 - Release metadata 1.15.0 / Android versionCode 1020.
 - Vexa-only public migration policy.
+
+
+## Advanced readiness wave
+
+- Added a Vexa Readiness Gate with `READY`, `DEGRADED`, and `BLOCKED` states.
+- Added actionable blocker/signal reporting for identity, runtime metadata, editor, network, and clipboard state.
+- Exposed readiness through the command registry.
+- Corrected Workspace Pulse network evaluation to use normalized runtime state.
+- Strengthened the main validation gate with translation checking.
+- No new branch or PR was created; changes were integrated directly on `main`.
