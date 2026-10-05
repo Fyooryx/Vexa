@@ -4,7 +4,7 @@ const path = require("path");
 const configXML = path.resolve(__dirname, "../../../config.xml");
 const menuJava = path.resolve(
   __dirname,
-  "../../../platforms/android/app/src/main/java/com/foxdebug/browser/Menu.java",
+  "../../../platforms/android/app/src/main/java/com/vexa/app/browser/Menu.java",
 );
 const docProvider = path.resolve(
   __dirname,
