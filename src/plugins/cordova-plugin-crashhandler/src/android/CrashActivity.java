@@ -1,4 +1,4 @@
-package com.foxdebug.crashhandler;
+package com.vexa.app.crashhandler;
 
 import android.app.Activity;
 import android.content.ClipData;
