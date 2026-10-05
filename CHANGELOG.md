@@ -1,6 +1,15 @@
 ## [Unreleased]
 
 ### Added
+- Optional Vexa Termux bridge with installed-app detection, shell-session launch, and command delegation.
+- Vexa Termux validation gate and regression coverage.
+- First-party native plugin namespace migration to `com.vexa.app.*`.
+- Centralized API trust classification and Vexa Pro-cache migration helpers.
+
+### Security
+- Disabled global Android cleartext traffic and restricted cleartext exceptions to loopback hosts.
+
+### Added
 - Vexa Core Boundary API with canonical, legacy-fallback, and unavailable runtime states.
 - Vexa Doctor reporting of the active runtime boundary mode.
 - Vexa Doctor now degrades on legacy boundary fallback and blocks when the canonical Vexa runtime is unavailable.
