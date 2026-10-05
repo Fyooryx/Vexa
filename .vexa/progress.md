@@ -9,10 +9,10 @@
 - Branding/release metadata updated.
 - Verification gates pending.
 
-Status: ADVANCE_IMPLEMENTATION_COMPLETE
+Status: ADVANCE_DOCTOR_IMPLEMENTATION_COMPLETE
 
 - Advanced readiness implementation integrated directly on `main`.
-- Verification command execution remains pending/UNVERIFIED in this environment.
+- Verification command execution remains pending/UNVERIFIED in this environment.\n- Vexa Doctor diagnostics and copy commands added directly to `main`.\n- Legacy branch cleanup remains pending because the current GitHub connector exposes no delete-ref operation.
 
 - Readiness recommendations added.
 - In-app test runner branding aligned to Vexa.
