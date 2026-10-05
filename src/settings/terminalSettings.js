@@ -50,9 +50,7 @@ export default function terminalSettings() {
 		},
 		{
 			key: "openTermuxSession",
-			text:
-				strings["open termux session"] ||
-				"Open Termux shell",
+			text: strings["open termux session"] || "Open Termux shell",
 			info:
 				strings["info-open-termux-session"] ||
 				"Start an interactive shell in the official Termux environment.",
@@ -63,9 +61,7 @@ export default function terminalSettings() {
 			key: "termuxWorkdir",
 			text: strings["termux working directory"] || "Termux working directory",
 			value: terminalValues.termuxWorkdir,
-			prompt:
-				strings["termux working directory"] ||
-				"Termux working directory",
+			prompt: strings["termux working directory"] || "Termux working directory",
 			promptOptions: {
 				test(value) {
 					return typeof value === "string" && value.trim().length > 0;
@@ -318,33 +314,33 @@ export default function terminalSettings() {
 	async function callback(key, value) {
 		switch (key) {
 			case "openTermux":
-			try {
-				await Terminal.openTermux();
-			} catch (error) {
-				console.error("Failed to open Termux:", error);
-				toast(error?.message || String(error));
-			}
-			return;
+				try {
+					await Terminal.openTermux();
+				} catch (error) {
+					console.error("Failed to open Termux:", error);
+					toast(error?.message || String(error));
+				}
+				return;
 
-		case "openTermuxSession":
-			try {
-				await Terminal.openTermuxSession(terminalValues.termuxWorkdir);
-			} catch (error) {
-				console.error("Failed to open Termux session:", error);
-				toast(error?.message || String(error));
-			}
-			return;
+			case "openTermuxSession":
+				try {
+					await Terminal.openTermuxSession(terminalValues.termuxWorkdir);
+				} catch (error) {
+					console.error("Failed to open Termux session:", error);
+					toast(error?.message || String(error));
+				}
+				return;
 
-		case "termuxWorkdir":
-			appSettings.update({
-				terminalSettings: {
-					...values.terminalSettings,
-					termuxWorkdir: String(value || "~"),
-				},
-			});
-			return;
+			case "termuxWorkdir":
+				appSettings.update({
+					terminalSettings: {
+						...values.terminalSettings,
+						termuxWorkdir: String(value || "~"),
+					},
+				});
+				return;
 
-				case "all_file_access":
+			case "all_file_access":
 				if (ANDROID_SDK_INT >= 30) {
 					system.isManageExternalStorageDeclared((boolStr) => {
 						if (boolStr === "true") {
