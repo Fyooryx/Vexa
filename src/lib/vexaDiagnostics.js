@@ -48,9 +48,9 @@ export function getWorkspaceSnapshot(runtime = {}) {
 		current.lspProviders ??
 		(typeof globalThis.listRuntimeProviders === "function"
 			? globalThis.listRuntimeProviders()
-			: (typeof globalThis.vexa?.require === "function"
+			: typeof globalThis.vexa?.require === "function"
 				? globalThis.vexa.require("lsp")?.runtimes?.list?.() || []
-				: []));
+				: []);
 
 	return {
 		openFiles: files.length,
