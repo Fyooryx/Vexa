@@ -108,6 +108,7 @@ import keyBindings, {
 } from "lib/keyBindings";
 import settings from "lib/settings";
 import {
+	copyVexaContextPack,
 	copyVexaDiagnostics,
 	copyVexaText,
 	formatHealthSummary,
@@ -719,6 +720,24 @@ function registerCoreCommands() {
 					toast(copied ? "Code location copied" : "Clipboard is unavailable"),
 				)
 				.catch(() => toast("Failed to copy code location"));
+			return true;
+		},
+	});
+	addCommand({
+		name: "vexa:copyContext",
+		description: "Copy Vexa developer context pack",
+		readOnly: true,
+		requiresView: false,
+		run() {
+			copyVexaContextPack()
+				.then((copied) =>
+					toast(
+						copied
+							? "Vexa context pack copied"
+							: "Clipboard is unavailable",
+					),
+				)
+				.catch(() => toast("Failed to copy Vexa context pack"));
 			return true;
 		},
 	});
