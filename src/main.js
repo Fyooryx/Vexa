@@ -1038,14 +1038,14 @@ function backButtonHandler() {
 }
 
 function menuButtonHandler() {
-	const { acode } = window;
-	acode?.exec("toggle-sidebar");
+	const api = window?.vexa || window?.acode;
+	api?.exec("toggle-sidebar");
 }
 
 async function pauseHandler() {
-	const { acode } = window;
+	const api = window?.vexa || window?.acode;
 	await window.editorManager?.flushCacheWrites?.();
-	acode?.exec("save-state");
+	api?.exec("save-state");
 }
 
 function resumeHandler() {
