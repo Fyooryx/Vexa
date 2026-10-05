@@ -360,7 +360,7 @@ export default {
 		);
 		const isTermuxUri = currentUri.includes("com.termux.documents");
 		const isVexaTerminalPublicSafUri = currentUri.includes(
-			"com.vexa.app.documents",
+			"com.foxdebug.acode.documents",
 		);
 		const isLegacyAcodeTerminalPublicSafUri = currentUri.includes(
 			"com.foxdebug.acode.documents",
