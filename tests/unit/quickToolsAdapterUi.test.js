@@ -140,6 +140,7 @@ function hostCommands(manager, exec) {
 			"dialogs/prompt",
 			"handlers/quickTools",
 			"lib/settings",
+			"lib/vexaApi",
 			"lib/vexaDiagnostics",
 			"lib/vexaWorkspaceCheckpoint",
 			"lib/vexaIdentity",
@@ -152,6 +153,17 @@ function hostCommands(manager, exec) {
 			...dependencies,
 			"@codemirror/state": { Compartment: class {} },
 			"cm/keyBindingUtils": { toCodeMirrorKey: () => null },
+			"lib/vexaApi": {
+				vexaExec: exec,
+				vexaAddIcon: () => {},
+				getVexaCore: () => ({ exec }),
+				getVexaCoreBoundaryStatus: () => ({
+					schemaVersion: 1,
+					status: "CANONICAL",
+					canonical: true,
+					legacyFallback: false,
+				}),
+			},
 			"lib/keyBindings": {
 				__esModule: true,
 				default: {},
