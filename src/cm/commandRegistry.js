@@ -114,6 +114,7 @@ import {
 	copyVexaWorkspaceSnapshot,
 	formatHealthSummary,
 	formatMigrationStatus,
+	formatVexaRuntimeProfile,
 	formatVexaCapabilities,
 	getActiveCodeLocation,
 	getVexaHealthChecks,
@@ -701,6 +702,21 @@ function registerCoreCommands() {
 				globalThis.alert("Vexa Migration", status);
 			} else {
 				toast(status);
+			}
+			return true;
+		},
+	});
+	addCommand({
+		name: "vexa:runtimeProfile",
+		description: "Show Vexa runtime profile",
+		readOnly: true,
+		requiresView: false,
+		run() {
+			const profile = formatVexaRuntimeProfile();
+			if (typeof globalThis.alert === "function") {
+				globalThis.alert("Vexa Runtime", profile);
+			} else {
+				toast(profile);
 			}
 			return true;
 		},
