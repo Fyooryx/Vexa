@@ -723,6 +723,20 @@ function registerCoreCommands() {
 		},
 	});
 	addCommand({
+		name: "vexa:copyWorkspaceReport",
+		description: "Copy Vexa workspace report",
+		readOnly: true,
+		requiresView: false,
+		run() {
+			copyVexaText(getVexaWorkspaceReport())
+				.then((copied) =>
+					toast(copied ? "Workspace report copied" : "Clipboard is unavailable"),
+				)
+				.catch(() => toast("Failed to copy workspace report"));
+			return true;
+		},
+	});
+	addCommand({
 		name: "vexa:copyDiagnostics",
 		description: "Copy Vexa diagnostics",
 		readOnly: true,
