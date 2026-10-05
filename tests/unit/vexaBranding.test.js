@@ -48,6 +48,13 @@ describe("Vexa branding", () => {
 		expect(read("www/logo.svg")).toContain("Vexa logo");
 	});
 
+	it("keeps the in-app test runner branded as Vexa", () => {
+		const tester = read("src/test/tester.js");
+
+		expect(tester).toContain("Running Vexa test suite...");
+		expect(tester).not.toContain("Running Acode test suite...");
+	});
+
 	it("uses Vexa command identities", () => {
 		const commands = read("src/cm/commandRegistry.js");
 		const bindings = read("src/lib/keyBindings.js");
