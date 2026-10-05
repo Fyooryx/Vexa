@@ -107,6 +107,7 @@ import keyBindings, {
 	CODEMIRROR_COMMAND_NAMES,
 } from "lib/keyBindings";
 import settings from "lib/settings";
+import { vexaExec } from "lib/vexaApi";
 import {
 	copyVexaContextPack,
 	copyVexaDiagnostics,
@@ -210,7 +211,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("find-file");
+			vexaExec("find-file");
 			return true;
 		},
 	});
@@ -220,7 +221,7 @@ function registerCoreCommands() {
 		readOnly: false,
 		requiresView: false,
 		run() {
-			acode.exec("close-current-tab");
+			vexaExec("close-current-tab");
 			return true;
 		},
 	});
@@ -230,7 +231,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("new-pane");
+			vexaExec("new-pane");
 			return true;
 		},
 	});
@@ -240,7 +241,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("move-tab-to-new-pane");
+			vexaExec("move-tab-to-new-pane");
 			return true;
 		},
 	});
@@ -250,7 +251,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("close-pane");
+			vexaExec("close-pane");
 			return true;
 		},
 	});
@@ -260,7 +261,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("focus-next-pane");
+			vexaExec("focus-next-pane");
 			return true;
 		},
 	});
@@ -270,7 +271,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("focus-previous-pane");
+			vexaExec("focus-previous-pane");
 			return true;
 		},
 	});
@@ -280,7 +281,7 @@ function registerCoreCommands() {
 		readOnly: false,
 		requiresView: false,
 		run() {
-			acode.exec("close-all-tabs");
+			vexaExec("close-all-tabs");
 			return true;
 		},
 	});
@@ -290,7 +291,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("toggle-pin-tab");
+			vexaExec("toggle-pin-tab");
 			return true;
 		},
 	});
@@ -300,7 +301,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("new-file");
+			vexaExec("new-file");
 			return true;
 		},
 	});
@@ -310,7 +311,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("open-file");
+			vexaExec("open-file");
 			return true;
 		},
 	});
@@ -320,7 +321,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("open-folder");
+			vexaExec("open-folder");
 			return true;
 		},
 	});
@@ -330,7 +331,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("save");
+			vexaExec("save");
 			return true;
 		},
 	});
@@ -340,7 +341,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("save-as");
+			vexaExec("save-as");
 			return true;
 		},
 	});
@@ -350,7 +351,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("save-all-changes");
+			vexaExec("save-all-changes");
 			return true;
 		},
 	});
@@ -360,7 +361,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("next-file");
+			vexaExec("next-file");
 			return true;
 		},
 	});
@@ -370,7 +371,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("prev-file");
+			vexaExec("prev-file");
 			return true;
 		},
 	});
@@ -380,7 +381,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("next-file-history");
+			vexaExec("next-file-history");
 			return true;
 		},
 	});
@@ -390,7 +391,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("prev-file-history");
+			vexaExec("prev-file-history");
 			return true;
 		},
 	});
@@ -400,7 +401,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("open", "settings");
+			vexaExec("open", "settings");
 			return true;
 		},
 	});
@@ -410,7 +411,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("rename");
+			vexaExec("rename");
 			return true;
 		},
 	});
@@ -420,7 +421,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("run");
+			vexaExec("run");
 			return true;
 		},
 	});
@@ -437,7 +438,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("toggle-fullscreen");
+			vexaExec("toggle-fullscreen");
 			return true;
 		},
 	});
@@ -447,7 +448,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("toggle-sidebar");
+			vexaExec("toggle-sidebar");
 			return true;
 		},
 	});
@@ -457,7 +458,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("toggle-menu");
+			vexaExec("toggle-menu");
 			return true;
 		},
 	});
@@ -467,7 +468,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("toggle-editmenu");
+			vexaExec("toggle-editmenu");
 			return true;
 		},
 	});
@@ -488,7 +489,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("goto");
+			vexaExec("goto");
 			return true;
 		},
 	});
@@ -498,7 +499,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("find");
+			vexaExec("find");
 			return true;
 		},
 	});
@@ -537,7 +538,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("open", "problems");
+			vexaExec("open", "problems");
 			return true;
 		},
 	});
@@ -547,7 +548,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("replace");
+			vexaExec("replace");
 			return true;
 		},
 	});
@@ -557,7 +558,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("command-palette");
+			vexaExec("command-palette");
 			return true;
 		},
 	});
@@ -567,7 +568,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("syntax");
+			vexaExec("syntax");
 			return true;
 		},
 	});
@@ -594,7 +595,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("open-log-file");
+			vexaExec("open-log-file");
 			return true;
 		},
 	});
@@ -632,7 +633,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("open", "plugins");
+			vexaExec("open", "plugins");
 			return true;
 		},
 	});
@@ -642,7 +643,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("open", "file_browser");
+			vexaExec("open", "file_browser");
 			return true;
 		},
 	});
@@ -1084,7 +1085,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("copy-device-info");
+			vexaExec("copy-device-info");
 			return true;
 		},
 	});
@@ -1094,7 +1095,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("change-app-theme");
+			vexaExec("change-app-theme");
 			return true;
 		},
 	});
@@ -1104,7 +1105,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("change-editor-theme");
+			vexaExec("change-editor-theme");
 			return true;
 		},
 	});
@@ -1114,7 +1115,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("new-terminal");
+			vexaExec("new-terminal");
 			return true;
 		},
 	});
@@ -1124,7 +1125,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("welcome");
+			vexaExec("welcome");
 			return true;
 		},
 	});
@@ -1135,7 +1136,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("welcome");
+			vexaExec("welcome");
 			return true;
 		},
 	});
@@ -1146,7 +1147,7 @@ function registerCoreCommands() {
 		readOnly: true,
 		requiresView: false,
 		run() {
-			acode.exec("run-tests");
+			vexaExec("run-tests");
 			return true;
 		},
 	});
@@ -1154,7 +1155,7 @@ function registerCoreCommands() {
 		name: "dev:openInspector",
 		description: "Open Inspector",
 		run() {
-			acode.exec("open-inspector");
+			vexaExec("open-inspector");
 			return true;
 		},
 		readOnly: true,
@@ -1164,7 +1165,7 @@ function registerCoreCommands() {
 		name: "dev:toggleDevTools",
 		description: "Toggle Developer Tools",
 		run() {
-			acode.exec("toggle-inspector");
+			vexaExec("toggle-inspector");
 			return true;
 		},
 		readOnly: true,
@@ -1749,7 +1750,7 @@ function registerCommandsFromKeyBindings() {
 							const resolvedView = resolveView(view);
 							if (!resolvedView) return false;
 						}
-						acode.exec(binding.action);
+						vexaExec(binding.action);
 						return true;
 					} catch (error) {
 						console.error(`Failed to execute action ${binding.action}`, error);
@@ -1921,7 +1922,7 @@ async function openInAppBrowserCommand() {
 		placeholder: "http://",
 		match: /^https?:\/\/.+/,
 	});
-	if (url) acode.exec("open-inapp-browser", url);
+	if (url) vexaExec("open-inapp-browser", url);
 	return true;
 }
 
