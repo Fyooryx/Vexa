@@ -189,6 +189,7 @@ describe("Vexa advanced diagnostics", () => {
 			navigator: { clipboard: { writeText: async () => {} } },
 		});
 		expect(capabilities.workspaceReport).toBe(true);
+		expect(capabilities.workspaceCheckpoint).toBe(true);
 		expect(capabilities.healthCheck).toBe(true);
 		expect(capabilities.migrationStatus).toBe(true);
 		expect(capabilities.clipboard).toBe(true);
