@@ -6,36 +6,35 @@
 
 [![GitHub Stars](https://img.shields.io/github/stars/Fyooryx/Vexa?style=flat)](https://github.com/Fyooryx/Vexa) [![](https://dcbadge.vercel.app/api/server/vVxVWYUAWD?style=flat)](https://discord.gg/vVxVWYUAWD)
 
-## • Vexa 1.14.6 additions
+## • Vexa 1.15.0 additions
 
 - centralized Vexa identity metadata without conflating it with upstream service endpoints
-- `Vexa 1.14.6` consolidates all icon-picker previews and Android launcher artwork on the supplied Vexa logo
+- `Vexa 1.15.0` consolidates all icon-picker previews and Android launcher artwork on the supplied Vexa logo
 - `Vexa: Copy Diagnostics` command for support reports
-- Vexa deep-link routing through one parser with migration-safe compatibility handling
+- Vexa deep-link routing through one canonical parser
 - API credential routing derived from the configured service endpoint
 - Vexa-branded startup/splash error messaging
 - density-specific Vexa launcher assets across Android mipmap resources
 - supplied Vexa logo is now the canonical launcher, splash, and in-app icon artwork
 - legacy Android icon resource filenames were migrated to the Vexa resource naming scheme
-- visible UI and localization branding is Vexa-first without changing compatibility identifiers
+- visible UI, diagnostics, commands, and localization use Vexa as the single product identity
 - automated branding guards now cover visible UI surfaces, localization values, and legacy resource filenames
 - reproducible nightly builds remain protected by pinned GitHub Actions and Node.js 22
 
 ## • Vexa Advanced Developer Layer
 
-PR #19 introduces an incremental Vexa-native developer layer without removing legacy compatibility contracts.
+Vexa 1.15.0 consolidates the developer tooling into a single Vexa-native surface.
 
 - Vexa Workspace Report for runtime and workspace state
 - Vexa Health Check for runtime, editor, LSP, clipboard, and network capability checks
-- Vexa Migration Status for the staged rebrand contract
+- Vexa Identity Status for the canonical product identity
 - Vexa Capability Matrix for feature/runtime visibility
 - Vexa Developer Context Pack for support/debugging reports
 - Vexa Workspace Snapshot for metadata-only session export
-- Vexa-first command and LSP naming while retaining compatibility aliases
+- Vexa-first command and LSP naming
 - Vexa Runtime Profile: a read-only, metadata-only runtime/workspace health profile exposed to commands and plugins
 - Vexa Health Snapshot: a consolidated metadata-only health/workspace/capability snapshot with display and copy commands
 
-Legacy identifiers are migrated only when a verified replacement exists. Deep links, storage identifiers, billing identifiers, upstream endpoints, and plugin compatibility surfaces may remain temporarily by design.
 ## • Overview
 
 Selamat datang di Vexa Editor - alat pengeditan kode yang kuat dan serbaguna yang dirancang khusus untuk perangkat Android. Apakah Anda sedang mengerjakan HTML, CSS, JavaScript, atau bahasa pemrograman lainnya, Vexa memberdayakan Anda untuk mengkode di mana saja dengan percaya diri. 
