@@ -1,4 +1,4 @@
-package com.foxdebug.browser;
+package com.vexa.app.browser;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -16,7 +16,7 @@ import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import com.vexa.app.R;
-import com.foxdebug.system.Ui;
+import com.vexa.app.system.Ui;
 
 public class Menu extends PopupWindow {
 
