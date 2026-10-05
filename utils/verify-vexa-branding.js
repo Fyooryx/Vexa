@@ -92,6 +92,20 @@ expect(
 	identity.includes('FREE_PACKAGE_NAME: "com.vexa.appfree"'),
 	"Vexa free package identity is missing",
 );
+expect(
+	identity.includes("MIGRATION_PHASE: 1"),
+	"Vexa repository must remain on gradual migration Phase 1",
+);
+expect(
+	identity.includes('LEGACY_NATIVE_NAMESPACE: "com.foxdebug"') &&
+		identity.includes('VEXA_NATIVE_NAMESPACE: "com.vexa.app"'),
+	"Vexa native namespace migration identities are missing",
+);
+expect(
+	identity.includes("LEGACY_PLUGIN_NAMESPACE_MIGRATION_ENABLED: false"),
+	"native plugin namespace migration must stay disabled until compatibility bridges are verified",
+);
+
 expect(identity.includes('URL_SCHEME: "vexa"'), "Vexa URL scheme is missing");
 expect(
 	identity.includes('LEGACY_URL_SCHEME: "acode"'),
