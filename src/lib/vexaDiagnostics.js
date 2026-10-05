@@ -390,7 +390,11 @@ export function getVexaHealthSnapshot(runtime = {}) {
 }
 
 export function formatVexaHealthSnapshot(runtime = {}) {
-	return JSON.stringify(getVexaHealthSnapshot(runtime), null, 2);
+	return [
+		"Vexa Health Snapshot",
+		"---------------------",
+		JSON.stringify(getVexaHealthSnapshot(runtime), null, 2),
+	].join("\n");
 }
 
 export function formatHealthSummary(checks) {
