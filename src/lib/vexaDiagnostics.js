@@ -180,7 +180,9 @@ export function getVexaHealthChecks(runtime = {}) {
 		{
 			id: "runtime",
 			label: "Runtime metadata",
-			ok: Boolean(current.buildInfo?.versionName || current.buildInfo?.versionCode),
+			ok: Boolean(
+				current.buildInfo?.versionName || current.buildInfo?.versionCode,
+			),
 		},
 		{
 			id: "editor",
@@ -198,8 +200,8 @@ export function getVexaHealthChecks(runtime = {}) {
 			label: "Clipboard",
 			ok: Boolean(
 				current.clipboard?.writeText ||
-				current.navigator?.clipboard?.writeText ||
-				current.cordova?.plugins?.clipboard?.copy,
+					current.navigator?.clipboard?.writeText ||
+					current.cordova?.plugins?.clipboard?.copy,
 			),
 		},
 		{
