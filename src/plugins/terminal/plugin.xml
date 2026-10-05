@@ -25,6 +25,20 @@
         </config-file>
         <config-file parent="/*" target="AndroidManifest.xml" />
 
+        <!-- Optional Termux bridge for advanced shell delegation. -->
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <queries>
+                <package android:name="com.termux" />
+            </queries>
+            <uses-permission android:name="com.termux.permission.RUN_COMMAND" />
+        </config-file>
+
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="TermuxBridge">
+                <param name="android-package" value="com.vexa.app.rk.exec.terminal.TermuxBridge" />
+            </feature>
+        </config-file>
+
         <source-file src="src/android/BackgroundExecutor.java" target-dir="src/com/vexa/app/rk/exec/terminal" />
         <source-file src="src/android/ProcessManager.java" target-dir="src/com/vexa/app/rk/exec/terminal" />
         <source-file src="src/android/ProcessUtils.java" target-dir="src/com/vexa/app/rk/exec/terminal" />
