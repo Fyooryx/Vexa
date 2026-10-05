@@ -754,11 +754,11 @@ function registerCoreCommands() {
 			toast(
 				checkpoint
 					? "Vexa checkpoint saved: " +
-						checkpoint.filename +
-						":" +
-						checkpoint.line +
-						":" +
-						checkpoint.column
+							checkpoint.filename +
+							":" +
+							checkpoint.line +
+							":" +
+							checkpoint.column
 					: "No active editor location available",
 			);
 			return true;
