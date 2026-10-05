@@ -99,34 +99,6 @@ Working with packages:
 EOF
     fi
 
-    # Create Vexa CLI tool (keep acode as a compatibility alias)
-    if [ ! -e "$PREFIX/alpine/usr/local/bin/vexa" ]; then
-        mkdir -p "$PREFIX/alpine/usr/local/bin"
-        cat <<'ACODE_CLI' > "$PREFIX/alpine/usr/local/bin/acode"
-#!/bin/bash
-# vexa - Open files/folders in Vexa
-# Uses OSC escape sequences to communicate with the Vexa terminal
-
-usage() {
-    echo "Usage: vexa [file/folder...]"
-    echo ""
-    echo "Open files or folders in Vexa."
-    echo ""
-    echo "Examples:"
-    echo "  vexa file.txt      # Open a file"
-    echo "  vexa .             # Open current folder"
-    echo "  vexa ~/project     # Open a folder"
-    echo "  vexa -h, --help    # Show this help"
-}
-
-get_abs_path() {
-    local path="$1"
-    local abs_path=""
-
-    if command -v realpath >/dev/null 2>&1; then
-        abs_path=$(realpath -- "$path" 2>/dev/null)
-    fi
-
     if [[ -z "$abs_path" ]]; then
         if [[ -d "$path" ]]; then
             abs_path=$(cd -- "$path" 2>/dev/null && pwd -P)
@@ -178,7 +150,6 @@ for arg in "$@"; do
 done
 VEXA_CLI
         chmod +x "$PREFIX/alpine/usr/local/bin/vexa"
-        ln -sfn vexa "$PREFIX/alpine/usr/local/bin/acode"
     fi
 
     # Create initrc if it doesn't exist
@@ -291,9 +262,9 @@ _acode_preexec() {
 
 # Preserve any existing DEBUG trap and append our handler instead of overwriting it.
 # This avoids clobbering user-installed preexec hooks (starship, fzf, bash-preexec, etc.).
-__acode_existing_debug_trap="$(trap -p DEBUG 2>/dev/null)"
-if [[ -n "${__acode_existing_debug_trap}" ]]; then
-    __acode_existing_cmd="$(printf "%s" "${__acode_existing_debug_trap}" | sed -E "s/.*'((.*)?)'.*/\1/")"
+__vexa_existing_debug_trap="$(trap -p DEBUG 2>/dev/null)"
+if [[ -n "${__vexa_existing_debug_trap}" ]]; then
+    __acode_existing_cmd="$(printf "%s" "${__vexa_existing_debug_trap}" | sed -E "s/.*'((.*)?)'.*/\1/")"
 else
     __acode_existing_cmd=""
 fi
@@ -306,7 +277,7 @@ if [[ "${__acode_existing_cmd}" != *"_acode_preexec"* ]]; then
         trap '_acode_preexec' DEBUG
     fi
 fi
-unset __acode_existing_debug_trap __acode_existing_cmd
+unset __vexa_existing_debug_trap __acode_existing_cmd
 
 # Command-not-found handler
 command_not_found_handle() {
