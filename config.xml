@@ -49,7 +49,7 @@
                 android:hardwareAccelerated="true"
                 android:largeHeap="true"
                 android:requestLegacyExternalStorage="true"
-                android:usesCleartextTraffic="true"
+                android:usesCleartextTraffic="false"
                 android:enableOnBackInvokedCallback="false" />
         </edit-config>
 
