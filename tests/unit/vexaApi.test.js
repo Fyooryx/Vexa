@@ -6,6 +6,7 @@ import {
   getVexaFormatters,
   vexaGetFormatterFor,
   getVexaCoreBoundaryStatus,
+  requireVexaCore,
 } from "lib/vexaApi";
 
 describe("Vexa core boundary", () => {
@@ -22,6 +23,14 @@ describe("Vexa core boundary", () => {
 
     expect(getVexaCore()).toBe(vexa);
     expect(vexaExec("noop")).toBe("vexa");
+  });
+
+  it("requires a core when an internal lifecycle path cannot continue without one", () => {
+    expect(() => requireVexaCore()).toThrow("[Vexa] core runtime unavailable");
+
+    const core = { exec: () => true };
+    globalThis.vexa = core;
+    expect(requireVexaCore()).toBe(core);
   });
 
   it("falls back to the legacy global only when the Vexa global is unavailable", () => {
