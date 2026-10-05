@@ -1,4 +1,4 @@
-package com.foxdebug.browser;
+package com.vexa.app.browser;
 
 import android.app.Activity;
 import android.content.Context;
@@ -31,9 +31,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import com.foxdebug.browser.Emulator;
-import com.foxdebug.browser.Menu;
-import com.foxdebug.system.Ui;
+import com.vexa.app.browser.Emulator;
+import com.vexa.app.browser.Menu;
+import com.vexa.app.system.Ui;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
