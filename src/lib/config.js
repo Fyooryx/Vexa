@@ -21,8 +21,6 @@ const config = {
 	SCROLL_SPEED_SLOW: "SLOW",
 	SIDEBAR_SLIDE_START_THRESHOLD_PX: 20,
 	CUSTOM_THEME: 'body[theme="custom"]',
-	FEEDBACK_EMAIL: "apps@foxdebug.com",
-	// Legacy email remains as a compatibility fallback; new product feedback uses Vexa Issues.
 	FEEDBACK_URL: `${VEXA_IDENTITY.REPOSITORY_URL}/issues/new`,
 	ERUDA_CDN: "https://cdn.jsdelivr.net/npm/eruda",
 
