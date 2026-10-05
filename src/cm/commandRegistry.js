@@ -107,7 +107,15 @@ import keyBindings, {
 	CODEMIRROR_COMMAND_NAMES,
 } from "lib/keyBindings";
 import settings from "lib/settings";
-import { copyVexaDiagnostics, copyVexaText, formatHealthSummary, getActiveCodeLocation, getVexaHealthChecks, getVexaWorkspaceReport } from "lib/vexaDiagnostics";
+import {
+	copyVexaDiagnostics,
+	copyVexaText,
+	formatHealthSummary,
+	formatMigrationStatus,
+	getActiveCodeLocation,
+	getVexaHealthChecks,
+	getVexaWorkspaceReport,
+} from "lib/vexaDiagnostics";
 import { VEXA_IDENTITY } from "lib/vexaIdentity";
 import Url from "utils/Url";
 
@@ -653,6 +661,21 @@ function registerCoreCommands() {
 				globalThis.alert("Vexa Health", message);
 			} else {
 				toast(message);
+			}
+			return true;
+		},
+	});
+	addCommand({
+		name: "vexa:migrationStatus",
+		description: "Show Vexa migration status",
+		readOnly: true,
+		requiresView: false,
+		run() {
+			const status = formatMigrationStatus();
+			if (typeof globalThis.alert === "function") {
+				globalThis.alert("Vexa Migration", status);
+			} else {
+				toast(status);
 			}
 			return true;
 		},
