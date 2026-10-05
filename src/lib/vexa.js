@@ -263,7 +263,7 @@ class Vexa {
 		const listModes = () => [...getModes()];
 		const listModesByName = () => ({ ...getModesByName() });
 
-		const aceModes = {
+		const editorModes = {
 			addMode,
 			removeMode,
 			getModeForPath: (path) => getModeForPath(String(path || "")),
@@ -397,7 +397,7 @@ class Vexa {
 			if (!didWarnAboutFileList) {
 				didWarnAboutFileList = true;
 				console.warn(
-					'acode.require("fileList") is deprecated. Use the asynchronous "fileIndex" API. fileList now contains only non-native storage providers.',
+					'vexa.require("fileList") is deprecated. Use the asynchronous "fileIndex" API. fileList now contains only non-native storage providers.',
 				);
 			}
 			return files(...args);
@@ -413,7 +413,9 @@ class Vexa {
 		this.define("palette", palette);
 		this.define("projects", projects);
 		this.define("tutorial", tutorial);
-		this.define("aceModes", aceModes);
+		this.define("editorModes", editorModes);
+		// Legacy plugin API alias retained during gradual migration.
+		this.define("aceModes", editorModes);
 		this.define("themes", themesModule);
 		this.define("editorLanguages", editorLanguages);
 		this.define("editorThemes", editorThemesModule);
@@ -577,7 +579,7 @@ class Vexa {
 	}
 
 	/**
-	 * Installs an Acode plugin from registry
+	 * Installs a Vexa plugin from registry (Acode-compatible API)
 	 * @param {string} pluginId id of the plugin to install
 	 * @param {string} installerPluginName Name of plugin attempting to install
 	 * @returns {Promise<void>}
