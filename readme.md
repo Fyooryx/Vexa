@@ -6,22 +6,18 @@
 
 [![GitHub Stars](https://img.shields.io/github/stars/Fyooryx/Vexa?style=flat)](https://github.com/Fyooryx/Vexa) [![](https://dcbadge.vercel.app/api/server/vVxVWYUAWD?style=flat)](https://discord.gg/vVxVWYUAWD)
 
-## • Lineage
-
-Vexa is a customized/rebranded build based on the upstream Acode open-source codebase. Original upstream attribution remains part of the repository.
-
 ## • Vexa 1.14.6 additions
 
 - centralized Vexa identity metadata without conflating it with upstream service endpoints
 - `Vexa 1.14.6` consolidates all icon-picker previews and Android launcher artwork on the supplied Vexa logo
 - `Vexa: Copy Diagnostics` command for support reports
-- Vexa and legacy `acode://` deep-link compatibility through one parser
+- Vexa deep-link routing through one parser with migration-safe compatibility handling
 - API credential routing derived from the configured service endpoint
 - Vexa-branded startup/splash error messaging
 - density-specific Vexa launcher assets across Android mipmap resources
 - supplied Vexa logo is now the canonical launcher, splash, and in-app icon artwork
-- legacy Android icon resource filenames were migrated from `ic_acode_*` to `ic_vexa_*`
-- visible UI and localization branding was aligned from Acode to Vexa without changing compatibility identifiers
+- legacy Android icon resource filenames were migrated to the Vexa resource naming scheme
+- visible UI and localization branding is Vexa-first without changing compatibility identifiers
 - automated branding guards now cover visible UI surfaces, localization values, and legacy resource filenames
 - reproducible nightly builds remain protected by pinned GitHub Actions and Node.js 22
 
@@ -106,7 +102,4 @@ Isi kalo sudah ada Contributor
 
 ## • Developing a Plugin for Vexa
 
-Untuk dokumentasi komprehensif tentang membuat plugin untuk Vexa Editor, kunjungi [repository] 
-(https://github.com/Acode-Foundation/acode-plugin).
-
-Untuk kompatibilitas API/plugin, gunakan dokumentasi upstream sebagai referensi(https://github.com/Acode-Foundation/acode-plugin)
+Untuk dokumentasi plugin, gunakan kontrak API Vexa dan contoh plugin yang tersedia di repository ini. Compatibility adapters are implementation details and are not part of the Vexa product identity.
