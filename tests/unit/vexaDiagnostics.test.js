@@ -182,6 +182,31 @@ describe("Vexa advanced diagnostics", () => {
 	})).toContain("Vexa Runtime Profile");
 	});
 
+	it("calculates a weighted Vexa health score", () => {
+		const healthy = getVexaHealthScore({
+			buildInfo: { versionName: "1.14.6", versionCode: 1019 },
+			editorManager: { files: [] },
+			navigator: {
+				onLine: true,
+				clipboard: { writeText: async () => {} },
+			},
+		});
+		expect(healthy.score).toBe(100);
+		expect(healthy.status).toBe("HEALTHY");
+		expect(healthy.failed).toBe(0);
+
+		const degraded = getVexaHealthScore({
+			buildInfo: { versionName: "1.14.6", versionCode: 1019 },
+			editorManager: { files: [] },
+			navigator: { onLine: true },
+		});
+		expect(degraded.score).toBeLessThan(100);
+		expect(degraded.status).toBe("DEGRADED");
+		expect(formatVexaHealthScore({ buildInfo: { versionName: "1.14.6" }, editorManager: { files: [] } })).toContain(
+			"Vexa Health Score",
+		);
+	});
+
 	it("reports the Vexa capability matrix", () => {
 		const capabilities = getVexaCapabilities({
 			buildInfo: { versionName: "1.14.6" },
