@@ -1,4 +1,4 @@
-package com.foxdebug.sftp;
+package com.vexa.app.sftp;
 
 import android.content.Context;
 import com.vexa.app.rk.auth.EncryptedPreferenceManager;
