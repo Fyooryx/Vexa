@@ -26,3 +26,4 @@
 - Corrected Workspace Pulse network evaluation to use normalized runtime state.
 - Strengthened the main validation gate with translation checking.
 - No new branch or PR was created; changes were integrated directly on `main`.
+\n## Vexa Doctor wave\n\n- Added consolidated Vexa Doctor metadata diagnostics.\n- Added `vexa:doctor` and `vexa:copyDoctor` command surfaces.\n- Doctor aggregates identity, readiness, health, capability, workspace, and migration state without exporting file contents.\n
