@@ -63,6 +63,14 @@ describe("Vexa branding", () => {
 		expect(bindings).toContain('name: "vexa:showWelcome"');
 	});
 
+	it("verifies migrated first-party native plugin namespaces", () => {
+		const verifier = read("utils/verify-vexa-branding.js");
+		expect(verifier).toContain("migratedNativeJavaFiles");
+		expect(verifier).toContain("migratedNativePluginXml");
+		expect(verifier).toContain("com/vexa/app");
+		expect(verifier).not.toContain('src/plugins/browser/android/com/foxdebug/browser/Menu.java');
+	});
+
 	it("uses the Vexa runtime boundary for migrated internal surfaces", () => {
 		const api = read("src/lib/vexaApi.js");
 		const commandRegistry = read("src/cm/commandRegistry.js");
