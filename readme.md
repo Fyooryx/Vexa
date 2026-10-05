@@ -27,6 +27,7 @@ Vexa 1.15.0 consolidates the developer tooling into a single Vexa-native surface
 
 - Vexa Workspace Report for runtime and workspace state
 - Vexa Health Check for runtime, editor, LSP, clipboard, and network capability checks
+- Vexa Identity Lock for deterministic product identity verification
 - Vexa Identity Status for the canonical product identity
 - Vexa Capability Matrix for feature/runtime visibility
 - Vexa Developer Context Pack for support/debugging reports
@@ -34,6 +35,7 @@ Vexa 1.15.0 consolidates the developer tooling into a single Vexa-native surface
 - Vexa-first command and LSP naming
 - Vexa Runtime Profile: a read-only, metadata-only runtime/workspace health profile exposed to commands and plugins
 - Vexa Health Snapshot: a consolidated metadata-only health/workspace/capability snapshot with display and copy commands
+- Vexa Workspace Pulse: a compact actionable workspace/health signal with safe copy support
 
 ## • Overview
 
