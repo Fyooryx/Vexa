@@ -27,7 +27,7 @@ import {
 describe("Vexa advanced diagnostics", () => {
 	beforeEach(() => {
 		globalThis.BuildInfo = {
-			versionName: "1.14.6",
+			versionName: "1.15.0",
 			versionCode: 1019,
 			packageName: "com.vexa.app",
 		};
@@ -88,7 +88,7 @@ describe("Vexa advanced diagnostics", () => {
 
 	it("produces a Vexa workspace report", () => {
 		const report = getVexaWorkspaceReport({
-			buildInfo: { versionName: "1.14.6", packageName: "com.vexa.app" },
+			buildInfo: { versionName: "1.15.0", packageName: "com.vexa.app" },
 			navigator: { onLine: true },
 			editorManager: { files: [], activeFile: null },
 		});
@@ -133,7 +133,7 @@ describe("Vexa advanced diagnostics", () => {
 	it("reports runtime diagnostics with workspace counts", () => {
 		const report = getVexaDiagnostics({
 			buildInfo: {
-				versionName: "1.14.6",
+				versionName: "1.15.0",
 				versionCode: 1019,
 				packageName: "com.vexa.app",
 			},
@@ -155,7 +155,7 @@ describe("Vexa advanced diagnostics", () => {
 
 	it("exports a metadata-only workspace snapshot", () => {
 		const snapshot = getVexaWorkspaceSnapshot({
-			buildInfo: { versionName: "1.14.6", packageName: "com.vexa.app" },
+			buildInfo: { versionName: "1.15.0", packageName: "com.vexa.app" },
 			editorManager: {
 				files: [
 					{
@@ -182,7 +182,7 @@ describe("Vexa advanced diagnostics", () => {
 
 	it("builds a shareable Vexa developer context pack", () => {
 		const pack = getVexaContextPack({
-			buildInfo: { versionName: "1.14.6", packageName: "com.vexa.app" },
+			buildInfo: { versionName: "1.15.0", packageName: "com.vexa.app" },
 			navigator: { onLine: true },
 			editorManager: { files: [], activeFile: null },
 		});
@@ -195,7 +195,7 @@ describe("Vexa advanced diagnostics", () => {
 
 	it("builds a stable Vexa runtime profile", () => {
 		const profile = getVexaRuntimeProfile({
-			buildInfo: { versionName: "1.14.6", packageName: "com.vexa.app" },
+			buildInfo: { versionName: "1.15.0", packageName: "com.vexa.app" },
 			device: { platform: "Android" },
 			navigator: {
 				language: "id-ID",
@@ -218,14 +218,14 @@ describe("Vexa advanced diagnostics", () => {
 		expect(profile.dirtyFiles).toBe(1);
 		expect(profile.health).toMatchObject({ ok: true, failed: 0 });
 		expect(formatVexaRuntimeProfile({
-			buildInfo: { versionName: "1.14.6", packageName: "com.vexa.app" },
+			buildInfo: { versionName: "1.15.0", packageName: "com.vexa.app" },
 			editorManager: { files: [], activeFile: null },
 	})).toContain("Vexa Runtime Profile");
 	});
 
 	it("calculates a weighted Vexa health score", () => {
 		const healthy = getVexaHealthScore({
-			buildInfo: { versionName: "1.14.6", versionCode: 1019 },
+			buildInfo: { versionName: "1.15.0", versionCode: 1019 },
 			editorManager: { files: [] },
 			navigator: {
 				onLine: true,
@@ -237,19 +237,19 @@ describe("Vexa advanced diagnostics", () => {
 		expect(healthy.failed).toBe(0);
 
 		const degraded = getVexaHealthScore({
-			buildInfo: { versionName: "1.14.6", versionCode: 1019 },
+			buildInfo: { versionName: "1.15.0", versionCode: 1019 },
 			navigator: { onLine: true, clipboard: null },
 		});
 		expect(degraded.score).toBeLessThan(100);
 		expect(degraded.status).toBe("DEGRADED");
-		expect(formatVexaHealthScore({ buildInfo: { versionName: "1.14.6" }, editorManager: { files: [] } })).toContain(
+		expect(formatVexaHealthScore({ buildInfo: { versionName: "1.15.0" }, editorManager: { files: [] } })).toContain(
 			"Vexa Health Score",
 		);
 	});
 
 	it("builds a consolidated Vexa health snapshot", () => {
 		const snapshot = getVexaHealthSnapshot({
-			buildInfo: { versionName: "1.14.6", versionCode: 1019 },
+			buildInfo: { versionName: "1.15.0", versionCode: 1019 },
 			navigator: {
 				onLine: true,
 				language: "id-ID",
@@ -276,7 +276,7 @@ describe("Vexa advanced diagnostics", () => {
 		expect(snapshot.capabilities.healthSnapshot).toBe(true);
 		expect(
 			formatVexaHealthSnapshot({
-				buildInfo: { versionName: "1.14.6" },
+				buildInfo: { versionName: "1.15.0" },
 				editorManager: { files: [] },
 			}),
 		).toContain("Vexa Health Snapshot");
@@ -284,7 +284,7 @@ describe("Vexa advanced diagnostics", () => {
 
 	it("reports the Vexa capability matrix", () => {
 		const capabilities = getVexaCapabilities({
-			buildInfo: { versionName: "1.14.6" },
+			buildInfo: { versionName: "1.15.0" },
 			editorManager: { files: [], editor: { state: {} } },
 			navigator: { clipboard: { writeText: async () => {} } },
 		});
@@ -297,7 +297,7 @@ describe("Vexa advanced diagnostics", () => {
 	});
 	it("summarizes health checks deterministically", () => {
 		const checks = getVexaHealthChecks({
-			buildInfo: { versionName: "1.14.6" },
+			buildInfo: { versionName: "1.15.0" },
 			editorManager: { files: [] },
 			navigator: {
 				onLine: true,
