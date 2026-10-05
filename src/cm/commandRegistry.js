@@ -121,6 +121,12 @@ import {
 	getVexaWorkspaceReport,
 } from "lib/vexaDiagnostics";
 import { VEXA_IDENTITY } from "lib/vexaIdentity";
+import {
+	clearVexaWorkspaceCheckpoints,
+	formatVexaWorkspaceCheckpoints,
+	restoreVexaWorkspaceCheckpoint,
+	saveVexaWorkspaceCheckpoint,
+} from "lib/vexaWorkspaceCheckpoint";
 import Url from "utils/Url";
 
 const commandKeymapCompartment = new Compartment();
@@ -718,6 +724,70 @@ function registerCoreCommands() {
 			} else {
 				toast(profile);
 			}
+			return true;
+		},
+	});
+	addCommand({
+		name: "vexa:checkpointSave",
+		description: "Save current Vexa workspace checkpoint",
+		readOnly: true,
+		requiresView: false,
+		run() {
+			const checkpoint = saveVexaWorkspaceCheckpoint();
+			toast(
+				checkpoint
+					? "Vexa checkpoint saved: " +
+						checkpoint.filename +
+						":" +
+						checkpoint.line +
+						":" +
+						checkpoint.column
+					: "No active editor location available",
+			);
+			return true;
+		},
+	});
+	addCommand({
+		name: "vexa:checkpointList",
+		description: "List saved Vexa workspace checkpoints",
+		readOnly: true,
+		requiresView: false,
+		run() {
+			const list = formatVexaWorkspaceCheckpoints();
+			if (typeof globalThis.alert === "function") {
+				globalThis.alert("Vexa Checkpoints", list);
+			} else {
+				toast(list);
+			}
+			return true;
+		},
+	});
+	addCommand({
+		name: "vexa:checkpointRestore",
+		description: "Restore latest Vexa workspace checkpoint",
+		readOnly: true,
+		requiresView: false,
+		run() {
+			restoreVexaWorkspaceCheckpoint()
+				.then((restored) =>
+					toast(
+						restored
+							? "Vexa checkpoint restored"
+							: "No Vexa checkpoint available",
+					),
+				)
+				.catch(() => toast("Failed to restore Vexa checkpoint"));
+			return true;
+		},
+	});
+	addCommand({
+		name: "vexa:checkpointClear",
+		description: "Clear saved Vexa workspace checkpoints",
+		readOnly: true,
+		requiresView: false,
+		run() {
+			const cleared = clearVexaWorkspaceCheckpoints();
+			toast(cleared ? "Vexa checkpoints cleared" : "Unable to clear Vexa checkpoints");
 			return true;
 		},
 	});
