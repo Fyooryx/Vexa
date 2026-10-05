@@ -156,7 +156,11 @@ describe("Vexa advanced diagnostics", () => {
 		const profile = getVexaRuntimeProfile({
 			buildInfo: { versionName: "1.14.6", packageName: "com.vexa.app" },
 			device: { platform: "Android" },
-			navigator: { language: "id-ID", onLine: true },
+			navigator: {
+				language: "id-ID",
+				onLine: true,
+				clipboard: { writeText: async () => {} },
+			},
 			editorManager: {
 				files: [
 					{ type: "editor", markChanged: true },
