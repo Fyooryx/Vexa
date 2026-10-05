@@ -6,6 +6,8 @@ import {
 	formatVexaHealthScore,
 	formatVexaHealthSnapshot,
 	formatVexaRuntimeProfile,
+	formatVexaIdentityStatus,
+	formatVexaWorkspacePulse,
 	getActiveCodeLocation,
 	getVexaRuntimeProfile,
 	getVexaCapabilities,
@@ -14,7 +16,9 @@ import {
 	getVexaHealthChecks,
 	getVexaHealthScore,
 	getVexaHealthSnapshot,
+	getVexaIdentityStatus,
 	getVexaMigrationStatus,
+	getVexaWorkspacePulse,
 	getVexaWorkspaceReport,
 	getVexaWorkspaceSnapshot,
 	getWorkspaceSnapshot,
@@ -91,6 +95,39 @@ describe("Vexa advanced diagnostics", () => {
 		expect(report).toContain("Vexa Workspace Report");
 		expect(report).toContain("Package: com.vexa.app");
 		expect(report).toContain("Migration phase: 2");
+	});
+
+	it("locks the public identity to Vexa", () => {
+		const status = getVexaIdentityStatus({
+			buildInfo: { versionName: "1.15.0", packageName: "com.vexa.app" },
+		});
+		expect(status.mode).toBe("VEXA_ONLY");
+		expect(status.status).toBe("LOCKED");
+		expect(status.failed).toBe(0);
+		expect(formatVexaIdentityStatus({
+			buildInfo: { versionName: "1.15.0", packageName: "com.vexa.app" },
+		})).toContain("Vexa Identity Lock");
+	});
+
+	it("builds a metadata-only workspace pulse", () => {
+		const pulse = getVexaWorkspacePulse({
+			buildInfo: { versionName: "1.15.0", packageName: "com.vexa.app" },
+			navigator: { onLine: true },
+			editorManager: {
+			files: [{ type: "editor", filename: "main.js", markChanged: true }],
+			activeFile: { filename: "main.js", uri: "file:///workspace/main.js" },
+		},
+	});
+		expect(pulse.schemaVersion).toBe(1);
+		expect(pulse.app).toBe("Vexa");
+		expect(pulse.status).toBe("READY");
+		expect(pulse.dirtyFiles).toBe(1);
+		expect(pulse.signals.map((signal) => signal.id)).toContain("unsaved");
+		expect(formatVexaWorkspacePulse({
+		buildInfo: { versionName: "1.15.0", packageName: "com.vexa.app" },
+		navigator: { onLine: true },
+		editorManager: { files: [], activeFile: null },
+	})).toContain("Vexa Workspace Pulse");
 	});
 
 	it("reports runtime diagnostics with workspace counts", () => {
