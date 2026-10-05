@@ -1,4 +1,4 @@
-package com.foxdebug.browser;
+package com.vexa.app.browser;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,7 +13,7 @@ import android.view.WindowInsets;
 import android.view.WindowInsetsController;
 import android.view.WindowManager;
 import android.webkit.WebChromeClient;
-import com.foxdebug.system.Ui;
+import com.vexa.app.system.Ui;
 import org.json.JSONObject;
 
 public class BrowserActivity extends Activity {
