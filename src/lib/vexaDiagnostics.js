@@ -292,6 +292,7 @@ export function getVexaCapabilities(runtime = {}) {
 		identityLock: true,
 		workspacePulse: true,
 		readinessGate: true,
+		doctor: true,
 		codemirror: Boolean(current.editorManager?.editor?.state),
 		lsp: workspace.lspProviders.length > 0,
 		multiPane: Number(workspace.paneCount || 0) > 1,
@@ -529,6 +530,79 @@ export function formatVexaReadiness(runtime = {}) {
 	].join("\n");
 }
 
+
+export function getVexaDoctorReport(runtime = {}) {
+	const identity = getVexaIdentityStatus(runtime);
+	const readiness = getVexaReadiness(runtime);
+	const health = getVexaHealthScore(runtime);
+	const capabilities = getVexaCapabilities(runtime);
+	const workspace = getVexaWorkspacePulse(runtime);
+	const migration = getVexaMigrationStatus();
+
+	const status =
+		readiness.status === "BLOCKED" ||
+		identity.status !== "LOCKED" ||
+		health.status === "ATTENTION"
+			? "BLOCKED"
+			: readiness.status === "DEGRADED" ||
+					health.status === "DEGRADED" ||
+					workspace.status !== "READY"
+				? "DEGRADED"
+				: "READY";
+
+	const recommendations = [
+		...readiness.recommendations,
+		...(health.failed
+			? health.checks
+					.filter((check) => !check.ok)
+					.map((check) => "Resolve health check: " + check.label + ".")
+			: []),
+	];
+
+	return Object.freeze({
+		schemaVersion: 1,
+		generatedAt: new Date().toISOString(),
+		app: VEXA_IDENTITY.NAME,
+		status,
+		identity,
+		readiness,
+		health: {
+			score: health.score,
+			status: health.status,
+			passed: health.passed,
+			failed: health.failed,
+		},
+		capabilities,
+		workspace: {
+			status: workspace.status,
+			openFiles: workspace.openFiles,
+			dirtyFiles: workspace.dirtyFiles,
+			activeFile: workspace.activeFile,
+			lspProviders: workspace.lspProviders,
+		},
+		migration,
+		recommendations: [...new Set(recommendations)],
+	});
+}
+
+export function formatVexaDoctorReport(runtime = {}) {
+	const doctor = getVexaDoctorReport(runtime);
+	return [
+		"Vexa Doctor",
+		"------------",
+		"Status: " + doctor.status,
+		"Identity: " + doctor.identity.status,
+		"Readiness: " + doctor.readiness.status,
+		"Health: " + doctor.health.score + "/100 (" + doctor.health.status + ")",
+		"Workspace: " + doctor.workspace.status,
+		"Migration phase: " + valueOrUnknown(doctor.migration.phase),
+		"Recommendations:",
+		...(doctor.recommendations.length
+			? doctor.recommendations.map((recommendation) => "- " + recommendation)
+			: ["- none"]),
+	].join("\n");
+}
+
 export function formatVexaHealthScore(runtime = {}) {
 	const health = getVexaHealthScore(runtime);
 	return [
@@ -689,6 +763,10 @@ export async function copyVexaText(text, runtime = {}) {
 
 export async function copyVexaReadiness(runtime = {}) {
 	return copyVexaText(formatVexaReadiness(runtime), runtime);
+}
+
+export async function copyVexaDoctorReport(runtime = {}) {
+	return copyVexaText(formatVexaDoctorReport(runtime), runtime);
 }
 
 export async function copyVexaRuntimeProfile(runtime = {}) {
