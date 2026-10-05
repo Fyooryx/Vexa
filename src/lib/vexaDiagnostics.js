@@ -119,6 +119,32 @@ export function formatMigrationStatus() {
 		"Legacy deep link: " + status.legacyDeepLink,
 	].join("\n");
 }
+export function getVexaCapabilities(runtime = {}) {
+	const current = getRuntime(runtime);
+	const workspace = getWorkspaceSnapshot(runtime);
+	const capabilities = {
+		codemirror: Boolean(globalThis.editorManager?.editor?.state),
+		lsp: workspace.lspProviders.length > 0,
+		multiPane: Number(workspace.paneCount || 0) > 1,
+		terminal: Boolean(globalThis.vexa?.require?.("terminal") || globalThis.acode?.require?.("terminal")),
+		workspaceReport: true,
+	healthCheck: true,
+		migrationStatus: true,
+		clipboard: Boolean(current.clipboard?.writeText || current.navigator?.clipboard?.writeText || current.cordova?.plugins?.clipboard?.copy),
+	};
+	return Object.freeze(capabilities);
+}
+
+export function formatVexaCapabilities(runtime = {}) {
+	const capabilities = getVexaCapabilities(runtime);
+	return [
+		"Vexa Capabilities",
+		"-----------------",
+		...Object.entries(capabilities).map(([name, enabled]) =>
+			(enabled ? "PASS " : "---- ") + name,
+		),
+	].join("\n");
+}
 export function getVexaHealthChecks(runtime = {}) {
 	const current = getRuntime(runtime);
 	const workspace = getWorkspaceSnapshot(runtime);
