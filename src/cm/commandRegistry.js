@@ -725,9 +725,7 @@ function registerCoreCommands() {
 			copyVexaHealthSnapshot()
 				.then((copied) =>
 					toast(
-						copied
-							? "Vexa health snapshot copied"
-							: "Clipboard is unavailable",
+						copied ? "Vexa health snapshot copied" : "Clipboard is unavailable",
 					),
 				)
 				.catch(() => toast("Failed to copy Vexa health snapshot"));
