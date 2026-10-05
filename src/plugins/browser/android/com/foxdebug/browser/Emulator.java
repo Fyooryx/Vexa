@@ -1,4 +1,4 @@
-package com.foxdebug.browser;
+package com.vexa.app.browser;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import com.foxdebug.system.Ui;
+import com.vexa.app.system.Ui;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
