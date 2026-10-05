@@ -361,6 +361,20 @@ describe("Vexa advanced diagnostics", () => {
 		expect(doctor.health.status).toBe("HEALTHY");
 		expect(doctor.capabilities.workspaceReport).toBe(true);
 		expect(formatVexaDoctorReport(runtime)).toContain("Vexa Doctor");
+
+		delete globalThis.vexa;
+		globalThis.acode = {};
+		const fallbackDoctor = getVexaDoctorReport(runtime);
+		expect(fallbackDoctor.status).toBe("DEGRADED");
+		expect(fallbackDoctor.coreBoundary.status).toBe("LEGACY_FALLBACK");
+
+		delete globalThis.acode;
+		const blockedDoctor = getVexaDoctorReport(runtime);
+		expect(blockedDoctor.status).toBe("BLOCKED");
+		expect(blockedDoctor.coreBoundary.status).toBe("UNAVAILABLE");
+		expect(blockedDoctor.recommendations).toContain(
+			"Restore the canonical Vexa runtime before continuing.",
+		);
 	});
 
 	it("summarizes health checks deterministically", () => {
