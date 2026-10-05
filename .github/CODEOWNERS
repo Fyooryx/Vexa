@@ -1,4 +1,5 @@
-.github/CODEOWNERS @Acode-Foundation/acode 
+# Vexa project owner
+* @Fyooryx
 
 # workflows
 .github/workflows/nightly-build.yml @unschooledgamer
