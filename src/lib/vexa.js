@@ -87,11 +87,11 @@ import helpers from "utils/helpers";
 import KeyboardEvent from "utils/keyboardEvent";
 import Url from "utils/Url";
 import config from "./config";
+import quickToolsAdapters from "./quickToolsAdapter";
 import {
 	formatVexaRuntimeProfile,
 	getVexaRuntimeProfile,
 } from "./vexaDiagnostics";
-import quickToolsAdapters from "./quickToolsAdapter";
 import webview from "./webview";
 
 class Vexa {
