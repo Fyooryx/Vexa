@@ -1,6 +1,7 @@
 ## [Unreleased]
 
 ### Added
+- Vexa Workspace Checkpoints: metadata-only active-file/cursor checkpoints with bounded local history and restore support.
 - Vexa Workspace Report, Health Check, Migration Status, Capability Matrix, Developer Context Pack, and metadata-only Workspace Snapshot.
 - Vexa-first developer command and LSP naming with compatibility aliases.
 - Added a read-only Vexa Runtime Profile for lightweight runtime/workspace health visibility.
