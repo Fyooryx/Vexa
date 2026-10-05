@@ -1,4 +1,3 @@
-import { listRuntimeProviders } from "cm/lsp/runtimeProviders";
 import config from "./config";
 import { getRuntimePackageName, VEXA_IDENTITY } from "./vexaIdentity";
 
@@ -16,6 +15,9 @@ function getRuntime(runtime = {}) {
 		editorManager: runtime.editorManager ?? globalThis.editorManager ?? null,
 		clipboard: runtime.clipboard ?? null,
 		cordova: runtime.cordova ?? globalThis.cordova,
+		lspProviders: Array.isArray(runtime.lspProviders)
+			? runtime.lspProviders
+			: null,
 	};
 }
 
@@ -42,7 +44,11 @@ export function getWorkspaceSnapshot(runtime = {}) {
 	const activeFile = current.editorManager?.activeFile ?? null;
 	const dirtyFiles = files.filter((file) => file?.markChanged);
 	const selection = getActiveSelection(current.editorManager);
-	const providers = listRuntimeProviders();
+	const providers =
+		current.lspProviders ??
+		(typeof globalThis.listRuntimeProviders === "function"
+			? globalThis.listRuntimeProviders()
+			: []);
 
 	return {
 		openFiles: files.length,
@@ -133,14 +139,17 @@ export function getVexaCapabilities(runtime = {}) {
 		codemirror: Boolean(current.editorManager?.editor?.state),
 		lsp: workspace.lspProviders.length > 0,
 		multiPane: Number(workspace.paneCount || 0) > 1,
-		terminal: Boolean(globalThis.vexa?.require?.("terminal") || globalThis.acode?.require?.("terminal")),
+		terminal: Boolean(
+			globalThis.vexa?.require?.("terminal") ||
+				globalThis.acode?.require?.("terminal"),
+		),
 		workspaceReport: true,
 		healthCheck: true,
 		migrationStatus: true,
 		clipboard: Boolean(
 			current.clipboard?.writeText ||
-			current.navigator?.clipboard?.writeText ||
-			current.cordova?.plugins?.clipboard?.copy,
+				current.navigator?.clipboard?.writeText ||
+				current.cordova?.plugins?.clipboard?.copy,
 		),
 	};
 	return Object.freeze(capabilities);
@@ -171,10 +180,7 @@ export function getVexaHealthChecks(runtime = {}) {
 		{
 			id: "runtime",
 			label: "Runtime metadata",
-			ok: Boolean(
-				current.buildInfo?.versionName ||
-				current.buildInfo?.versionCode,
-			),
+			ok: Boolean(current.buildInfo?.versionName || current.buildInfo?.versionCode),
 		},
 		{
 			id: "editor",
