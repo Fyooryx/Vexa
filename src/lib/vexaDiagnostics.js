@@ -712,34 +712,63 @@ export function formatHealthSummary(checks) {
 	return { passed, failed, ok: failed === 0 };
 }
 
-export function getVexaDiagnostics(runtime = {}) {
+export function getVexaDiagnosticData(runtime = {}) {
 	const current = getRuntime(runtime);
 	const workspace = getWorkspaceSnapshot(runtime);
+	return Object.freeze({
+		diagnosticsVersion: VEXA_DIAGNOSTICS_VERSION,
+		app: VEXA_IDENTITY.NAME,
+		version: valueOrUnknown(current.buildInfo.versionName),
+		versionCode: valueOrUnknown(current.buildInfo.versionCode),
+		packageName: getRuntimePackageName(current.buildInfo),
+		android: valueOrUnknown(current.device.version),
+		platform: valueOrUnknown(current.device.platform),
+		model: valueOrUnknown(current.device.model),
+		manufacturer: valueOrUnknown(current.device.manufacturer),
+		language: valueOrUnknown(current.navigator.language),
+		online: valueOrUnknown(current.navigator.onLine),
+		editor: valueOrUnknown(config.SUPPORTED_EDITOR),
+		urlScheme: VEXA_IDENTITY.URL_SCHEME,
+		legacyUrlScheme: VEXA_IDENTITY.LEGACY_URL_SCHEME,
+		productBoundary: "Vexa application",
+		serviceBoundary: "upstream service",
+		repositoryUrl: VEXA_IDENTITY.REPOSITORY_URL,
+		serviceUrl: config.BASE_URL,
+		reportScope: "runtime metadata and workspace metadata only",
+		openFiles: workspace.openFiles,
+		dirtyFiles: workspace.dirtyFiles,
+		lspProviders: workspace.lspProviders,
+	});
+}
+
+export function getVexaDiagnostics(runtime = {}) {
+	const data = getVexaDiagnosticData(runtime);
 	return [
 		"Vexa Diagnostics",
-		"Diagnostics version: " + VEXA_DIAGNOSTICS_VERSION,
+		"Diagnostics version: " + data.diagnosticsVersion,
 		"----------------",
-		"App: " + VEXA_IDENTITY.NAME,
-		"Version: " + valueOrUnknown(current.buildInfo.versionName),
-		"Version code: " + valueOrUnknown(current.buildInfo.versionCode),
-		"Package: " + getRuntimePackageName(current.buildInfo),
-		"Android: " + valueOrUnknown(current.device.version),
-		"Platform: " + valueOrUnknown(current.device.platform),
-		"Model: " + valueOrUnknown(current.device.model),
-		"Manufacturer: " + valueOrUnknown(current.device.manufacturer),
-		"Language: " + valueOrUnknown(current.navigator.language),
-		"Online: " + valueOrUnknown(current.navigator.onLine),
+		"App: " + data.app,
+		"Version: " + data.version,
+		"Version code: " + data.versionCode,
+		"Package: " + data.packageName,
+		"Android: " + data.android,
+		"Platform: " + data.platform,
+		"Model: " + data.model,
+		"Manufacturer: " + data.manufacturer,
+		"Language: " + data.language,
+		"Online: " + data.online,
 		"Migration phase: " + valueOrUnknown(VEXA_IDENTITY.MIGRATION_PHASE),
-		"Open files: " + workspace.openFiles,
-		"Unsaved files: " + workspace.dirtyFiles,
+		"Open files: " + data.openFiles,
+		"Unsaved files: " + data.dirtyFiles,
 		"LSP providers: " +
-			(workspace.lspProviders.length
-				? workspace.lspProviders.join(", ")
-				: "none"),
-		"Product identity: Vexa",
-		"Identity mode: " + VEXA_IDENTITY.IDENTITY_MODE,
-		"Vexa repository: " + VEXA_IDENTITY.REPOSITORY_URL,
-		"Report scope: runtime and workspace metadata only",
+			(data.lspProviders.length ? data.lspProviders.join(", ") : "none"),
+		"Product boundary: " + data.productBoundary,
+		"Service boundary: " + data.serviceBoundary,
+		"Vexa repository: " + data.repositoryUrl,
+		"Upstream service: " + data.serviceUrl,
+		"Deep link: " + data.urlScheme + "://",
+		"Legacy deep link: " + data.legacyUrlScheme + "://",
+		"Report scope: " + data.reportScope,
 	].join("\n");
 }
 
@@ -828,4 +857,4 @@ export async function copyVexaContextPack(runtime = {}) {
 	return copyVexaText(getVexaContextPack(runtime), runtime);
 }
 
-export const VEXA_DIAGNOSTICS_VERSION = 7;
+export const VEXA_DIAGNOSTICS_VERSION = 8;
