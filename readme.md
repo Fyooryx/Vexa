@@ -36,6 +36,7 @@ PR #19 introduces an incremental Vexa-native developer layer without removing le
 - Vexa Developer Context Pack for support/debugging reports
 - Vexa Workspace Snapshot for metadata-only session export
 - Vexa-first command and LSP naming while retaining compatibility aliases
+- Vexa Runtime Profile: a read-only, metadata-only runtime/workspace health profile exposed to commands and plugins
 
 Legacy identifiers are migrated only when a verified replacement exists. Deep links, storage identifiers, billing identifiers, upstream endpoints, and plugin compatibility surfaces may remain temporarily by design.
 ## • Overview
