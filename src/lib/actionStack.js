@@ -1,5 +1,6 @@
 import confirm from "dialogs/confirm";
 import appSettings from "lib/settings";
+import { getVexaCore } from "./vexaApi";
 
 const stack = [];
 let mark = null;
@@ -78,7 +79,7 @@ export default {
 
 		if (appSettings.value.confirmOnExit) {
 			let closeMessage =
-				acode.exitAppMessage || strings["close app"].capitalize(0);
+				getVexaCore()?.exitAppMessage || strings["close app"].capitalize(0);
 			confirmation = await confirm(strings.warning.toUpperCase(), closeMessage);
 		}
 
