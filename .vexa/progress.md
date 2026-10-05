@@ -48,7 +48,7 @@ Status: ADVANCE_BRANCH_CONVERGENCE_COMPLETE
 ## 2026-10-06 — Legacy branch consolidation
 
 - Audited all 22 non-main branches against current `main`.
-- 7 branch heads were strictly behind main and required no replay.
+- 9 branch heads were strictly behind main and required no replay.
 - Remaining diverged heads were reconciled semantically; stale version metadata was not copied backward over the current 1.15.0 baseline.
 - Material remaining hardening from the diverged work was integrated into main.
 - No new branch and no PR were created.
