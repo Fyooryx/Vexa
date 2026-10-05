@@ -1,6 +1,15 @@
 ## [Unreleased]
 
 ### Added
+- Vexa Core Boundary API with canonical, legacy-fallback, and unavailable runtime states.
+- Vexa Doctor reporting of the active runtime boundary mode.
+- Regression coverage for Vexa boundary resolution and required-core behavior.
+
+### Improved
+- Migrated selected command, formatter, project, welcome, selection, exit-state, and plugin lifecycle paths to Vexa-native runtime access.
+- Extended the branding guard to prevent boundary bypass in migrated Vexa-native surfaces.
+
+### Added
 - Vexa Readiness Gate combining identity, runtime, editor, health, network, and clipboard signals into `READY`, `DEGRADED`, or `BLOCKED` states.
 - Vexa readiness diagnostics exposed through the command registry.
 - Vexa readiness copy support and developer handoff output.
@@ -868,7 +877,8 @@
 ### Other Changes
 * **Chore**: Updated Ace Editor to `v1.39.0`
   * Added CSV & TSV mode
-  * Improved search support for multi-line patterns (`\n`, `\t`)
+  * Improved search support for multi-line patterns (`
+`, `\t`)
   * And more—see the Ace Changelog
 * Many translation updates for `hu-hu` by @summoner
 
