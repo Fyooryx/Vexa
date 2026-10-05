@@ -24,6 +24,9 @@ Technical compatibility may exist below the product boundary while it is being r
 
 New code follows these rules:
 
+7. Route new runtime access through `src/lib/vexaApi.js`; do not address the legacy `acode` global directly outside compatibility-boundary code.
+
+
 1. Import and call Vexa-named modules and APIs.
 2. Use `com.vexa.app` for the application identity.
 3. Use `vexa://` as the canonical application deep link.
@@ -45,7 +48,9 @@ The Vexa developer layer now provides:
 - Health Snapshot
 - Capability Matrix
 - Identity Lock
-- Developer Context Pack\n- Vexa Doctor diagnostics and copy support
+- Developer Context Pack
+- Vexa Doctor diagnostics and copy support
+- Vexa Core Boundary API with explicit canonical/fallback state reporting
 - Active Code Location
 - Copy actions for diagnostics and safe metadata-only reports
 
