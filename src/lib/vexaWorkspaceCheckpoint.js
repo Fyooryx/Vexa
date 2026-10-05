@@ -1,5 +1,3 @@
-import openFile from "./openFile";
-
 export const VEXA_CHECKPOINT_SCHEMA_VERSION = 1;
 export const VEXA_CHECKPOINT_STORAGE_KEY = "vexa_workspace_checkpoints_v1";
 export const VEXA_CHECKPOINT_LIMIT = 5;
@@ -124,7 +122,11 @@ export async function restoreVexaWorkspaceCheckpoint(
 
 	if (!checkpoint) return false;
 
-	const opener = runtime.openFile ?? openFile;
+	let opener = runtime.openFile;
+	if (!opener) {
+		const module = await import("./openFile");
+		opener = module.default;
+	}
 	if (typeof opener !== "function") return false;
 
 	await opener(checkpoint.uri, {
@@ -151,7 +153,8 @@ export function formatVexaWorkspaceCheckpoints(runtime = {}) {
 		"--------------------------",
 		...checkpoints.map(
 			(checkpoint, index) =>
-				(index + 1) +
+				index +
+				1 +
 				". " +
 				checkpoint.filename +
 				":" +
