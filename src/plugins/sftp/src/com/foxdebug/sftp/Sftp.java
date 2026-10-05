@@ -1,4 +1,4 @@
-package com.foxdebug.sftp;
+package com.vexa.app.sftp;
 
 import android.app.Activity;
 import android.app.AlertDialog;
