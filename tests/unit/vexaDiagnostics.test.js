@@ -3,13 +3,14 @@ import {
 	formatHealthSummary,
 	formatMigrationStatus,
 	formatVexaCapabilities,
-	getVexaContextPack,
-	getVexaCapabilities,
 	getActiveCodeLocation,
+	getVexaCapabilities,
+	getVexaContextPack,
 	getVexaDiagnostics,
 	getVexaHealthChecks,
 	getVexaMigrationStatus,
 	getVexaWorkspaceReport,
+	getVexaWorkspaceSnapshot,
 	getWorkspaceSnapshot,
 } from "lib/vexaDiagnostics";
 
