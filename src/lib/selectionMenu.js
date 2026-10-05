@@ -1,7 +1,6 @@
 import { focusEditorIfEditable } from "cm/editorReadOnly";
 import appSettings from "lib/settings";
 import { vexaExec } from "./vexaApi";
-import { vexaExec } from "./vexaApi";
 
 const exec = (command) => {
 	const { editor } = editorManager;
