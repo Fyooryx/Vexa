@@ -33,4 +33,15 @@ Status: ADVANCE_DOCTOR_IMPLEMENTATION_COMPLETE
 - Full repository verification remains UNVERIFIED because the runtime environment cannot resolve `github.com`.
 - No branch or PR was created; all implementation commits landed directly on `main`.
 
-Status: ADVANCE_CORE_BOUNDARY_IMPLEMENTATION_COMPLETE
+Status: ADVANCE_NATIVE_NAMESPACE_TERMUX_SECURITY_COMPLETE
+
+## 2026-10-06 — Legacy branch convergence wave
+
+- Audited all 23 repository branches against current `main`.
+- Classified branch changes into superseded, compatible, and useful unique deltas instead of blindly replaying stale snapshots.
+- Converged useful native namespace migration, API trust classification, Pro-cache migration, strict cleartext security, and optional Termux integration onto `main`.
+- Preserved current newer Vexa diagnostics, workflow hardening, branding assets, translation validation, and release metadata instead of regressing to older branch states.
+- Branch deletion is authorized by the user but cannot be executed with the currently exposed GitHub connector because it has no delete-ref/delete-branch operation.
+- Full test/type/build verification remains UNVERIFIED.
+
+Status: ADVANCE_BRANCH_CONVERGENCE_COMPLETE
