@@ -49,3 +49,12 @@
 - Doctor status treats legacy fallback as `DEGRADED` and emits a migration recommendation.
 - Canonical `window.vexa` remains the only `READY` boundary state.
 - Diagnostics schema generation was advanced to version 7.
+
+## Legacy branch convergence
+
+- Branches with no positive delta relative to current `main` were classified as superseded rather than rewritten into `main`.
+- Older Nightfall/identity/auth branches contain changes already represented by newer mainline implementations.
+- The owner-contact branch contains personal contact metadata and older release metadata; these were not imported because current Vexa project identity is intentionally project-level.
+- The complete-identity migration delta for first-party Android namespaces was safely converged onto current main.
+- The Termux branch was not copied wholesale because it replaces the current terminal architecture; only its additive, independently bounded Termux bridge capability was integrated.
+- Branch deletion remains pending because no delete-ref operation is exposed by the GitHub connector.
