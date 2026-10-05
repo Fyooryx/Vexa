@@ -3,6 +3,7 @@ import {
 	formatHealthSummary,
 	formatMigrationStatus,
 	formatVexaCapabilities,
+	getVexaContextPack,
 	getVexaCapabilities,
 	getActiveCodeLocation,
 	getVexaDiagnostics,
@@ -106,6 +107,19 @@ describe("Vexa advanced diagnostics", () => {
 		expect(report).toContain("Diagnostics version: 4");
 		expect(report).toContain("Online: false");
 		expect(report).toContain("Unsaved files: 1");
+	});
+
+	it("builds a shareable Vexa developer context pack", () => {
+		const pack = getVexaContextPack({
+			buildInfo: { versionName: "1.14.6", packageName: "com.vexa.app" },
+			navigator: { onLine: true },
+			editorManager: { files: [], activeFile: null },
+		});
+		expect(pack).toContain("Vexa Developer Context Pack");
+		expect(pack).toContain("Vexa Workspace Report");
+		expect(pack).toContain("Vexa Migration Status");
+		expect(pack).toContain("Vexa Capabilities");
+		expect(pack).toContain("Vexa Health Summary");
 	});
 
 	it("reports the Vexa capability matrix", () => {
