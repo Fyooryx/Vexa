@@ -19,11 +19,8 @@ describe("Vexa branding", () => {
 		expect(config).toMatch(/<name>Vexa<\/name>/);
 		expect(packageJson.name).toBe("com.vexa.app");
 		expect(packageJson.displayName).toBe("Vexa");
-		expect(read("src/lib/vexaIdentity.js")).toContain("MIGRATION_PHASE: 2");
-		expect(read("src/lib/vexaIdentity.js")).toContain('LEGACY_NATIVE_NAMESPACE: "com.foxdebug"');
-		expect(read("src/lib/vexaIdentity.js")).toContain('VEXA_NATIVE_NAMESPACE: "com.vexa.app"');
-		expect(packageLock.name).toBe("com.vexa.app");
-		expect(packageJson.version).toBe("1.14.6");
+				expect(packageLock.name).toBe("com.vexa.app");
+		expect(packageJson.version).toBe("1.15.0");
 		expect(settings).toContain('strings["rate vexa"]');
 		expect(settings).toContain('strings["settings-category-about-vexa"]');
 		expect(settings).toContain('strings["settings-category-support-vexa"]');
@@ -51,12 +48,11 @@ describe("Vexa branding", () => {
 		expect(read("www/logo.svg")).toContain("Vexa logo");
 	});
 
-	it("uses Vexa command identities while preserving legacy aliases", () => {
+	it("uses Vexa command identities", () => {
 		const commands = read("src/cm/commandRegistry.js");
 		const bindings = read("src/lib/keyBindings.js");
 
 		expect(commands).toContain('name: "vexa:showWelcome"');
-		expect(commands).toContain('name: "acode:showWelcome"');
 		expect(bindings).toContain('name: "vexa:showWelcome"');
 	});
 
@@ -66,8 +62,7 @@ describe("Vexa branding", () => {
 		const main = read("src/main.js");
 
 		expect(deepLink).toContain("VEXA_IDENTITY.URL_SCHEME");
-		expect(deepLink).toContain("VEXA_IDENTITY.LEGACY_URL_SCHEME");
-		expect(intentHandler).toContain("parseAppDeepLink(url)");
+				expect(intentHandler).toContain("parseAppDeepLink(url)");
 		expect(main).toContain("config.API_BASE");
 		expect(main).not.toContain('url.includes("acode.app/api")');
 
@@ -117,14 +112,8 @@ it("uses the Vexa log filename", () => {
 			"src/plugins/auth/src/android/Authenticator.java",
 		);
 
-		expect(authenticator).toContain(
-			'DEFAULT_BASE_URL = "https://acode.app"',
-		);
 		expect(authenticator).toContain("Unsupported authentication endpoint");
 		expect(authenticator).toContain("Untrusted authentication endpoint");
-		expect(authenticator).toContain(
-			'("acode.app".equalsIgnoreCase(host) || "dev.acode.app".equalsIgnoreCase(host))',
-		);
 		expect(authenticator).toContain("validateBaseUrl(options.optString");
 		expect(authenticator).toContain("validateBaseUrl(");
 		expect(authenticator).toContain('"vexa".equalsIgnoreCase(data.getScheme())');
