@@ -1,4 +1,4 @@
-package com.foxdebug.webview;
+package com.vexa.app.webview;
 
 import android.app.DownloadManager;
 import android.content.Context;
