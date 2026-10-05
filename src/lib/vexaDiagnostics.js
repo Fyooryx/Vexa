@@ -305,6 +305,56 @@ export function getVexaHealthChecks(runtime = {}) {
 	];
 }
 
+export function getVexaHealthScore(runtime = {}) {
+	const checks = getVexaHealthChecks(runtime);
+	const weights = {
+		identity: 30,
+		runtime: 20,
+		editor: 20,
+		lsp: 10,
+		clipboard: 10,
+		network: 10,
+	};
+	const totalWeight = Object.values(weights).reduce(
+		(total, weight) => total + weight,
+		0,
+	);
+	const earnedWeight = checks.reduce(
+		(total, check) => total + (check.ok ? weights[check.id] || 0 : 0),
+		0,
+	);
+	const score =
+		totalWeight > 0 ? Math.round((earnedWeight / totalWeight) * 100) : 0;
+	const status =
+		score >= 90 ? "HEALTHY" : score >= 70 ? "DEGRADED" : "ATTENTION";
+	return Object.freeze({
+		schemaVersion: 1,
+		score,
+		status,
+		checks,
+		passed: checks.filter((check) => check.ok).length,
+		failed: checks.filter((check) => !check.ok).length,
+	});
+}
+
+export function formatVexaHealthScore(runtime = {}) {
+	const health = getVexaHealthScore(runtime);
+	return [
+		"Vexa Health Score",
+		"-----------------",
+		"Score: " + health.score + "/100",
+		"Status: " + health.status,
+		"Checks: " + health.passed + " passed / " + health.failed + " failed",
+		"",
+		...health.checks.map(
+			(check) =>
+				(check.ok ? "PASS " : "FAIL ") +
+				check.label +
+				(check.detail ? " (" + check.detail + ")" : ""),
+		),
+	].join("\n");
+}
+
 export function formatHealthSummary(checks) {
 	const safeChecks = Array.isArray(checks) ? checks : [];
 	const passed = safeChecks.filter((check) => check.ok).length;
