@@ -19,3 +19,6 @@
 - [x] Integrate boundary state into Vexa Doctor and capability diagnostics.
 - [x] Extend branding verification for migrated Vexa-native surfaces.
 - [ ] Continue the remaining legacy technical identifier review only where compatibility evidence supports retirement.
+
+- [x] Make Vexa Doctor surface boundary failures as degraded/blocked states.
+- [x] Advance diagnostics generation after the boundary contract change.
