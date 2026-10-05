@@ -22,3 +22,9 @@
 
 - [x] Make Vexa Doctor surface boundary failures as degraded/blocked states.
 - [x] Advance diagnostics generation after the boundary contract change.
+
+- [x] Audit all legacy branches against current main.
+- [x] Converge safe unique security, namespace, Pro-cache, and Termux feature deltas.
+- [x] Preserve newer mainline changes where an old branch would regress them.
+- [ ] Delete superseded legacy branches when a GitHub delete-ref capability is available.
+- [ ] Run full Vexa verification and Android build.
