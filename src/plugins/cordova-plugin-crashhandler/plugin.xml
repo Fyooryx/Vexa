@@ -10,14 +10,14 @@
   <platform name="android">
     <config-file target="res/xml/config.xml" parent="/*">
       <feature name="CrashHandler">
-        <param name="android-package" value="com.foxdebug.crashhandler.CrashHandler"/>
+        <param name="android-package" value="com.vexa.app.crashhandler.CrashHandler"/>
         <param name="onload" value="true" />
       </feature>
     </config-file>
 
     <config-file parent="./application" target="AndroidManifest.xml">
       <activity
-        android:name="com.foxdebug.crashhandler.CrashActivity"
+        android:name="com.vexa.app.crashhandler.CrashActivity"
         android:process=":crash"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         android:exported="false"
