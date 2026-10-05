@@ -38,6 +38,11 @@ Vexa 1.15.0 consolidates the developer tooling into a single Vexa-native surface
 - Vexa Workspace Pulse: a compact actionable workspace/health signal with safe copy support
 - Vexa Readiness Gate: deterministic `READY`, `DEGRADED`, or `BLOCKED` readiness with actionable recommendations
 - Vexa readiness copy command for shareable troubleshooting handoff
+- Vexa Core Boundary API with canonical/fallback/unavailable runtime states
+- First-party Android plugin namespaces migrated to `com.vexa.app.*`
+- Optional Termux bridge for advanced shell delegation via `RunCommandService`
+- API trust classification and migrated Pro-cache access boundaries
+- Strict Android cleartext policy with loopback-only exceptions
 
 ## • Overview
 
