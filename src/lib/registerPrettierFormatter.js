@@ -1,3 +1,5 @@
+import { getVexaCore } from "./vexaApi";
+
 const PRETTIER_ID = "prettier";
 const PRETTIER_NAME = "Prettier";
 
@@ -26,7 +28,7 @@ const SUPPORTED_EXTENSIONS = [
 ];
 
 export function registerPrettierFormatter() {
-	const api = window?.vexa || window?.acode;
+	const api = getVexaCore();
 	if (!api) return;
 	const alreadyRegistered = api.formatters.some(({ id }) => id === PRETTIER_ID);
 	if (alreadyRegistered) return;
