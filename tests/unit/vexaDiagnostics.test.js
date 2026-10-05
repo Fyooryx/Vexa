@@ -109,6 +109,33 @@ describe("Vexa advanced diagnostics", () => {
 		expect(report).toContain("Unsaved files: 1");
 	});
 
+	it("exports a metadata-only workspace snapshot", () => {
+		const snapshot = getVexaWorkspaceSnapshot({
+			buildInfo: { versionName: "1.14.6", packageName: "com.vexa.app" },
+			editorManager: {
+				files: [
+					{
+						type: "editor",
+						filename: "main.js",
+						uri: "file:///workspace/main.js",
+						markChanged: true,
+						pinned: true,
+					},
+				],
+				activeFile: { filename: "main.js", uri: "file:///workspace/main.js" },
+			},
+		});
+		expect(snapshot.schemaVersion).toBe(1);
+		expect(snapshot.app).toBe("Vexa");
+		expect(snapshot.package).toBe("com.vexa.app");
+		expect(snapshot.files[0]).toMatchObject({
+			filename: "main.js",
+			dirty: true,
+			pinned: true,
+		});
+		expect(snapshot.files[0]).not.toHaveProperty("content");
+	});
+
 	it("builds a shareable Vexa developer context pack", () => {
 		const pack = getVexaContextPack({
 			buildInfo: { versionName: "1.14.6", packageName: "com.vexa.app" },
