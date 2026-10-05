@@ -1,16 +1,16 @@
 ## [Unreleased]
 
 ### Added
-- Vexa Workspace Checkpoints: metadata-only active-file/cursor checkpoints with bounded local history and restore support.
-- Vexa Workspace Report, Health Check, Migration Status, Capability Matrix, Developer Context Pack, and metadata-only Workspace Snapshot.
-- Vexa-first developer command and LSP naming with compatibility aliases.
-- Added a read-only Vexa Runtime Profile for lightweight runtime/workspace health visibility.
-- Added Vexa Health Snapshot: a consolidated, metadata-only machine-readable view of health, workspace state, capabilities, and migration phase.
+- Vexa Identity Lock for deterministic product identity verification.
+- Vexa Workspace Pulse for compact workspace, health, and attention signals.
+- Copy support for the Workspace Pulse developer signal.
+- Vexa 1.15.0 developer tooling consolidates identity, health, workspace, and diagnostics surfaces.
 
 ### Changed
-- Continued gradual product branding migration toward Vexa.
-- Refreshed canonical Vexa logo assets and converged the Welcome, store-listing, and legacy logo copies to the exact canonical Vexa PNG.
-- Kept legacy technical identifiers available until verified replacement paths exist.
+- Promoted the Vexa application metadata to 1.15.0 / Android versionCode 1020.
+- Advanced diagnostics now expose a Vexa-only product identity surface.
+- Repository documentation now defines main as the single integration target.
+
 # Changelog
 
 ## 1.14.6 — Vexa identity and launcher convergence
