@@ -34,12 +34,11 @@ function rateBox() {
 				localStorage.dontAskForRating = true;
 			} else {
 				const stars = getStars(val);
-				const subject = "feedback - Vexa editor";
-				const textBody = stars + "</br>%0A" + getFeedbackBody("</br>%0A");
-				const email = config.FEEDBACK_EMAIL;
-				system.openInBrowser(
-					`mailto:${email}?subject=${subject}&body=${textBody}`,
-				);
+				const subject = "Feedback - Vexa editor";
+				const textBody = stars + "\n" + getFeedbackBody("\n");
+				const feedbackUrl =
+					`${config.FEEDBACK_URL}?title=${encodeURIComponent(subject)}&body=${encodeURIComponent(textBody)}`;
+				system.openInBrowser(feedbackUrl);
 			}
 		}, 100);
 
