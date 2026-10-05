@@ -110,6 +110,7 @@ import settings from "lib/settings";
 import {
 	copyVexaContextPack,
 	copyVexaDiagnostics,
+	copyVexaHealthSnapshot,
 	copyVexaRuntimeProfile,
 	copyVexaText,
 	copyVexaWorkspaceSnapshot,
@@ -117,6 +118,7 @@ import {
 	formatMigrationStatus,
 	formatVexaCapabilities,
 	formatVexaHealthScore,
+	formatVexaHealthSnapshot,
 	formatVexaRuntimeProfile,
 	getActiveCodeLocation,
 	getVexaHealthChecks,
@@ -696,6 +698,39 @@ function registerCoreCommands() {
 			} else {
 				toast(score);
 			}
+			return true;
+		},
+	});
+	addCommand({
+		name: "vexa:healthSnapshot",
+		description: "Show Vexa health snapshot",
+		readOnly: true,
+		requiresView: false,
+		run() {
+			const snapshot = formatVexaHealthSnapshot();
+			if (typeof globalThis.alert === "function") {
+				globalThis.alert("Vexa Health Snapshot", snapshot);
+			} else {
+				toast(snapshot);
+			}
+			return true;
+		},
+	});
+	addCommand({
+		name: "vexa:copyHealthSnapshot",
+		description: "Copy Vexa health snapshot",
+		readOnly: true,
+		requiresView: false,
+		run() {
+			copyVexaHealthSnapshot()
+				.then((copied) =>
+					toast(
+						copied
+							? "Vexa health snapshot copied"
+							: "Clipboard is unavailable",
+					),
+				)
+				.catch(() => toast("Failed to copy Vexa health snapshot"));
 			return true;
 		},
 	});
