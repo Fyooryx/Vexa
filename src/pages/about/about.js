@@ -100,11 +100,16 @@ export default function AboutInclude() {
 			</div>
 
 			<div className="social-links">
-				<a href="mailto:apps@foxdebug.com" className="social-link">
+				<a
+					href={`${VEXA_IDENTITY.REPOSITORY_URL}/issues`}
+					className="social-link"
+					rel="noreferrer"
+					target="_blank"
+				>
 					<div className="social-icon">
-						<span className="icon gmail"></span>
+						<span className="icon github"></span>
 					</div>
-					Mail
+					Support
 				</a>
 				<a href={config.TWITTER_URL} className="social-link">
 					<div className="social-icon">
