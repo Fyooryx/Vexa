@@ -1,4 +1,4 @@
-package com.foxdebug.iap;
+package com.vexa.app.iap;
 
 import android.app.Activity;
 import android.content.Context;
