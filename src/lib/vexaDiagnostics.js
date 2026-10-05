@@ -1,5 +1,6 @@
 import config from "./config";
 import { getRuntimePackageName, VEXA_IDENTITY } from "./vexaIdentity";
+import { getVexaCoreBoundaryStatus } from "./vexaApi";
 
 function valueOrUnknown(value) {
 	return value === undefined || value === null || value === ""
@@ -288,7 +289,9 @@ export function formatMigrationStatus() {
 export function getVexaCapabilities(runtime = {}) {
 	const current = getRuntime(runtime);
 	const workspace = getWorkspaceSnapshot(runtime);
+	const boundary = getVexaCoreBoundaryStatus();
 	const capabilities = {
+		coreBoundary: boundary.status === "CANONICAL",
 		identityLock: true,
 		workspacePulse: true,
 		readinessGate: true,
@@ -532,6 +535,7 @@ export function formatVexaReadiness(runtime = {}) {
 
 
 export function getVexaDoctorReport(runtime = {}) {
+	const coreBoundary = getVexaCoreBoundaryStatus();
 	const identity = getVexaIdentityStatus(runtime);
 	const readiness = getVexaReadiness(runtime);
 	const health = getVexaHealthScore(runtime);
@@ -564,6 +568,7 @@ export function getVexaDoctorReport(runtime = {}) {
 		generatedAt: new Date().toISOString(),
 		app: VEXA_IDENTITY.NAME,
 		status,
+		coreBoundary,
 		identity,
 		readiness,
 		health: {
@@ -591,6 +596,7 @@ export function formatVexaDoctorReport(runtime = {}) {
 		"Vexa Doctor",
 		"------------",
 		"Status: " + doctor.status,
+		"Core boundary: " + doctor.coreBoundary.status,
 		"Identity: " + doctor.identity.status,
 		"Readiness: " + doctor.readiness.status,
 		"Health: " + doctor.health.score + "/100 (" + doctor.health.status + ")",
@@ -791,4 +797,4 @@ export async function copyVexaContextPack(runtime = {}) {
 	return copyVexaText(getVexaContextPack(runtime), runtime);
 }
 
-export const VEXA_DIAGNOSTICS_VERSION = 5;
+export const VEXA_DIAGNOSTICS_VERSION = 6;
