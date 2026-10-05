@@ -811,6 +811,21 @@ function registerCoreCommands() {
 		},
 	});
 	addCommand({
+		name: "vexa:readiness",
+		description: "Show Vexa readiness gate",
+		readOnly: true,
+		requiresView: false,
+		run() {
+			const readiness = formatVexaReadiness();
+			if (typeof globalThis.alert === "function") {
+				globalThis.alert("Vexa Readiness", readiness);
+			} else {
+				toast(readiness);
+			}
+			return true;
+		},
+	});
+	addCommand({
 		name: "vexa:runtimeProfile",
 		description: "Show Vexa runtime profile",
 		readOnly: true,
