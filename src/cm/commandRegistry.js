@@ -114,8 +114,6 @@ import {
 	copyVexaRuntimeProfile,
 	formatVexaIdentityStatus,
 	formatVexaWorkspacePulse,
-	getVexaIdentityStatus,
-	getVexaWorkspacePulse,
 	copyVexaText,
 	copyVexaWorkspaceSnapshot,
 	formatHealthSummary,
