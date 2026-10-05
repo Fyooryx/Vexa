@@ -52,6 +52,7 @@ import loadPlugins from "lib/loadPlugins";
 import Logger from "lib/logger";
 import notificationManager from "lib/notificationManager";
 import openFolder, { addedFolder } from "lib/openFolder";
+import { getCachedPro } from "lib/proCache";
 import { registerPrettierFormatter } from "lib/registerPrettierFormatter";
 import restoreFiles from "lib/restoreFiles";
 import settings from "lib/settings";
@@ -206,12 +207,7 @@ async function onDeviceReady() {
 			window.log("error", e);
 		});
 
-		const storedPro = [
-			localStorage.getItem(VEXA_IDENTITY.PRO_STORAGE_KEY),
-			...VEXA_IDENTITY.LEGACY_PRO_STORAGE_KEYS.map((key) =>
-				localStorage.getItem(key),
-			),
-		].some((value) => value === "true");
+		const storedPro = getCachedPro();
 		if (storedPro) {
 			config.HAS_PRO = true;
 			localStorage.setItem(VEXA_IDENTITY.PRO_STORAGE_KEY, "true");
