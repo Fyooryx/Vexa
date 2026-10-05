@@ -1,4 +1,4 @@
-package com.foxdebug.system;
+package com.vexa.app.system;
 
 import android.util.Base64;
 import android.util.Log;
