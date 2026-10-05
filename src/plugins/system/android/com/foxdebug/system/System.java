@@ -1,4 +1,4 @@
-package com.foxdebug.system;
+package com.vexa.app.system;
 
 import static android.os.Build.VERSION.SDK_INT;
 
@@ -39,7 +39,7 @@ import androidx.core.content.pm.ShortcutInfoCompat;
 import androidx.core.content.pm.ShortcutManagerCompat;
 import androidx.core.graphics.drawable.IconCompat;
 import androidx.documentfile.provider.DocumentFile;
-import com.foxdebug.system.Ui.Theme;
+import com.vexa.app.system.Ui.Theme;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
