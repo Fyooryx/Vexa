@@ -66,6 +66,7 @@ import mustache from "mustache";
 import themes from "theme/list";
 import { initHighlighting } from "utils/codeHighlight";
 import { getEncoding, initEncodings } from "utils/encodings";
+import { isTrustedApiRequest } from "utils/apiSecurity";
 import helpers from "utils/helpers";
 import { INSTALL_SOURCE_PLAY, isPlayStoreInstall } from "utils/installSource";
 import loadPolyFill from "utils/polyfill";
@@ -83,10 +84,7 @@ ajax.response = (xhr) => {
 };
 
 ajax.configure = (xhr, url) => {
-	if (
-		typeof url === "string" &&
-		(url === config.API_BASE || url.startsWith(config.API_BASE + "/"))
-	) {
+	if (isTrustedApiRequest(url, config.API_BASE, window.location.href)) {
 		xhr.withCredentials = true;
 	}
 };
