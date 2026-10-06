@@ -1026,11 +1026,12 @@ async function more_plugin_action(id, pluginName) {
 
 			// if (choice === "reload_plugins") {
 			// 	// Unmount all currently loaded plugins before reloading
-			// 	if (window.acode && typeof window.acode.getLoadedPluginIds === "function") {
-			// 		for (const pluginId of window.acode.getLoadedPluginIds()) {
-			// 			window.acode.unmountPlugin(pluginId);
-			// 		}
-			// 	}
+			// Legacy bulk-reload path intentionally disabled; lifecycle belongs to Vexa.
+			/*
+
+
+
+*/
 			// 	await window.loadPlugins?.();
 			// 	window.toast(strings.success);
 			// }
@@ -1038,7 +1039,7 @@ async function more_plugin_action(id, pluginName) {
 				location.reload();
 			} else if (choice === "single") {
 				if (enabled) {
-					window.acode.unmountPlugin(id);
+					requireVexaCore().unmountPlugin(id);
 					window.toast(strings["plugin_disabled"] || "Plugin Disabled");
 				} else {
 					await loadPlugin(id);
