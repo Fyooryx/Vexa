@@ -1,6 +1,7 @@
 ## [Unreleased]
 
 ### Added
+- Vexa branch consolidation record covering every non-main branch.
 - Optional Vexa Termux bridge with installed-app detection, shell-session launch, and command delegation.
 - Vexa Termux validation gate and regression coverage.
 - First-party native plugin namespace migration to `com.vexa.app.*`.
