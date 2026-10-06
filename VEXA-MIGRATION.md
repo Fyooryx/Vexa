@@ -31,6 +31,7 @@ New code follows these rules:
 5. Do not introduce new compatibility aliases or new alternate product branding.
 6. Prefer root-cause fixes and bounded migrations over broad unverified rewrites.
 7. Route new runtime access through `src/lib/vexaApi.js`; do not address the legacy `acode` global directly outside compatibility-boundary code.
+8. Keep legacy identifiers only at explicit compatibility or upstream boundaries, and prefer Vexa terminology everywhere else.
 
 ## Advanced developer layer
 
