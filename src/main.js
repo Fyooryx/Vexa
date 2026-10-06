@@ -1035,12 +1035,12 @@ function backButtonHandler() {
 }
 
 function menuButtonHandler() {
-	const api = window?.vexa || window?.acode;
+	const api = vexa;
 	api?.exec("toggle-sidebar");
 }
 
 async function pauseHandler() {
-	const api = window?.vexa || window?.acode;
+	const api = vexa;
 	await window.editorManager?.flushCacheWrites?.();
 	api?.exec("save-state");
 }
