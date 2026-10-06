@@ -179,8 +179,8 @@ expect(
 	"deep-link parser must derive the canonical Vexa scheme",
 );
 expect(
-	intentHandler.includes("parseAppDeepLink(url)"),
-	"intent handler must use the canonical deep-link parser",
+	intentHandler.includes("parseAppIntentUrl(url)"),
+	"intent handler must use the canonical app-intent parser",
 );
 expect(
 	polyfill.includes('import config from "./config";') &&
