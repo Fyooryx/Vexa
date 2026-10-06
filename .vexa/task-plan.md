@@ -41,3 +41,6 @@
 - [x] Confirm no legacy branch has commits ahead of main.
 - [x] Continue migrating direct internal legacy runtime calls behind the Vexa boundary.
 - [ ] Delete obsolete branch refs when a branch-delete operation is available.
+
+- [x] Record the 22 non-main branch consolidation states in `.vexa/branch-consolidation.md`.
+- [ ] Delete obsolete branch refs once a supported GitHub ref-delete operation is available.
