@@ -62,8 +62,8 @@ import startAd, {
 	setBannerSuppressed,
 } from "lib/startAd";
 import vexa from "lib/vexa";
-import { VEXA_IDENTITY } from "lib/vexaIdentity";
 import { getVexaCore, vexaExec } from "lib/vexaApi";
+import { VEXA_IDENTITY } from "lib/vexaIdentity";
 import mustache from "mustache";
 import themes from "theme/list";
 import { isTrustedApiRequest } from "utils/apiSecurity";
