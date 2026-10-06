@@ -66,3 +66,15 @@
 - Redundant duplicate implementations were not added when the current mainline already contained a newer equivalent, e.g. `appIntent.js` versus the canonical `appDeepLink.js`.
 - Personal contact fields from the owner-contact branch were not propagated into the product code; non-sensitive repository ownership/contributor cleanup was retained.
 - Branch deletion is still pending because the available GitHub connector exposes no branch/ref deletion operation. No force-reset was used as a substitute.
+
+
+## Branch convergence audit
+
+- All 22 non-main branches now report `ahead_by=0` against `main`.
+- Diverged branch histories were absorbed into `main` without replacing the current main tree with older branch trees.
+- The complete identity-migration branch's native `com/vexa/app` package paths are already represented in current main.
+- The Termux branch's bridge, verifier, tests, and documentation are already represented in current main.
+- Older auth, network-security, diagnostics, workflow, owner metadata, branding, and runtime hardening deltas were found to be present on main in current or superseding form during the branch audit.
+- The canonical app-intent parser from the 1.14.4 hardening line was reimplemented on main rather than restoring the stale branch tree.
+- The remaining technical compatibility identifiers are still governed by the Vexa migration policy and were not deleted blindly.
+- Branch ref deletion remains unavailable through the current connector.
