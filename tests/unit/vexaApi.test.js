@@ -5,6 +5,8 @@ import {
   vexaExec,
   getVexaFormatters,
   vexaGetFormatterFor,
+  vexaFormat,
+  vexaPushNotification,
   getVexaCoreBoundaryStatus,
   requireVexaCore,
 } from "lib/vexaApi";
@@ -84,5 +86,23 @@ describe("Vexa core boundary", () => {
     expect(added).toEqual([["html-project-icon", "data:image/png;base64,test"]]);
     expect(getVexaFormatters()).toEqual(core.formatters);
     expect(vexaGetFormatterFor(["js", "ts"])).toEqual(["formatter:js", "formatter:ts"]);
+  });
+
+  it("delegates formatting and notifications through the Vexa boundary", async () => {
+    const calls = [];
+    globalThis.vexa = {
+      format: async (...args) => {
+        calls.push(["format", args]);
+        return true;
+      },
+      pushNotification: (...args) => calls.push(["notify", args]),
+    };
+
+    expect(await vexaFormat("js")).toBe(true);
+    expect(vexaPushNotification("Title", "Message")).toBeUndefined();
+    expect(calls).toEqual([
+      ["format", ["js"]],
+      ["notify", ["Title", "Message"]],
+    ]);
   });
 });
