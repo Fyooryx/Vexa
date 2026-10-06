@@ -97,6 +97,29 @@ describe("Vexa branding", () => {
 		expect(loadPlugins).not.toContain("acode[onPluginLoadCallback]");
 	});
 
+	it("keeps high-traffic internal actions behind the Vexa runtime boundary", () => {
+		const migratedSurfaces = [
+			"src/handlers/intent.js",
+			"src/lib/saveFile.js",
+			"src/settings/appSettings.js",
+			"src/lib/editorManager.js",
+			"src/components/sidebar/index.js",
+			"src/pages/fileBrowser/fileBrowser.js",
+			"src/handlers/tabContextMenu.js",
+			"src/sidebarApps/files/index.js",
+			"src/pages/plugins/plugins.js",
+			"src/pages/plugin/plugin.js",
+			"src/sidebarApps/extensions/index.js",
+			"src/lib/commands.js",
+			"src/lib/adRewards.js",
+		];
+		for (const file of migratedSurfaces) {
+			expect(read(file)).not.toMatch(
+				/\bacode\.(?:exec|unmountPlugin|format|pushNotification)\s*\(/,
+			);
+		}
+	});
+
 	it("aligns Vexa deep links and API credential routing", () => {
 		const deepLink = read("src/utils/appDeepLink.js");
 		const intentHandler = read("src/handlers/intent.js");
