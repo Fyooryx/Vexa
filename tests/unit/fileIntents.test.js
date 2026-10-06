@@ -19,6 +19,7 @@ function setup() {
 			"lib/auth": {},
 			"lib/config": {},
 			"lib/startAd": {},
+			"lib/vexaApi": { vexaExec: exec },
 			"lib/openFile": open,
 			"lib/loadPlugins": { isInitialPluginLoadComplete: () => pluginsReady },
 			"dialogs/select": select,
