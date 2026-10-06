@@ -1,6 +1,6 @@
 import config from "./config";
-import { getRuntimePackageName, VEXA_IDENTITY } from "./vexaIdentity";
 import { getVexaCore, getVexaCoreBoundaryStatus } from "./vexaApi";
+import { getRuntimePackageName, VEXA_IDENTITY } from "./vexaIdentity";
 
 function valueOrUnknown(value) {
 	return value === undefined || value === null || value === ""
