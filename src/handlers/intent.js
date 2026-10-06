@@ -5,10 +5,9 @@ import config from "lib/config";
 import { isInitialPluginLoadComplete } from "lib/loadPlugins";
 import openFile from "lib/openFile";
 import { BANNER_SUPPRESSION_REASON, setBannerSuppressed } from "lib/startAd";
+import { vexaExec } from "lib/vexaApi";
 import { parseAppIntentUrl } from "utils/appIntent";
-import { vexaExec } from "lib/vexaApi";
 import helpers from "utils/helpers";
-import { vexaExec } from "lib/vexaApi";
 
 const handlers = [];
 /**
