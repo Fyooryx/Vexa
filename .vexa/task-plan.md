@@ -31,3 +31,9 @@
 - [x] Audit all legacy branch heads against current main.
 - [x] Reconcile material non-stale changes from diverged legacy branches.
 - [ ] Delete retired GitHub branches when a supported ref-delete operation is available.
+
+- [x] Audit all existing branches against the authoritative main tree.
+- [x] Absorb diverged branch histories into main without reverting current main content.
+- [x] Reconcile the useful app-intent parser change into the current main architecture.
+- [x] Verify all non-main branch tips are no longer ahead of main.
+- [ ] Delete retired branch refs when a GitHub delete-ref operation is available.
