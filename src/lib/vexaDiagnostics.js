@@ -573,7 +573,7 @@ export function getVexaDoctorReport(runtime = {}) {
 		identity.status !== "LOCKED" ||
 		health.status === "ATTENTION"
 			? "BLOCKED"
-: coreBoundary.status === "LEGACY_FALLBACK" ||
+			: coreBoundary.status === "LEGACY_FALLBACK" ||
 					readiness.status === "DEGRADED" ||
 					health.status === "DEGRADED" ||
 					workspace.status !== "READY"
