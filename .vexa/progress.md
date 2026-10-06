@@ -73,3 +73,13 @@ Status: ADVANCE_BRANCH_CONVERGENCE_COMPLETE
 - Fresh branch comparison shows all retained legacy branches are behind `main` with zero commits ahead; their branch heads are already contained in main history.
 - Full repository test/type/build execution remains UNVERIFIED.
 - Branch deletion is still DEFERRED because the connected GitHub mutation surface exposes ref updates but no branch/ref deletion operation.
+
+## 2026-10-06 — Advance Vexa boundary cleanup
+
+- Extended the Vexa core boundary with format and notification adapters.
+- Migrated remaining direct runtime calls in plugin management, file-browser persistence, command formatting, and reward notifications.
+- Removed redundant legacy-global fallback lookups from the main menu/pause handlers.
+- Added verification coverage for the expanded boundary surface.
+- Re-checked all 22 non-main branches: every branch is behind main with ahead_by=0.
+- Branch refs remain because GitHub branch deletion is not exposed by the active connector.
+- CI was triggered on the latest main change and was still running at the last observation.
