@@ -94,7 +94,7 @@ expect(
 	"Vexa runtime boundary must expose canonical, status, and required-core access",
 );
 expect(
-	!mainSource.includes("window?.acode"),
+	!main.includes("window?.acode"),
 	"main lifecycle handlers must not bypass the Vexa runtime boundary",
 );
 expect(
