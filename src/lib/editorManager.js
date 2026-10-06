@@ -1,5 +1,4 @@
 import sidebarApps from "sidebarApps";
-import { vexaExec } from "lib/vexaApi";
 import { indentUnit, language as languageFacet } from "@codemirror/language";
 import { search } from "@codemirror/search";
 import {
@@ -68,6 +67,7 @@ import {
 	initModes,
 } from "cm/modelist";
 import createTouchSelectionMenu from "cm/touchSelectionMenu";
+import { vexaExec } from "lib/vexaApi";
 import "cm/supportedModes";
 import { onProviderRegistered } from "fileSystem";
 import { autocompletion } from "@codemirror/autocomplete";
