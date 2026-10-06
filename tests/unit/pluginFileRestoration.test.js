@@ -142,6 +142,7 @@ function setup() {
 			"./editorFile": {},
 			"./openFolder": {},
 			"./settings": settings,
+			"./vexaApi": { vexaExec: vi.fn() },
 		},
 		{ editorManager: manager, strings: {} },
 	);
