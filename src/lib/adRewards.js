@@ -1,4 +1,5 @@
 import toast from "components/toast";
+import { vexaPushNotification } from "./vexaApi";
 import {
 	createRewardStateLifecycle,
 	isRewardPassActive,
@@ -92,7 +93,7 @@ function emitChange() {
 
 function notify(title, message, type = "info") {
 	toast(message, 4000);
-	window.acode?.pushNotification?.(title, message, {
+	vexaPushNotification(title, message, {
 		icon: type === "success" ? "verified" : "notifications",
 		type,
 	});
