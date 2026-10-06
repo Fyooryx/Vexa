@@ -1,6 +1,7 @@
 import "./fileBrowser.scss";
 
 import fsOperation from "fileSystem";
+import { vexaExec } from "lib/vexaApi";
 import externalFs from "fileSystem/externalFs";
 import Checkbox from "components/checkbox";
 import Contextmenu from "components/contextmenu";
@@ -1330,7 +1331,7 @@ function FileBrowserInclude(mode, info, doesOpenLast = true) {
 					return false;
 				});
 				localStorage.storageList = JSON.stringify(storageList);
-				acode.exec("save-state");
+				vexaExec("save-state");
 				reload();
 			}
 
