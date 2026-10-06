@@ -166,7 +166,8 @@ export function getVexaWorkspacePulse(runtime = {}) {
 	}
 
 	const criticalHealthFailure = health.checks.some(
-		(check) => !check.ok && ["identity", "runtime", "editor"].includes(check.id),
+		(check) =>
+			!check.ok && ["identity", "runtime", "editor"].includes(check.id),
 	);
 	const status = criticalHealthFailure ? "ATTENTION" : "READY";
 	return Object.freeze({
@@ -556,7 +557,6 @@ export function formatVexaReadiness(runtime = {}) {
 				: "none"),
 	].join("\n");
 }
-
 
 export function getVexaDoctorReport(runtime = {}) {
 	const coreBoundary = getVexaCoreBoundaryStatus();
