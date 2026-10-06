@@ -316,6 +316,22 @@ const themeSetting = read("src/pages/themeSetting/themeSetting.js");
 const backupRestore = read("src/settings/backupRestore.js");
 const devcontainer = read(".devcontainer/devcontainer.json");
 const mainSource = read("src/main.js");
+const remainingBoundaryPaths = [
+	["main.js", mainSource, "window?.acode"],
+	["adRewards.js", read("src/lib/adRewards.js"), "window.acode?.pushNotification"],
+	["fileBrowser.js", read("src/pages/fileBrowser/fileBrowser.js"), "acode.exec("],
+	["commands.js", read("src/lib/commands.js"), "acode.format("],
+	["plugins.js", read("src/pages/plugins/plugins.js"), "window.acode.unmountPlugin"],
+	["plugin.js", read("src/pages/plugin/plugin.js"), "acode.unmountPlugin("],
+	["extensions/index.js", read("src/sidebarApps/extensions/index.js"), "acode.unmountPlugin("],
+];
+for (const [file, source, pattern] of remainingBoundaryPaths) {
+	expect(
+		!source.includes(pattern),
+		`${file} must not bypass the Vexa runtime boundary with ${pattern}`,
+	);
+}
+
 const iconCss = read("src/res/icons/style.css");
 
 expect(
