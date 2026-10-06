@@ -1,4 +1,5 @@
 import Contextmenu from "components/contextmenu";
+import { vexaExec } from "lib/vexaApi";
 
 const EDGE_MARGIN = 8;
 const MENU_WIDTH_ESTIMATE = 240;
@@ -84,7 +85,7 @@ export default function openTabContextMenu(file) {
 		if (!action) return;
 		menu.hide();
 		removeSuppressor();
-		acode.exec(action, file.id);
+		vexaExec(action, file.id);
 	});
 
 	menu.show();
