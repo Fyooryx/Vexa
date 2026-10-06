@@ -544,13 +544,9 @@ export function formatVexaReadiness(runtime = {}) {
 		"Status: " + readiness.status,
 		"Health: " + readiness.healthScore + "/100",
 		"Blockers: " +
-			(readiness.blockers.length
-				? readiness.blockers.join("; ")
-				: "none"),
+			(readiness.blockers.length ? readiness.blockers.join("; ") : "none"),
 		"Signals: " +
-			(readiness.signals.length
-				? readiness.signals.join("; ")
-				: "none"),
+			(readiness.signals.length ? readiness.signals.join("; ") : "none"),
 		"Recommendations: " +
 			(readiness.recommendations.length
 				? readiness.recommendations.join("; ")
