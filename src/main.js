@@ -63,6 +63,7 @@ import startAd, {
 } from "lib/startAd";
 import vexa from "lib/vexa";
 import { VEXA_IDENTITY } from "lib/vexaIdentity";
+import { getVexaCore, vexaExec } from "lib/vexaApi";
 import mustache from "mustache";
 import themes from "theme/list";
 import { isTrustedApiRequest } from "utils/apiSecurity";
@@ -256,6 +257,7 @@ async function onDeviceReady() {
 		return true;
 	})();
 	window.vexa = vexa;
+	// Legacy global remains only as an explicit compatibility bridge.
 	window.acode = vexa;
 	await adRewards.init();
 	ensureAceCompatApi();
