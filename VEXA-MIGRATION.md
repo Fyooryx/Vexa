@@ -89,3 +89,7 @@ A Vexa change is complete only when:
 - branding and asset checks pass;
 - residual technical compatibility is documented rather than presented as product identity;
 - remaining uncertainty is reported explicitly.
+
+## Branch convergence
+
+Historical Vexa hardening branches are converged into `main` as ancestry. Current `main` remains the source of truth for file content; older branch implementations are not allowed to overwrite newer fixes merely to preserve textual history. Retired branch refs should be deleted once repository tooling exposes a safe delete-ref operation.
