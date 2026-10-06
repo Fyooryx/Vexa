@@ -84,3 +84,10 @@
 - Every checked branch reports `ahead=0`; therefore there are no branch commits currently ahead of `main`.
 - Main already contains the historical Termux native terminal, app-intent, authentication, diagnostics, branding, and namespace-migration work observed on the legacy branches.
 - Branch refs themselves remain as historical pointers and are not yet deleted.
+
+## Final branch state audit — 2026-10-06
+
+- All 22 non-main refs report `ahead_by=0` against `main`.
+- No remaining branch contains unintegrated commits ahead of the authoritative line.
+- A machine-readable human-readable consolidation record was added at `.vexa/branch-consolidation.md`.
+- Branch refs themselves still exist because the current connector does not expose a delete-ref mutation.
