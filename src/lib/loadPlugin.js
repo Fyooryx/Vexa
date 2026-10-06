@@ -20,8 +20,8 @@ export default async function loadPlugin(pluginId, justInstalled = false) {
 
 	// Unmount the old version before loading the new one.
 	// This MUST be done here by the framework, not by the new plugin code itself,
-	// because once the new script loads, it calls acode.setPluginUnmount(id, newDestroy)
-	// which overwrites the old version's destroy callback. At that point the old
+	// because once the new script loads, its compatibility API can overwrite the old
+	// version's destroy callback. At that point the old
 	// destroy — which holds references to the old sidebar app, commands, event
 	// listeners, etc. — is lost and can never be called. Letting the framework
 	// invoke unmountPlugin() first ensures the OLD destroy() runs while it still
