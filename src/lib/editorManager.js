@@ -1,4 +1,5 @@
 import sidebarApps from "sidebarApps";
+import { vexaExec } from "lib/vexaApi";
 import { indentUnit, language as languageFacet } from "@codemirror/language";
 import { search } from "@codemirror/search";
 import {
@@ -265,7 +266,7 @@ async function EditorManager($header, $body) {
 		backgroundColor: "var(--danger-color)",
 		textColor: "var(--danger-text-color)",
 		onclick() {
-			acode.exec("open", "problems");
+			vexaExec("open", "problems");
 		},
 	});
 
