@@ -13,7 +13,6 @@ import Url from "utils/Url";
 import checkFiles from "./checkFiles";
 import config from "./config";
 import EditorFile from "./editorFile";
-import { vexaFormat } from "./vexaApi";
 import { loadFileBrowser } from "./lazyImports";
 import openFile from "./openFile";
 import openFolder from "./openFolder";
@@ -21,6 +20,7 @@ import run from "./run";
 import saveState from "./saveState";
 import appSettings from "./settings";
 import showFileInfo from "./showFileInfo";
+import { vexaFormat } from "./vexaApi";
 
 function getTabCloseSelectionOptions() {
 	return {
