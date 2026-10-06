@@ -5,7 +5,7 @@ import config from "lib/config";
 import { isInitialPluginLoadComplete } from "lib/loadPlugins";
 import openFile from "lib/openFile";
 import { BANNER_SUPPRESSION_REASON, setBannerSuppressed } from "lib/startAd";
-import { parseAppDeepLink } from "utils/appDeepLink";
+import { parseAppIntentUrl } from "utils/appIntent";
 import helpers from "utils/helpers";
 
 const handlers = [];
@@ -29,7 +29,7 @@ export default async function HandleIntent(intent = {}) {
 			intent.fileUri ||
 			intent.data ||
 			intent.extras?.["android.intent.extra.STREAM"];
-		const appLink = parseAppDeepLink(url);
+		const appLink = parseAppIntentUrl(url);
 		if (appLink) {
 			const { module, action, value } = appLink;
 
