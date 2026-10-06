@@ -122,11 +122,12 @@ describe("Vexa branding", () => {
 
 	it("aligns Vexa deep links and API credential routing", () => {
 		const deepLink = read("src/utils/appDeepLink.js");
+		const appIntent = read("src/utils/appIntent.js");
 		const intentHandler = read("src/handlers/intent.js");
 		const main = read("src/main.js");
 
-		expect(deepLink).toContain("VEXA_IDENTITY.URL_SCHEME");
-			expect(intentHandler).toContain("parseAppIntentUrl(url)");
+		expect(appIntent).toContain("VEXA_IDENTITY.URL_SCHEME");
+		expect(intentHandler).toContain("parseAppIntentUrl(url)");
 		expect(main).toContain("config.API_BASE");
 		expect(main).not.toContain('url.includes("acode.app/api")');
 
