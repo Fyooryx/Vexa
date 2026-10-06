@@ -66,3 +66,10 @@ Status: ADVANCE_BRANCH_CONVERGENCE_COMPLETE
 - Branch deletion is still blocked by the available GitHub connector because it exposes no delete-ref operation.
 
 Status: ADVANCE_BRANCH_CONVERGENCE_COMPLETE
+## 2026-10-06 — Advance legacy-call boundary wave
+
+- Migrated additional internal command paths to `src/lib/vexaApi.js`: intent actions, save formatting, fullscreen settings, file sidebar, editor problems, sidebar, file browser, and tab context actions.
+- Kept `window.acode` only as a compatibility bridge; no new product-facing Acode branding was introduced.
+- Fresh branch comparison shows all retained legacy branches are behind `main` with zero commits ahead; their branch heads are already contained in main history.
+- Full repository test/type/build execution remains UNVERIFIED.
+- Branch deletion is still DEFERRED because the connected GitHub mutation surface exposes ref updates but no branch/ref deletion operation.
