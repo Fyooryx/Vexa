@@ -37,3 +37,7 @@
 - [x] Reconcile the useful app-intent parser change into the current main architecture.
 - [x] Verify all non-main branch tips are no longer ahead of main.
 - [ ] Delete retired branch refs when a GitHub delete-ref operation is available.
+- [x] Re-audit all retained legacy branches against current main.
+- [x] Confirm no legacy branch has commits ahead of main.
+- [x] Continue migrating direct internal legacy runtime calls behind the Vexa boundary.
+- [ ] Delete obsolete branch refs when a branch-delete operation is available.
