@@ -174,8 +174,8 @@ expect(
 );
 
 expect(
-	deepLink.includes("VEXA_IDENTITY.URL_SCHEME"),
-	"deep-link parser must derive the canonical Vexa scheme",
+	appIntent.includes("VEXA_IDENTITY.URL_SCHEME"),
+	"canonical app-intent parser must derive the Vexa scheme",
 );
 expect(
 	intentHandler.includes("parseAppIntentUrl(url)"),
