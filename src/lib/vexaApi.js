@@ -52,6 +52,14 @@ export function vexaGetFormatterFor(extensions) {
 	return resolveCore()?.getFormatterFor?.(extensions) ?? [];
 }
 
+export async function vexaFormat(...args) {
+	return requireVexaCore().format(...args);
+}
+
+export function vexaPushNotification(...args) {
+	return resolveCore()?.pushNotification?.(...args);
+}
+
 export default Object.freeze({
 	getCore: getVexaCore,
 	requireCore: requireVexaCore,
@@ -60,4 +68,6 @@ export default Object.freeze({
 	addIcon: vexaAddIcon,
 	getFormatters: getVexaFormatters,
 	getFormatterFor: vexaGetFormatterFor,
+	format: vexaFormat,
+	pushNotification: vexaPushNotification,
 });
