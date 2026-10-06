@@ -9,6 +9,7 @@ import auth, { loginEvents } from "lib/auth";
 import config from "lib/config";
 import helpers from "utils/helpers";
 import Url from "utils/Url";
+import { vexaExec } from "lib/vexaApi";
 
 /**
  * @typedef {object} SideBar
@@ -391,7 +392,7 @@ function create($container, $toggler) {
 			resizeBar.style.display = "block";
 			app.append($el);
 			$el.onclick = () => {
-				if (!$el.textContent) acode.exec("open-folder");
+				if (!$el.textContent) vexaExec("open-folder");
 			};
 		}
 		onshow();
