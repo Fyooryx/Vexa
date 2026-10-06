@@ -10,6 +10,7 @@ import auth from "lib/auth";
 import config from "lib/config";
 import InstallState from "lib/installState";
 import loadPlugin from "lib/loadPlugin";
+import { requireVexaCore } from "lib/vexaApi";
 import settings from "lib/settings";
 import { interstitialAd } from "lib/startAd";
 import FileBrowser from "pages/fileBrowser";
@@ -936,7 +937,7 @@ async function uninstall(id) {
 		]);
 		const pluginMainScript = document.getElementById(`${id}-mainScript`);
 		if (pluginMainScript) document.head.removeChild(pluginMainScript);
-		acode.unmountPlugin(id);
+		requireVexaCore().unmountPlugin(id);
 
 		const searchInput = container.querySelector('input[name="search-ext"]');
 		if (searchInput) {
