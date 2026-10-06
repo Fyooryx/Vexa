@@ -16,6 +16,7 @@ import JSZip from "jszip";
 import actionStack from "lib/actionStack";
 import checkFiles from "lib/checkFiles";
 import config from "lib/config";
+import { vexaExec } from "lib/vexaApi";
 import openFolder from "lib/openFolder";
 import projects from "lib/projects";
 import recents from "lib/recents";
@@ -1171,7 +1172,7 @@ function FileBrowserInclude(mode, info, doesOpenLast = true) {
 					}
 
 					case "info":
-						acode.exec("file-info", url);
+						vexaExec("file-info", url);
 						break;
 
 					case "copyuri":
