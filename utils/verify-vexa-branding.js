@@ -30,6 +30,7 @@ const bun = read("bun.lock");
 const config = read("config.xml");
 const identity = read("src/lib/vexaIdentity.js");
 const deepLink = read("src/utils/appDeepLink.js");
+const appIntent = read("src/utils/appIntent.js");
 const intentHandler = read("src/handlers/intent.js");
 const main = read("src/main.js");
 const polyfill = read("src/lib/polyfill.js");
