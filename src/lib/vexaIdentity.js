@@ -21,8 +21,7 @@ export const VEXA_IDENTITY = Object.freeze({
 	UPSTREAM_SERVICE_URL: "https://acode.app",
 	VEXA_RELEASE_API_URL:
 		"https://api.github.com/repos/Fyooryx/Vexa/releases/latest",
-	RELEASES_API_URL:
-		"https://api.github.com/repos/Fyooryx/Vexa/releases",
+	RELEASES_API_URL: "https://api.github.com/repos/Fyooryx/Vexa/releases",
 	CHANGELOG_URL:
 		"https://raw.githubusercontent.com/Fyooryx/Vexa/main/CHANGELOG.md",
 	UPSTREAM_RELEASES_API_URL:
