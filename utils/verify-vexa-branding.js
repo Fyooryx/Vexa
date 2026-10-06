@@ -37,6 +37,8 @@ const polyfill = read("src/lib/polyfill.js");
 const bootstrap = read("www/index.html");
 const vexaCoreSource = read("src/lib/vexa.js");
 const vexaApiSource = read("src/lib/vexaApi.js");
+const mainSource = read("src/main.js");
+const extensionsSource = read("src/sidebarApps/extensions/index.js");
 const vexaCore = path.join(root, "..", "src/lib/vexa.js");
 const legacyCore = path.join(root, "..", "src/lib/acode.js");
 
@@ -91,6 +93,14 @@ expect(
 		vexaApiSource.includes("getVexaCoreBoundaryStatus") &&
 		vexaApiSource.includes("requireVexaCore"),
 	"Vexa runtime boundary must expose canonical, status, and required-core access",
+);
+expect(
+	!mainSource.includes("window?.acode"),
+	"main lifecycle handlers must not bypass the Vexa runtime boundary",
+);
+expect(
+	!extensionsSource.includes("window.acode.unmountPlugin"),
+	"extension lifecycle must not bypass the Vexa runtime boundary",
 );
 
 for (const [file, source, pattern] of [
