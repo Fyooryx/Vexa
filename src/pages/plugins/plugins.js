@@ -13,6 +13,7 @@ import config from "lib/config";
 import installPlugin from "lib/installPlugin";
 import loadPlugin from "lib/loadPlugin";
 import settings from "lib/settings";
+import { requireVexaCore } from "lib/vexaApi";
 import FileBrowser from "pages/fileBrowser";
 import Plugin from "pages/plugin";
 import helpers from "utils/helpers";
@@ -804,7 +805,7 @@ export default function PluginsInclude(updates) {
 		if (enabled) {
 			disabledMap[id] = true;
 			settings.update({ pluginsDisabled: disabledMap }, false);
-			window.acode.unmountPlugin(id);
+			requireVexaCore().unmountPlugin(id);
 			window.toast(strings["plugin_disabled"] || "Plugin Disabled");
 		} else {
 			delete disabledMap[id];
