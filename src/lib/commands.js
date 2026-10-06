@@ -13,6 +13,7 @@ import Url from "utils/Url";
 import checkFiles from "./checkFiles";
 import config from "./config";
 import EditorFile from "./editorFile";
+import { vexaFormat } from "./vexaApi";
 import { loadFileBrowser } from "./lazyImports";
 import openFile from "./openFile";
 import openFolder from "./openFolder";
@@ -728,7 +729,7 @@ export default {
 		const { editor } = editorManager;
 		const pos = editor.getCursorPosition();
 
-		const didFormat = await acode.format(selectIfNull);
+		const didFormat = await vexaFormat(selectIfNull);
 		if (didFormat) {
 			// Restore cursor position after formatting (pos.row is now 1-based)
 			editor.gotoLine(pos.row, pos.column);
