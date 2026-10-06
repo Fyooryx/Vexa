@@ -78,3 +78,9 @@
 - The canonical app-intent parser from the 1.14.4 hardening line was reimplemented on main rather than restoring the stale branch tree.
 - The remaining technical compatibility identifiers are still governed by the Vexa migration policy and were not deleted blindly.
 - Branch ref deletion remains unavailable through the current connector.
+## Branch consolidation audit
+
+- Rechecked the retained legacy branches against current `main`.
+- Every checked branch reports `ahead=0`; therefore there are no branch commits currently ahead of `main`.
+- Main already contains the historical Termux native terminal, app-intent, authentication, diagnostics, branding, and namespace-migration work observed on the legacy branches.
+- Branch refs themselves remain as historical pointers and are not yet deleted.
