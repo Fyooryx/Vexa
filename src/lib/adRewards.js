@@ -1,5 +1,4 @@
 import toast from "components/toast";
-import { vexaPushNotification } from "./vexaApi";
 import {
 	createRewardStateLifecycle,
 	isRewardPassActive,
@@ -11,6 +10,7 @@ import showRewardedAd, {
 } from "./rewardedAd";
 import secureAdRewardState from "./secureAdRewardState";
 import { setBannerSuppressed } from "./startAd";
+import { vexaPushNotification } from "./vexaApi";
 
 const ONE_HOUR = 60 * 60 * 1000;
 
