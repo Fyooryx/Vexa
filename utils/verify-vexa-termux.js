@@ -74,14 +74,8 @@ expect(
 	"Termux availability API is missing",
 );
 expect(facade.includes("openTermux()"), "Termux open API is missing");
-expect(
-	facade.includes("openTermuxSession("),
-	"Termux session API is missing",
-);
-expect(
-	facade.includes("runTermuxCommand("),
-	"Termux command API is missing",
-);
+expect(facade.includes("openTermuxSession("), "Termux session API is missing");
+expect(facade.includes("runTermuxCommand("), "Termux command API is missing");
 expect(
 	defaults.includes('termuxWorkdir: "~"'),
 	"Termux working directory default is missing",
