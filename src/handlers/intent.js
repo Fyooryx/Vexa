@@ -8,6 +8,7 @@ import { BANNER_SUPPRESSION_REASON, setBannerSuppressed } from "lib/startAd";
 import { parseAppIntentUrl } from "utils/appIntent";
 import { vexaExec } from "lib/vexaApi";
 import helpers from "utils/helpers";
+import { vexaExec } from "lib/vexaApi";
 
 const handlers = [];
 /**
