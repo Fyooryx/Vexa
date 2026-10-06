@@ -23,8 +23,8 @@ function setup() {
 			"lib/loadPlugins": { isInitialPluginLoadComplete: () => pluginsReady },
 			"dialogs/select": select,
 			"utils/helpers": { error: reportError },
-			"utils/appDeepLink": {
-				parseAppDeepLink: (url) => {
+			"utils/appIntent": {
+				parseAppIntentUrl: (url) => {
 					if (typeof url !== "string") return null;
 					const separator = url.indexOf("://");
 					if (separator <= 0) return null;
