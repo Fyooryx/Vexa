@@ -13,6 +13,7 @@ import config from "./config";
 import EditorFile from "./editorFile";
 import openFolder from "./openFolder";
 import appSettings from "./settings";
+import { vexaExec } from "./vexaApi";
 
 let saveTimeout;
 
@@ -174,7 +175,7 @@ async function saveFile(
 		if (appSettings.value.formatOnSave) {
 			editorManager.activeFile.markChanged = false;
 			try {
-				acode.exec("format", false);
+				vexaExec("format", false);
 			} finally {
 				editorManager.activeFile.markChanged = true;
 			}
