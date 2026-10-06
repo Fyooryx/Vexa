@@ -16,6 +16,7 @@ import FontManager from "pages/fontManager";
 import QuickToolsSettings from "pages/quickTools";
 import encodings, { getEncoding } from "utils/encodings";
 import helpers from "utils/helpers";
+import { vexaExec } from "lib/vexaApi";
 import { isPlayStoreInstall } from "utils/installSource";
 import Url from "utils/Url";
 
@@ -529,8 +530,8 @@ export default function otherSettings() {
 				break;
 
 			case "fullscreen":
-				if (value) acode.exec("enable-fullscreen");
-				else acode.exec("disable-fullscreen");
+				if (value) vexaExec("enable-fullscreen");
+				else vexaExec("disable-fullscreen");
 				break;
 
 			case "quickTools":
