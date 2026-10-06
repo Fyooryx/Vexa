@@ -7,9 +7,9 @@ import Ref from "html-tag-js/ref";
 import actionStack from "lib/actionStack";
 import auth, { loginEvents } from "lib/auth";
 import config from "lib/config";
+import { vexaExec } from "lib/vexaApi";
 import helpers from "utils/helpers";
 import Url from "utils/Url";
-import { vexaExec } from "lib/vexaApi";
 
 /**
  * @typedef {object} SideBar
