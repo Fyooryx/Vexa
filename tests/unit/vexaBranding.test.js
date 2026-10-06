@@ -19,7 +19,7 @@ describe("Vexa branding", () => {
 		expect(config).toMatch(/<name>Vexa<\/name>/);
 		expect(packageJson.name).toBe("com.vexa.app");
 		expect(packageJson.displayName).toBe("Vexa");
-				expect(packageLock.name).toBe("com.vexa.app");
+		expect(packageLock.name).toBe("com.vexa.app");
 		expect(packageJson.version).toBe("1.15.0");
 		expect(settings).toContain('strings["rate vexa"]');
 		expect(settings).toContain('strings["settings-category-about-vexa"]');
@@ -126,7 +126,7 @@ describe("Vexa branding", () => {
 		const main = read("src/main.js");
 
 		expect(deepLink).toContain("VEXA_IDENTITY.URL_SCHEME");
-				expect(intentHandler).toContain("parseAppDeepLink(url)");
+			expect(intentHandler).toContain("parseAppIntentUrl(url)");
 		expect(main).toContain("config.API_BASE");
 		expect(main).not.toContain('url.includes("acode.app/api")');
 
