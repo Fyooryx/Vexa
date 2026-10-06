@@ -159,7 +159,7 @@ describe("Vexa branding", () => {
 		expect(css).toContain(".icon.vexa");
 		expect(css).toContain('url("icons/vexa.svg")');
 	});
-it("uses the Vexa log filename", () => {
+\tit("uses the Vexa log filename", () => {
 		expect(read("src/lib/config.js")).toMatch(/LOG_FILE_NAME:\s*"Vexa\.log"/);
 	});
 	it("exposes safe Vexa repository commands", () => {
