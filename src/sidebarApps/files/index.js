@@ -2,6 +2,7 @@ import "./style.scss";
 import Sidebar from "components/sidebar";
 import fileIcons from "lib/fileIcons";
 import settings from "lib/settings";
+import { vexaExec } from "lib/vexaApi";
 
 /**@type {HTMLElement} */
 let container;
@@ -62,7 +63,7 @@ function onSelected(el) {
  */
 function clickHandler(e) {
 	if (!container.children.length) {
-		acode.exec("open-folder");
+		vexaExec("open-folder");
 		return;
 	}
 
