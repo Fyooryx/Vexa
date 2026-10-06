@@ -53,3 +53,16 @@ Status: ADVANCE_BRANCH_CONVERGENCE_COMPLETE
 - Material remaining hardening from the diverged work was integrated into main.
 - No new branch and no PR were created.
 - Branch deletion remains BLOCKED by connector capability: no GitHub ref-delete mutation is exposed.
+
+
+## 2026-10-06 — Branch convergence wave
+
+- Audited all 23 existing branches against current `main`.
+- The 9 already-behind branches had no commits ahead of `main`.
+- The 13 previously-diverged branches were absorbed into `main` as ancestry-only merge commits while preserving the current Vexa tree; their older functionality was reviewed and retained only where it was not already present or superseded.
+- Added the canonical `src/utils/appIntent.js` parser and made `src/utils/appDeepLink.js` a compatibility delegator.
+- Rechecked all 22 non-main branch tips: every branch now reports `ahead_by=0` versus `main`.
+- No new branch or PR was created.
+- Branch deletion is still blocked by the available GitHub connector because it exposes no delete-ref operation.
+
+Status: ADVANCE_BRANCH_CONVERGENCE_COMPLETE
