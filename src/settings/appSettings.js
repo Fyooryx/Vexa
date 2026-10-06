@@ -12,11 +12,11 @@ import fonts from "lib/fonts";
 import lang from "lib/lang";
 import openFile from "lib/openFile";
 import appSettings from "lib/settings";
+import { vexaExec } from "lib/vexaApi";
 import FontManager from "pages/fontManager";
 import QuickToolsSettings from "pages/quickTools";
 import encodings, { getEncoding } from "utils/encodings";
 import helpers from "utils/helpers";
-import { vexaExec } from "lib/vexaApi";
 import { isPlayStoreInstall } from "utils/installSource";
 import Url from "utils/Url";
 
