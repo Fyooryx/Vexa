@@ -12,6 +12,7 @@
 ### Added
 - Vexa Core Boundary API with canonical, legacy-fallback, and unavailable runtime states.
 - Vexa Doctor reporting of the active runtime boundary mode.
+- Canonical Vexa application-intent parsing with legacy deep-link delegation.
 - Vexa Doctor now degrades on legacy boundary fallback and blocks when the canonical Vexa runtime is unavailable.
 - Regression coverage for Vexa boundary resolution and required-core behavior.
 
