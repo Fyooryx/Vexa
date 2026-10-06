@@ -21,6 +21,7 @@ import markdownItTaskLists from "markdown-it-task-lists";
 import mimeTypes from "mime-types";
 import { highlightCodeBlock, initHighlighting } from "utils/codeHighlight";
 import helpers from "utils/helpers";
+import { requireVexaCore } from "lib/vexaApi";
 import Url from "utils/Url";
 import { isVersionGreater } from "utils/version";
 import view, { cleanups } from "./plugin.view.js";
@@ -254,7 +255,7 @@ export default async function PluginInclude(
 				fsOperation(pluginDir).delete(),
 				state.delete(state.storeUrl),
 			]);
-			acode.unmountPlugin(plugin.id);
+			requireVexaCore().unmountPlugin(plugin.id);
 			if (onUninstall) onUninstall(plugin.id);
 			installed = false;
 			update = false;
