@@ -6,6 +6,7 @@ import { isInitialPluginLoadComplete } from "lib/loadPlugins";
 import openFile from "lib/openFile";
 import { BANNER_SUPPRESSION_REASON, setBannerSuppressed } from "lib/startAd";
 import { parseAppIntentUrl } from "utils/appIntent";
+import { vexaExec } from "lib/vexaApi";
 import helpers from "utils/helpers";
 
 const handlers = [];
@@ -179,7 +180,7 @@ async function reportFailures(failures) {
 			},
 		).then(resolve, reject);
 	});
-	if (answer === "plugins") acode.exec("open", "plugins");
+	if (answer === "plugins") vexaExec("open", "plugins");
 }
 
 class IntentEvent {
